@@ -1,0 +1,104 @@
+<extend name="Public/base" />
+
+<block name="main">
+    <div class="row-fluid">
+        <div class="span12">
+            <div class="widget-box">
+                <div class="widget-title">
+                    <span class="icon">
+                        <i class="icon-plus"></i>
+                    </span>
+                    <h5></h5>
+                </div>
+                <div class="widget-content nopadding">
+                    <form class="form-horizontal" method="post" action="{:U('MemberCard/update')}">
+                        <input type="hidden" name="model" value="MemberCard">
+                        <input type="hidden" name="id" value="{$row['id']}">
+
+                        <div class="control-group">
+                            <label class="control-label" >持卡人姓名</label>
+                            <div class="controls">
+                                <input type="text" name="name" value="{$row['name']}"  style="width: 50%;">
+                                <span class="help-block">请输入持卡人姓名</span>
+                            </div>
+                        </div>
+
+                        <div class="control-group">
+                            <label class="control-label" >银行卡账号</label>
+                            <div class="controls">
+                                <input type="text" name="card_number" value="{$row['card_number']}"  style="width: 50%;">
+                                <span class="help-block">请输入持卡人银行卡账号</span>
+                            </div>
+                        </div>
+
+
+                        <div class="control-group">
+                            <label class="control-label" >身份证号</label>
+                            <div class="controls">
+                                <input type="text" name="id_card" value="{$row['id_card']}"  style="width: 50%;">
+                                <span class="help-block">请输入持卡人身份证号</span>
+                            </div>
+                        </div>
+
+                        <div class="control-group">
+                            <label class="control-label" >开户行名称</label>
+                            <div class="controls">
+                                <select name="bank_id" id="" style="width: 51%">
+                                    <volist name="row['support']" id="su">
+                                        <option value="{$su['id']}" <eq name="row['bank_id']" value="$su['id']">selected</eq>>{$su['bank_name']}</option>
+                                    </volist>
+                                </select>
+                                <span class="help-block">请输入持卡人银行卡账号</span>
+                            </div>
+                        </div>
+
+
+
+                        <div class="control-group">
+                            <label class="control-label" >联系电话</label>
+                            <div class="controls">
+                                <input type="text" name="phone" value="{$row['phone']}"  style="width: 50%;">
+                                <span class="help-block">请输入持卡人银行卡账号</span>
+                            </div>
+                        </div>
+
+                        <div class="form-actions">
+                            <button class="btn" onclick="javascript:history.back(-1);return false;">返 回</button>　
+                            <button class="btn btn-info ajax-post" target-form="form-horizontal" type="submit">保 存</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</block>
+<block name="script">
+    <script type="text/javascript">
+        $("#letter_ue").click(function(){
+            $('.letter-out-eu').show();
+            return false;
+        });
+        $(document).on('click', function(e) {
+            e = e || window.event;
+            if ( e.target.className == 'letter-out-eu' ) return;
+            $('.letter-out-eu').hide();
+        });
+        $(".select_ue_letter").click(function(){
+            $(".fir_ue_letter").val($(this).html());
+        });
+
+
+        $("#letter_cn").click(function(){
+            $('.letter-out-cn').show();
+            return false;
+        });
+        $(document).on('click', function(e) {
+            e = e || window.event;
+            if ( e.target.className == 'letter-out-cn' ) return;
+            $('.letter-out-cn').hide();
+        });
+        $(".select_cn_letter").click(function(){
+            $(".fir_cn_letter").val($(this).html());
+        });
+    </script>
+</block>

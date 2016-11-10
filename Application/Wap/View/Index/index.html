@@ -1,0 +1,169 @@
+<extend name="Public/base" />
+<block name="css">
+	<link rel="stylesheet" href="__CSS__/Swiper/swiper-3.4.0.min.css">
+</block>
+<block name="main">
+	<body >
+	<header class="bgz colb">
+			<span class="pfr local pore" linkto="msg.html">
+				<span class="jiaob poab bgr colb fs12 textcen lh14"></span>
+			</span>
+			<span class="poab pfl disib iconsanj" style="width: 45px;padding-right: 5px;">
+				<span class="" ele="type">店铺</span>
+				<select class="poab selpstime" forele="type">
+					<option>店铺</option>
+					<option>商品</option>
+				</select>
+			</span>
+		<div class="pore mat10 searchdiv">
+			<input class="poab fs12 " placeholder=""/>
+			<span class="search pfr"></span>
+		</div>
+	</header>
+    <div class="content" style="padding: 50px 0px;">
+        <div class="swiper-container">
+            <div class="swiper-wrapper">
+                <!--// 轮播-->
+            </div>
+            <div class="swiper-pagination"></div>
+        </div>
+            <div class="xqnav">
+
+            </div>
+
+            <!--特色好货-->
+            <div class="pad10 textcen">
+                <span class="icontshh">特色好货</span>
+            </div>
+            <div class="floor1"><!--// 楼层 1 --></div>
+
+            <!-- 热门市场  -->
+            <div class="pad10 textcen">
+                <span class="iconrmsc">热门市场</span>
+            </div>
+
+            <div class="ad3 ovhid hot1"><!--// 第一行--></div>
+
+            <div class="ad3 mat10 ovhid hot2"><!--// 第二行--></div>
+
+
+            <!-- 精品推荐  -->
+            <div class="pad10 textcen">
+                <span class="iconrmsc">精品推荐</span>
+            </div>
+
+            <div class="goodlist ovhid floor2"><!--// 耧层2--></div>
+    </div>
+	<footer class="bgz">
+		<div class="on">
+			<span>首页</span>
+		</div>
+		<div>
+			<span linkto="/index.php?m=Wap&c=Index&a=discover">发现</span>
+		</div>
+		<div>
+			<span>收藏</span>
+		</div>
+		<div>
+			<span>购物车</span>
+		</div>
+		<div>
+			<span>我的</span>
+		</div>
+	</footer>
+	</body>
+
+</block>
+<block name="script">
+    <script type="text/javascript" src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
+	<script type="text/javascript" src="__JS__/touch.min.js"></script>
+	<script type="text/javascript" src="__JS__/Swiper/swiper-3.4.0.jquery.min.js"></script>
+	<script type="text/javascript">
+
+	</script>
+	<script type="text/javascript">
+
+        wx.config({
+            debug: false, // 开启调试模式,调用的所有api的返回值会在客户端alert出来，若要查看传入的参数，可以在pc端打开，参数信息会通过log打出，仅在pc端时才会打印。
+            appId: '{$parameter["appId"]}', // 必填，公众号的唯一标识
+            timestamp:'{$parameter["timestamp"]}' , // 必填，生成签名的时间戳
+            nonceStr: '{$parameter["nonceStr"]}', // 必填，生成签名的随机串
+            signature: '{$parameter["signature"]}',// 必填，签名，见附录1
+            jsApiList: ['getLocation'] // 必填，需要使用的JS接口列表，所有JS接口列表见附录2
+        });
+        wx.ready(function(){
+            wx.getLocation({
+                type: 'wgs84', // 默认为wgs84的gps坐标，如果要返回直接给openLocation用的火星坐标，可传入'gcj02'
+                success: function (res) {
+                    var latitude = res.latitude; // 纬度，浮点数，范围为90 ~ -90
+                    var longitude = res.longitude; // 经度，浮点数，范围为180 ~ -180。
+                    $.get('/index.php?m=Wap&c=Index&a=geoIp',{lat:latitude,lng:longitude},function(data){
+                        var region = data['regeocode']['addressComponent']['province'];
+                        if(region == undefined || region == '')region = '沧州市';
+                        // 主调用
+                        var m_id = 1;
+                        getHtml(m_id,region);
+                    })
+                }
+            });
+        });
+
+        function getHtml(m_id,region_name)
+        {
+            $.post('{$url}',{m_id:'1',region_name:region_name},function(data){
+                var arr = data;
+                var goods_list = '/index.php?m=Wap&c=Goods&a=goodslist';
+                var goods_info = '/index.php?m=Wap&c=Goods&a=goodsinfo';
+                console.log(arr);
+                if(arr['flag'] == 'success'){
+                    // 轮播
+                    var advert = arr['data']['advert'];
+                    for(var x in advert){
+                        $('.swiper-wrapper').append('<div class="swiper-slide"><a href="'+advert[x]["ad_url"]+'" target="_blank"><img style="height: 150px;" src="'+advert[x]["ad_pic"]+'" alt="" class="width"></a></div>');
+                    }
+                    var mySwiper = new Swiper('.swiper-container', {
+                        autoplay: 5000,//可选选项，自动滑动
+                        pagination : '.swiper-pagination',
+                    })
+                    // 搜索 默认值
+                    var searchdiv= arr['data']['app_search'];
+                    $('.searchdiv input').attr('placeholder',searchdiv);
+
+                    // 首页图标
+                    var up = arr['data']['up'];
+                    for(var menu in up){
+                        if(menu <=6){
+                            $('.xqnav').append('<div linkto="'+goods_list+'&g_t_id='+up[menu]["g_t_id"]+'"><img src="'+up[menu]["app_picture"]+'" /><span>'+up[menu]["type_name"]+'</span></div>');
+                        }else{
+                            $('.xqnav').append('<div linkto="/index.php?m=Wap&c=Goods&a=classify"><img src="__IMG__/nav8.png" /><span>分类</span></div>');
+                        }
+
+                    }
+                    // 特色好货
+                    var first_floor = arr['data']['first_floor'];
+                    var floor1 = '<div class="ad"> <div class="tshhlef"> <div class="top" linkto="'+goods_list+'&keywords='+first_floor[0]["key"]+'"> <img src="'+first_floor[0]["pic"]+'" /> </div> <div class="bot"> <div class="botl" linkto="'+goods_list+'&keywords='+first_floor[1]["key"]+'"> <img src="'+first_floor[1]["pic"]+'" /> </div> <div class="botr" linkto="'+goods_list+'&keywords='+first_floor[2]["key"]+'"> <img src="'+first_floor[2]["pic"]+'" /> </div> </div> </div> <div class="tshhrig" linkto="'+goods_list+'&keywords='+first_floor[3]["key"]+'"> <img src="'+first_floor[3]["pic"]+'" /> </div> </div> ' +
+                            '<div class="ad2 mat10 ovhid"> <div linkto="'+goods_list+'&keywords='+first_floor[4]["key"]+'"> <img src="'+first_floor[4]["pic"]+'" /> </div> <div linkto="'+goods_list+'&keywords='+first_floor[5]["key"]+'"> <img src="'+first_floor[5]["pic"]+'" /> </div> <div linkto="'+goods_list+'&keywords='+first_floor[6]["key"]+'"> <img src="'+first_floor[6]["pic"]+'" /> </div> <div linkto="'+goods_list+'&keywords='+first_floor[7]["key"]+'"> <img src="'+first_floor[7]["pic"]+'" /> </div> </div>';
+                    $('.floor1').html(floor1);
+
+                    //热门市场
+                    var hot_class = arr['data']['hot_class'];
+                    for(var hot in hot_class){
+                        var str = '<div linkto="'+goods_list+'&g_t_id='+hot_class[hot]["g_t_id"]+'"><img src="'+hot_class[hot]["type_picture"]+'" /></div>';
+                        if(hot <= 3){
+                            $('.hot1').append(str);
+                        }else{
+                            $('.hot2').append(str);
+                        }
+                    }
+                    // 精品推荐
+                    var second_floor = arr['data']['second_floor'];
+                    for(var sf in second_floor){
+                        var floor2 =  '<div linkto="'+goods_info+'&goods_id='+second_floor[sf]["goods_id"]+'" class="goodh bgb"><div class="imgbag"><img src="'+second_floor[sf]["goods_pic"]+'" /></div><div class="pad0-10"><div class="goodname fs14">'+second_floor[sf]["cn_goods_name"]+'</div><div class="lh30 price fs14 colr">￥<span class="fs16">'+second_floor[sf]["cn_price"]+'</span></div><div class="cole fs12"><span class="mar20">销量：'+second_floor[sf]["sales"]+'</span><span>评论数：'+second_floor[sf]["comment"]+'</span></div></div></div>';
+                        $('.floor2').append(floor2);
+                    }
+                    top_linkto();
+                }
+            },'json')
+        }
+	</script>
+</block>

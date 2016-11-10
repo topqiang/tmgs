@@ -1,0 +1,68 @@
+<extend name="Public/base" />
+
+<block name="main">
+
+    <div class="row-fluid">
+
+        <div class="span12">
+            <div class="widget-box">
+
+                <div class="widget-title widget-title-search">
+                    <form action="{:U('Certification/index')}" method="post" class="form">
+                        <input type="text" name="contact_email" value="{$_REQUEST['contact_email']}" placeholder="输入申请邮箱">
+                        {$select}
+                        <button class="btn btn-inverse">查询</button>
+                    </form>
+                </div>
+
+                <div class="widget-content nopadding">
+                    <table class="table table-bordered table-striped with-check">
+                        <thead>
+                        <tr>
+                            <th><input type="checkbox" id="title-checkbox" name="title-checkbox" class="check-all"/><!--<i class="icon-resize-vertical"></i>--></th>
+                            <th>ID</th>
+                            <th>用户账号</th>
+                            <th>申请人实名</th>
+                            <th>申请手机号</th>
+                            <th>申请邮箱</th>
+                            <th>申请时间</th>
+                            <th>审核情况</th>
+                            <th>操作</th>
+                        </tr>
+                        </thead>
+                        <tbody class="tbody">
+                        <volist name="list" id="row">
+                            <tr>
+                                <td><input type="checkbox" name="ids[]" value="{$row['id']}" class="ids"/></td>
+                                <td>{$row['id']}</td>
+                                <td>{$row['account']}</td>
+                                <td>{$row['really_name']}</td>
+                                <td>{$row['contact_mobile']}</td>
+                                <td>{$row['contact_email']}</td>
+                                <td>{$row['create_time']|date='Y-m-d H:i',###}</td>
+                                <td>{$row['status']|get_check_status}</td>
+                                <td>
+                                    <eq name="row['status']" value="0">
+                                        <a href="{:U('Certification/update',array('id'=>$row['id']))}" title="审核" class="tip-bottom">
+                                            <span class="label label-success">审核</span></a>&nbsp;
+                                        <else/>
+                                        <a title="已审核" class="tip-bottom">
+                                            <span class="label">已审核</span>
+                                        </a>
+                                    </eq>
+
+                                </td>
+                            </tr>
+                        </volist>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="pagination alternate">
+                    {$page}
+                </div>
+
+            </div>
+        </div>
+    </div>
+</block>

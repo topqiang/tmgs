@@ -1,0 +1,72 @@
+<extend name="Public/base" />
+
+<block name="main">
+
+    <div class="row-fluid">
+
+        <div class="span12">
+            <div class="widget-box">
+
+                <div class="widget-title widget-title-search">
+               
+                    <button class="btn btn-success href" url="{:U('AuthRule/add',array('parid'=>$parid))}" target-form="ids">新增</button>&nbsp;
+                </div>
+
+                <div class="widget-content nopadding">
+                    <table class="table table-bordered table-striped with-check">
+                        <thead>
+                        <tr>
+                            <th><input type="checkbox" id="title-checkbox" name="title-checkbox" class="check-all"/><!--<i class="icon-resize-vertical"></i>--></th>
+                            <th>ID</th>
+                            <th>所属模组</th>
+                            <notempty name="parid">
+                                <th>规则</th>
+                            </notempty>
+                            <th>描述</th>
+                            <th>状态</th>
+                            <th>操作</th>
+                        </tr>
+                        </thead>
+                        <tbody class="tbody">
+                        <volist name="list" id="row">
+                            <tr>
+                                <td><input type="checkbox" name="ids[]" value="{$row['id']}" class="ids"/></td>
+                                <td>{$row['id']}</td>
+                                <td>{$row['module']}</td>
+                                <notempty name="parid">
+                                    <td>{$row['name']}</td>
+                                </notempty>
+                                <td>{$row['title']}</td>
+                                <td>{$row['status']|get_user_type}</td>
+                                <td>
+                                    <a href="{:U('AuthRule/update',array('id'=>$row['id']))}" title="编辑" class="tip-bottom">
+                                        <span class="label label-success">编辑</span></a>&nbsp;
+                                    <eq name="row['status']" value="0">
+                                        <a href="{:U('AuthRule/resume',array('model'=>'AuthRule','ids'=>$row['id'],'status'=>abs(1-$row['status'])))}" title="{$row['status']|get_user_status}" class="tip-bottom ajax-get">
+                                            <span class="label label-info">{$row['status']|get_user_status}</span></a>&nbsp;
+                                        <else/>
+                                        <a href="{:U('AuthRule/forbid',array('model'=>'AuthRule','ids'=>$row['id'],'status'=>abs(1-$row['status'])))}" title="{$row['status']|get_user_status}" class="tip-bottom ajax-get">
+                                            <span class="label label-inverse">{$row['status']|get_user_status}</span></a>&nbsp;
+                                    </eq>
+                                    <a href="{:U('AuthRule/remove',array('model'=>'AuthRule','ids'=>$row['id']))}" title="删除" class="tip-bottom confirm ajax-get">
+                                        <span class="label label-important">删除</span></a>
+                                        <empty name="row['parent_id']" >
+                                            <a href="{:U('AuthRule/index',array('model'=>'AuthRule','parid'=>$row['id']))}" title="查看组下分类" class="tip-bottom">
+                                            <span class="label label-info">查看组下分类</span></a>
+                                        </empty>
+                                   
+                                </td>
+                            </tr>
+                        </volist>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="pagination alternate">
+                    {$page}
+                </div>
+
+            </div>
+        </div>
+    </div>
+</block>

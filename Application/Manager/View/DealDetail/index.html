@@ -1,0 +1,115 @@
+<extend name="Public/base" />
+
+<block name="main">
+
+    <div class="row-fluid">
+
+        <div class="span12">
+            <div class="widget-box">
+                <div class="widget-title widget-title-search">
+                    <button class="btn btn-inverse" id="export">导出订单</button>&nbsp;
+                    <button class="btn btn-info href" url="{:U('DealDetail/index',array('type'=>1))}" >只看用户</button>&nbsp;
+                    <button class="btn btn-danger href" url="{:U('DealDetail/index',array('type'=>2))}" >只看商家</button>&nbsp;
+                    <form action="{:U('DealDetail/index')}" method="post" class="form">
+                        <input style="margin-top:-10px;width: 128px;" type="text" name="create_time" value="{$_REQUEST['create_time']}" class="laydate-icon" id="create_time" placeholder="请输入创建时间" style="width:136px;">
+                        <input style="margin-top:-10px;" type="text" name="title" value="{$_REQUEST['title']}" placeholder="请输入交易标题">
+                        <input style="margin-top:-10px;" type="text" name="content" value="{$_REQUEST['content']}" placeholder="请输入交易内容">
+                        <select name="type" id="" style="width:63px;">
+                            <?php
+                            if($_REQUEST['type'] == 1){
+                                echo '<option value="2"  >商家</option><option value="1" selected>用户</option>';
+                            }else{
+                                echo '<option value="2" selected>商家</option><option value="1"  >用户</option>';
+                            }
+                            ?>
+
+                        </select>
+                        <input style="margin-top:-10px;" type="text" name="account" value="{$_REQUEST['account']}" placeholder="请输入提现账号">
+                        <button  style="margin-top:-10px;" class="btn btn-inverse">查询</button>
+                    </form>
+                    <span class="income" >支出: <span style="color:red;">{$expend}</span>元&nbsp;&nbsp;存入: <span style="color:green;">{$deposit}</span>元&nbsp;&nbsp;差额:{$expend - $deposit}元(支出-存入)</span>
+                </div>
+                <div class="widget-content nopadding">
+                    <table class="table table-bordered table-striped with-check">
+                        <thead>
+                        <tr>
+                            <th><input type="checkbox" id="title-checkbox" name="title-checkbox" class="check-all"/><!--<i class="icon-resize-vertical"></i>--></th>
+                            <th>ID</th>
+                            <th>类型</th>
+                            <th>交易账号</th>
+                            <th>交易用户</th>
+                            <th>交易标题</th>
+                            <th>交易内容</th>
+                            <th>交易金额</th>
+                            <th>创建时间</th>
+                        </tr>
+                        </thead>
+                        <tbody class="tbody">
+                        <volist name="list" id="row">
+                            <tr>
+                                <td><input type="checkbox" name="ids[]" value="{$row['id']}" class="ids"/></td>
+                                <td>{$row['id']}</td>
+                                <eq name="row['type']" value="1">
+                                    <td style="color:#6392c8;">用户</td>
+                                    <else/>
+                                    <td style="color:#cf5b56;">商家</td>
+                                </eq>
+                                <td>{$row['object_id']['account']}</td>
+                                <td>{$row['object_id']['nickname']}</td>
+                                <td>{$row['title']}</td>
+                                <td>{$row['content']}</td>
+                                <td><eq name="row['symbol']" value="1"><span style="color:green;font-size:20px;">+</span><else/><span style="color:red;font-size:20px;">-</span></eq>{$row['money']}</td>
+                                <td>{$row['create_time']|date="Y-m-d H:i:s",###}</td>
+                            </tr>
+                        </volist>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="pagination alternate">
+                    {$page}
+                </div>
+
+            </div>
+        </div>
+    </div>
+</block>
+<block name="script">
+    <script src="__JS__/laydate/laydate.js"></script>
+    <script>
+        laydate({
+            elem: '#create_time', //目标元素。由于laydate.js封装了一个轻量级的选择器引擎，因此elem还允许你传入class、tag但必须按照这种方式 '#id .class'
+            istime: true, //是否开启时间选择
+            format: 'YYYY-MM-DD hh:mm:ss', //日期格式
+        });
+    </script>
+    <script type="text/javascript">
+        $('.go-handle').on('click',function(){
+            var id = $(this).data('id');
+            var type = $(this).data('type');
+            var status = $(this).data('status');
+                $.post('{:U("Goods/handleGood")}',{id:id,type:type,status:status},function(data){
+                    if(data.status == 1)alert('操作成功');
+                    window.location.reload();
+                });
+        });
+        $('select[name="condition"]').on('change',function(){
+            if($(this).val() == 4){
+                $('input[name="cn_goods_name"]').show();
+            }else{
+                $('input[name="cn_goods_name"]').hide();
+            }
+        });
+    </script>
+    <script>
+        // 导出订单
+        $('#export').on('click',function(){
+            var ids = $('.ids:checked').map(function(k, v) {
+                return $(this).val();
+            }).get().join(',');
+            if(!ids){return false;}
+            window.location.href = '/Manager/DealDetail/exportExcel/ids/'+ids;
+        });
+
+    </script>
+</block>

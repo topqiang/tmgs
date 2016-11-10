@@ -1,0 +1,283 @@
+<extend name="Public/base" />
+
+<block name="main">
+
+    <div class="row-fluid">
+
+        <div class="span12">
+            <div class="widget-box">
+
+                <div class="widget-title">
+                    <span class="icon">
+                        <i class="icon-plus"></i>
+                    </span>
+                    <h5>插件配置 [ {$data['title']} ]</h5>
+                </div>
+
+                <div class="widget-content nopadding">
+
+                    <form action="{:U('Plugins/update')}" class="form-horizontal" method="post">
+                        <foreach name="data['config']" item="form" key="o_key">
+                            <switch name="form['type']">
+                            <case value="text">
+                                <div class="control-group">
+                                    <label class="control-label">{$form['title']|default=''}</label>
+                                    <div class="controls">
+                                        <input type="text" name="config[{$o_key}]" value="{$form['value']}">
+                                        <span class="help-block">
+                                            <present name="form['tip']">{$form['tip']}</present>
+                                        </span>
+                                    </div>
+                                </div>
+                            </case>
+                            <case value="password">
+                                <div class="control-group">
+                                    <label class="control-label">{$form['title']|default=''}</label>
+                                    <div class="controls">
+                                        <input type="password" name="config[{$o_key}]" value="{$form['value']}">
+                                        <span class="help-block">
+                                            <present name="form['tip']">{$form['tip']}</present>
+                                        </span>
+                                    </div>
+                                </div>
+                            </case>
+                            <case value="hidden">
+                                <div class="control-group">
+                                    <label class="control-label">{$form['title']|default=''}</label>
+                                    <div class="controls">
+                                        <input type="hidden" name="config[{$o_key}]" value="{$form['value']}">
+                                        <span class="help-block">
+                                            <present name="form['tip']">{$form['tip']}</present>
+                                        </span>
+                                    </div>
+                                </div>
+                            </case>
+                            <case value="radio">
+                                <div class="control-group">
+                                    <label class="control-label">{$form['title']|default=''}</label>
+                                    <div class="controls">
+                                        <foreach name="form['options']" item="opt" key="opt_k">
+                                            <label>
+                                                <input type="radio" name="config[{$o_key}]" value="{$opt_k}" <eq name="form['value']" value="$opt_k"> checked</eq>>{$opt}　
+                                            </label>
+                                        </foreach>
+                                        <span class="help-block">
+                                            <present name="form['tip']">{$form['tip']}</present>
+                                        </span>
+                                    </div>
+                                </div>
+
+                            </case>
+                            <case value="checkbox">
+                                <div class="control-group">
+                                    <label class="control-label">{$form['title']|default=''}</label>
+                                    <div class="controls">
+                                        <foreach name="form['options']" item="opt" key="opt_k">
+                                            <php>
+                                                is_null($form["value"]) && $form["value"] = array();
+                                            </php>
+                                            <input type="checkbox" name="config[{$o_key}][]" value="{$opt_k}" <in name="opt_k" value="$form['value']">checked='checked'</in>>{$opt}　
+                                        </foreach>
+                                        <span class="help-block">
+                                            <present name="form['tip']">{$form['tip']}</present>
+                                        </span>
+                                    </div>
+                                </div>
+
+                            </case>
+                            <case value="select">
+                                <div class="control-group">
+                                    <label class="control-label">{$form['title']|default=''}</label>
+                                    <div class="controls">
+                                        <div class="btn-group">
+                                            <button type="button" class="btn checked" data-default="--选择--"></button>
+                                            <button class="btn dropdown-toggle" data-toggle="dropdown">
+                                                <!--<span class="checked" data-default="--选择--"></span>--><span class="caret"></span>
+                                            </button>
+                                            <ul class="dropdown-menu">
+                                                <foreach name="form['options']" item="opt" key="opt_k">
+                                                    <li data-value="{$opt_k}" data-title="{$opt}" <eq name="form['value']" value="$opt_k">class="selected"</eq>>
+                                                    <a href="javascript:void(0)">{$opt}</a>
+                                                    </li>
+                                                </foreach>
+                                            </ul>
+                                        </div>
+                                        <input type="hidden" name="config[{$o_key}]" value="{$form['value']}">
+                                        <span class="help-block">
+                                            <present name="form['tip']">{$form['tip']}</present>
+                                        </span>
+                                    </div>
+                                </div>
+
+                            </case>
+                            <case value="textarea">
+                                <div class="control-group">
+                                    <label class="control-label">{$form['title']|default=''}</label>
+                                    <div class="controls">
+                                        <textarea name="config[{$o_key}]">{$form['value']}</textarea>
+                                        <span class="help-block">
+                                            <present name="form['tip']">{$form['tip']}</present>
+                                        </span>
+                                    </div>
+                                </div>
+                            </case>
+                            <case value="picture_union">
+                                <div class="control-group">
+                                    <label class="control-label">{$form['title']|default=''}</label>
+                                    <div class="controls">
+                                        {:hook('upload',array('is_first'=>1,'queue_limit'=>2,'unique_sign'=>$o_key,'field_name'=>'config['.$o_key.']','field_value'=>$form['value'],'save_path'=>'Plugins'))}
+                                        <span class="help-block">
+                                            <present name="form['tip']">{$form['tip']}</present>
+                                        </span>
+                                    </div>
+                                </div>
+                            </case>
+
+                            <case value="group">
+                                <div class="widget-title">
+                                <ul class="nav-tabs nav">
+                                    <volist name="form['options']" id="li">
+                                        <li <eq name="i" value="1">class="active"</eq>>
+                                        <a href="#tab{$i}" data-toggle="tab">{$li['title']}</a>
+                                        </li>
+                                    </volist>
+                                </ul>
+                                </div>
+                                <div class="tab-content">
+                                <volist name="form['options']" id="tab">
+                                    <div id="tab{$i}" class="tab-pane <eq name='i' value='1'>active</eq> tab{$i}">
+                                    <foreach name="tab['options']" item="tab_form" key="o_tab_key">
+                                        <switch name="tab_form['type']">
+                                            <case value="text">
+                                                <div class="control-group">
+                                                    <label class="control-label">{$tab_form['title']|default=''}</label>
+                                                    <div class="controls">
+                                                        <input type="text" name="config[{$o_tab_key}]" value="{$tab_form['value']}">
+                                                        <span class="help-block">
+                                                            <present name="form['tip']">{$tab_form['tip']}</present>
+                                                        </span>
+                                                    </div>
+                                                </div>
+                                            </case>
+                                            <case value="password">
+                                                <div class="control-group">
+                                                    <label class="control-label">{$tab_form['title']|default=''}</label>
+                                                    <div class="controls">
+                                                        <input type="password" name="config[{$o_tab_key}]" value="{$tab_form['value']}">
+                                                        <span class="help-block">
+                                                            <present name="form['tip']">{$tab_form['tip']}</present>
+                                                        </span>
+                                                    </div>
+                                                </div>
+                                            </case>
+                                            <case value="hidden">
+                                                <div class="control-group">
+                                                    <label class="control-label">{$tab_form['title']|default=''}</label>
+                                                    <div class="controls">
+                                                        <input type="hidden" name="config[{$o_tab_key}]" value="{$tab_form['value']}">
+                                                        <span class="help-block">
+                                                            <present name="form['tip']">{$tab_form['tip']}</present>
+                                                        </span>
+                                                    </div>
+                                                </div>
+
+                                            </case>
+                                            <case value="radio">
+                                                <div class="control-group">
+                                                    <label class="control-label">{$tab_form['title']|default=''}</label>
+                                                    <div class="controls">
+                                                        <foreach name="tab_form['options']" item="opt" key="opt_k">
+                                                            <label>
+                                                                <input type="radio" name="config[{$o_tab_key}]" value="{$opt_k}" <eq name="tab_form['value']" value="$opt_k"> checked</eq>>{$opt}　
+                                                            </label>
+                                                        </foreach>
+                                                        <span class="help-block">
+                                                            <present name="form['tip']">{$tab_form['tip']}</present>
+                                                        </span>
+                                                    </div>
+                                                </div>
+                                            </case>
+                                            <case value="checkbox">
+                                                <div class="control-group">
+                                                    <label class="control-label">{$tab_form['title']|default=''}</label>
+                                                    <div class="controls">
+                                                        <foreach name="tab_form['options']" item="opt" key="opt_k">
+                                                            <label class="checkbox">
+                                                                <php> is_null($tab_form["value"]) && $tab_form["value"] = array();</php>
+                                                                <input type="checkbox" name="config[{$o_tab_key}][]" value="{$opt_k}" <in name="opt_k" value="$tab_form['value']">checked='checked'</in>>{$opt}　
+                                                            </label>
+                                                        </foreach>
+                                                        <span class="help-block">
+                                                            <present name="form['tip']">{$tab_form['tip']}</present>
+                                                        </span>
+                                                    </div>
+                                                </div>
+                                            </case>
+                                            <case value="select">
+                                                <div class="control-group">
+                                                    <label class="control-label">{$tab_form['title']|default=''}</label>
+                                                    <div class="controls">
+                                                        <div class="btn-group">
+                                                            <button type="button" class="btn checked" data-default="--选择--"></button>
+                                                            <button class="btn dropdown-toggle" data-toggle="dropdown">
+                                                                <!--<span class="checked" data-default="--选择分组--"></span>--><span class="caret"></span>
+                                                            </button>
+                                                            <ul class="dropdown-menu">
+                                                                <foreach name="tab_form['options']" item="opt" key="opt_k">
+                                                                    <li data-value="{$opt_k}" data-title="{$opt}" <eq name="tab_form['value']" value="$opt_k">class="selected"</eq>>
+                                                                    <a href="javascript:void(0)">{$opt}</a>
+                                                                    </li>
+                                                                </foreach>
+                                                            </ul>
+                                                        </div>
+                                                        <input type="hidden" name="config[{$o_tab_key}]" value="{$tab_form['value']}">
+                                                        <span class="help-block">
+                                                            <present name="form['tip']">{$tab_form['tip']}</present>
+                                                        </span>
+                                                    </div>
+                                                </div>
+                                            </case>
+                                            <case value="textarea">
+                                                <div class="control-group">
+                                                    <label class="control-label">{$tab_form['title']|default=''}</label>
+                                                    <div class="controls">
+                                                        <textarea name="config[{$o_tab_key}]">{$tab_form['value']}</textarea>
+                                                        <span class="help-block">
+                                                            <present name="form['tip']">{$tab_form['tip']}</present>
+                                                        </span>
+                                                    </div>
+                                                </div>
+                                            </case>
+                                            <case value="picture_union">
+                                                <div class="control-group">
+                                                    <label class="control-label">{$tab_form['title']|default=''}</label>
+                                                    <div class="controls">
+                                                        <php> </php>
+                                                        {:hook('upload',array('queue_limit'=>2,'unique_sign'=>$o_tab_key,'field_name'=>'config['.$o_tab_key.']','field_value'=>$tab_form['value'],'save_path'=>'Plugins'))}
+                                                        <span class="help-block">
+                                                            <present name="form['tip']">{$tab_form['tip']}</present>
+                                                        </span>
+                                                    </div>
+                                                </div>
+                                            </case>
+                                        </switch>
+                                    </foreach>
+                                    </div>
+                                </volist>
+                                </div>
+                            </case>
+                        </switch>
+                        </foreach>
+                        <div class="form-actions">
+                            <input type="hidden" name="model" value="Plugins" readonly>
+                            <input type="hidden" name="id" value="{:I('id')}" readonly>
+                            <button class="btn" onclick="javascript:history.back(-1);return false;">返 回</button>　
+                            <button class="btn btn-info ajax-post" target-form="form-horizontal" type="submit">保 存</button>
+                        </div>
+                    </form>
+                    <div class="pagination alternate"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</block>

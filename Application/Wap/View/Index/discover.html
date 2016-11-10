@@ -1,0 +1,103 @@
+<extend name="Public/base" />
+<block name="main">
+    <body>
+    <header class="bgz colb">
+    		<span class="pfr local pore" linkto="msg.html">
+    			<span class="jiaob poab bgr colb fs12 textcen lh14">3</span>
+    		</span>
+        <div class="textcen cenimg">
+            <img src="__IMG__/topbg.png">
+        </div>
+    </header>
+    <div class="topnav disf textcen colb fs12" style="margin-top: 50px;">
+        <div class="">
+            <span>发现好货</span>
+        </div>
+        <div class="">
+            <span>发现好店</span>
+        </div>
+        <div class="">
+            <span>发现好服务</span>
+        </div>
+    </div>
+    <div class="content pad10" style="margin-bottom: 50px">
+        <!-- 发现好货  -->
+        <div class="lh25">
+            <span class="fr fs12" linkto="faxiangood.html">更多》</span>
+            <span class="iconline">发现好货</span>
+        </div>
+
+        <div class="goodlist ovhid iconhh">
+           <!--// 发现好货-->
+        </div>
+
+        <!-- 发现好店  -->
+        <div class="lh25">
+            <span class="fr fs12" linkto="faxianshop.html">更多》</span>
+            <span class="iconline">发现好店</span>
+        </div>
+
+        <div class="shoplist iconhd">
+           <!--// 发现好店-->
+        </div>
+
+
+
+        <!-- 发现好服务  -->
+        <div class="lh25">
+            <span class="fr fs12">更多》</span>
+            <span class="iconline">发现好服务</span>
+        </div>
+
+        <div class="servicelist iconhfw">
+            <!--// 发现好服务-->
+        </div>
+    </div>
+    <footer class="bgz">
+        <div>
+            <span linkto="/index.php?m=Wap&c=Index&a=index">首页</span>
+        </div>
+        <div class="on">
+            <span>发现</span>
+        </div>
+        <div>
+            <span>收藏</span>
+        </div>
+        <div>
+            <span>购物车</span>
+        </div>
+        <div>
+            <span>我的</span>
+        </div>
+    </footer>
+    </body>
+</block>
+<block name="script">
+    <script type="text/javascript" src="__JS__/yxMobileSlider.js" ></script>
+
+    <script>
+        var m_id = 1;
+        $.post("http://2.taomim.com/index.php/Api/Discover/discoverList",{m_id:m_id},function(data){
+            var arr = data;
+            var good_product = arr['data']['good_product']; // 好货
+            var good_shop = arr['data']['good_shop']; // 好店铺
+            var good_service = arr['data']['good_service']; // 好服务
+            for(gp in good_product){
+                // 好商品
+                var gpStr =  '<div class="good" linkto="goodinfo.html"> <div class="imgbag"> <img src="'+good_product[gp]['goods_pic']+'" /> </div> <div class="pad0-10"> <div class="goodname fs14"> '+good_product[gp]["goods_name"]+' </div> <div class="lh30 price fs14 colr">￥<span class="fs16">'+good_product[gp]["price"]+'</span></div> <div class="cole fs12"> <span class="mar20">销量：'+good_product[gp]["sales"]+'</span> <span>评论数：'+good_product[gp]["evaluate"]+'</span> </div> </div> </div>'
+                $('.goodlist').append(gpStr);
+            }
+            for(gs in good_shop){
+                // 好店铺
+                var gsStr = '<div class="shop pad20 borb31"> <img src="'+good_shop[gs]['head_pic']+'" /> <div class="shopdec lh20"> <p><span class="mar5">'+good_shop[gs]["merchant_name"]+'</span> </p> <p class="mat10 cole fs14"> <span class="mar20">销量:'+good_shop[gs]['sales']+'</span> <span>商品:'+good_shop[gs]['goods_count']+'</span> </p> </div> <div class="bobtn bor1b colbl fr pad0-10 borad4 mat10">进店逛逛</div> </div>';
+                $('.shoplist').append(gsStr);
+            }
+            for(gs in good_service){
+                // 好服务
+                var gsStr = '<div class="shop pad20 borb31"> <img src="'+good_service[gs]['head_pic']+'" /> <div class="shopdec lh20"> <p><span class="mar5">'+good_service[gs]["merchant_name"]+'</span> </p> <p class="mat10 cole fs14"> <span class="mar20">销量:'+good_service[gs]['sales']+'</span> <span>商品:'+good_service[gs]['goods_count']+'</span> </p> </div> <div class="bobtn bor1b colbl fr pad0-10 borad4 mat10">进店逛逛</div> </div>';
+                $('.servicelist').append(gsStr);
+            }
+            console.log(arr);
+        },'json');
+    </script>
+</block>

@@ -1,0 +1,224 @@
+<extend name="Public/base" />
+
+<block name="main">
+    <div class="row-fluid">
+        <div class="widget-title widget-title-search">
+            <button class="btn"  onclick="javascript:history.back(-1);return false;">返回</button>&nbsp;
+            <eq name="row['status']" value="1">
+                <button class="btn btn-info tip-bottom confirm ajax-get url" url="{:U('Order/resume',array('model'=>'Order','ids'=>$row['id'],'status'=>2))}" target-form="ids">接单</button>&nbsp;
+            </eq>
+        </div>
+    </div>
+    <div class="row-fluid">
+
+        <div class="span7">
+            <div class="widget-box">
+                <div class="widget-title" style="text-align: center;">
+                    <span style="line-height: 35px;font-size: 20px;">订单商品详情</span>
+                </div>
+                <table class="table table-bordered">
+                    <tr>
+                        <td>商品名称</td><td>商品单价</td><td>商品属性</td><td>商品数量</td><td>产品运费</td><td>商品总价</td><td>供应商信息</td>
+                    </tr>
+                    <volist name="row['goods_info_serialization']['goods']" id="goods_info">
+                        <tr>
+                        <td>{$goods_info['goodsDetail']['goods_name']}</td>
+                        <td>{$goods_info['goodsDetail']['price']}</td>
+                        <td>{$goods_info['product']['attr_con_name']}</td>
+                        <td>{$goods_info['num']}</td>
+                        <td>{$goods_info['delivery_cost']}</td>
+
+                        <td>{$goods_info['price']}</td>
+                        <td style="text-align:center;"><a href="javascript:;" class="copy-link" data-id="{$goods_info['goodsDetail']['supply_info']}" title="{$goods_info['goodsDetail']['supply_info']}">查看信息</a></td>
+                        </tr>
+                    </volist>
+                </table>
+            </div>
+        </div>
+
+        <div class="span5">
+            <div class="widget-box">
+                <div class="widget-title">
+                    <div class="widget-title" style="text-align: center;">
+                        <span style="line-height: 35px;font-size: 20px;">送货地址</span>
+                    </div>
+                </div>
+                <table class="table table-bordered">
+                    <tr>
+                        <td>买家姓名:</td><td>{$row['address']['name']}</td>
+
+                    </tr>
+                    <tr>
+                        <td>联系电话:</td><td>{$row['address']['tel']}</td>
+
+                    </tr>
+                    <tr>
+                        <td>送货地区:</td><td>{$row['address']['province_id']}-{$row['address']['city_id']}-{$row['address']['area_id']}</td>
+
+                    </tr>
+                    <tr>
+                        <td>详细地址:</td><td>{$row['address']['address']}</td>
+                    </tr>
+                </table>
+            </div>
+
+            <div class="widget-box">
+                <div class="widget-title">
+                    <div class="widget-title" style="text-align: center;">
+                        <span style="line-height: 35px;font-size: 20px;">订单详情</span>
+                    </div>
+                </div>
+                <table class="table table-bordered">
+                    <tr>
+                        <td>订单号:</td><td>{$row['order_sn']}</td>
+
+                    </tr>
+                    <tr>
+                        <td>下单时间:</td><td>{$row['submit_order_time']|date="Y-m-d H:i:s",###}</td>
+
+                    </tr>
+                    <tr>
+                        <td>用户备注:</td><td>{$row['leave_msg']}</td>
+
+                    </tr>
+                    <tr>
+                        <td>订单总价:</td><td>{$row['totalprice']}<span>&nbsp;元</span></td>
+                    </tr>
+                    <tr>
+                        <td>支付类型:</td><td>{$row['pay_type']|get_order_type}</td>
+                    </tr>
+                    <tr>
+                        <td>订单状态:</td><td><span class="text-warning">{$row['status']|get_order_status}</span></td>
+                    </tr>
+                    <tr>
+                        <td>用户昵称:</td><td><span >{$row['m_id']}</span></td>
+                    </tr>
+                    <tr>
+                        <td>商家名称:</td><td><span >{$row['merchant_id']}</span></td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </div>
+    <eq name="row['status']" value="7">
+        <div class="row-fluid">
+            <div class="span12">
+                <div class="widget-box">
+                    <div class="widget-title" style="text-align: center;">
+                        <span style="line-height: 35px;font-size: 20px;">售后处理详情</span>
+                    </div>
+                    <table class="table table-bordered">
+                        <volist name="row['after_sale']" id="sale">
+                            <!--// 买家发起退货-->
+                            <eq name="sale['status']" value="1">
+                                <tr>
+                                    <td>{$sale['title']}</td>
+                                    <td>
+                                        <ul>
+                                            <volist name="sale['content']" id="content" key="ck">
+                                                <eq name="ck" value="4">
+                                                    <li>
+                                                        <volist name="content['list']" id="pic">
+                                                            <img src="{$pic['path']}" alt="" style="width:100px;">
+                                                        </volist>
+                                                    </li>
+                                                    <else/>
+                                                    <li>{$content['list']}</li>
+                                                </eq>
+                                            </volist>
+                                        </ul>
+                                    </td>
+                                </tr>
+                            </eq>
+                            <!--// 卖家已同意-->
+                            <eq name="sale['status']" value="2">
+                                <tr>
+                                    <td>{$sale['title']}</td>
+                                    <td>
+
+                                    </td>
+                                </tr>
+                            </eq>
+                            <!--// 卖家已确认退货地址-->
+                            <eq name="sale['status']" value="3">
+                                <tr>
+                                    <td>{$sale['title']}</td>
+                                    <td>
+                                        <ul>
+                                            <volist name="sale['content']" id="content">
+                                                <li>{$content['list']}</li>
+                                            </volist>
+                                        </ul>
+                                    </td>
+                                </tr>
+                            </eq>
+                            <!--// 买家已经退货-->
+                            <eq name="sale['status']" value="4">
+                                <tr>
+                                    <td>{$sale['title']}</td>
+                                    <td>
+                                        <ul>
+                                            <volist name="sale['content']" id="content" key="ck">
+                                                <neq name="ck" value="4">
+                                                    <li>{$content['list']}</li>
+                                                </neq>
+                                            </volist>
+                                        </ul>
+                                    </td>
+                                </tr>
+                            </eq>
+                            <!--// 卖家以确认收货-->
+                            <eq name="sale['status']" value="5">
+                                <tr>
+                                    <td>{$sale['title']}</td>
+                                    <td>
+
+                                    </td>
+                                </tr>
+                            </eq>
+
+                            <!--// 卖家以确认收货-->
+                            <eq name="sale['status']" value="6">
+                                <tr>
+                                    <td>{$sale['title']}</td>
+                                    <td>
+
+                                    </td>
+                                </tr>
+                            </eq>
+                            <!--// 系统-->
+                            <eq name="sale['status']" value="0">
+                                <tr>
+                                    <td>{$sale['title']}</td>
+                                    <td>
+
+                                    </td>
+                                </tr>
+                            </eq>
+                        </volist>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </eq>
+
+</block>
+<block name="script">
+   <script src="__JS__/layer.js"></script>
+    <script>
+        //        $(function(){})
+        $(document).on('click','.copy-link',function(){
+            var str = $(this).data("id");
+            layer.open({
+                type: 1,
+                title: false,
+                closeBtn: 0,
+                shadeClose: true,
+                area: ['623px', '50px'],
+                shade: [0.8, '#393D49'],
+                content: str
+            });
+        });
+
+    </script>
+</block>

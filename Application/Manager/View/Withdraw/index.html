@@ -1,0 +1,102 @@
+<extend name="Public/base" />
+
+<block name="main">
+
+    <div class="row-fluid">
+
+        <div class="span12">
+            <div class="widget-box">
+
+                <div class="widget-title widget-title-search">
+                    <button class="btn btn-inverse" id="export">导出订单</button>&nbsp;
+                    <button class="btn btn-info href" url="{:U('Withdraw/notIndex',array('type'=>2))}" >只看商家</button>&nbsp;
+                    <button class="btn btn-danger href" url="{:U('Withdraw/notIndex',array('type'=>1))}" >只看用户</button>&nbsp;
+                    <form action="{:U('Withdraw/index')}" method="post" class="form">
+                        <input style="margin-top:-10px;" type="text" name="create_time" value="{$_REQUEST['create_time']}" class="laydate-icon" id="create_time" placeholder="请输入提现时间" style="width:136px;">
+                        <input style="margin-top:-10px;" type="text" name="id_card" value="{$_REQUEST['id_card']}" placeholder="请输入身份证号">
+                        <input style="margin-top:-10px;" type="text" name="card_number" value="{$_REQUEST['card_number']}" placeholder="请输入银行卡号">
+                        <input style="margin-top:-10px;" type="text" name="name" value="{$_REQUEST['name']}" placeholder="请输入开户姓名">
+                        <select name="type" id="" style="width: 63px;">
+                            <option value="2">商家</option>
+                            <option value="1">用户</option>
+                        </select>
+                        <input style="margin-top:-10px;" type="text" name="account" value="{$_REQUEST['account']}" placeholder="请输入提现账号">
+                        <button  style="margin-top:-10px;" class="btn btn-inverse">查询</button>
+                    </form>
+                </div>
+            </div>
+            <div class="widget-content nopadding">
+                <table class="table table-bordered table-striped with-check"    >
+                    <thead>
+                    <tr>
+                        <th><input type="checkbox" id="title-checkbox" name="title-checkbox" class="check-all"/><!--<i class="icon-resize-vertical"></i>--></th>
+                        <th>ID</th>
+                        <th>提现账号</th>
+                        <th>提现类型</th>
+                        <th>开户姓名</th>
+                        <th>开户手机</th>
+                        <th>身份证号</th>
+                        <th>银行类型</th>
+                        <th>银行卡号</th>
+                        <th>提现金额</th>
+                        <th>提现日期</th>
+                        <th>提现状态</th>
+                        <th>操作</th>
+                    </tr>
+                    </thead>
+                    <tbody class="tbody">
+                    <volist name="list" id="row">
+                        <tr>
+                            <td><input type="checkbox" name="ids[]" value="{$row['id']}" class="ids"/></td>
+                            <td>{$row['id']}</td>
+                            <td>{$row['object_id']}</td>
+                            <td <eq name="row['type']" value="用户">style="color:#6392c8;"<else/>style="color:#cf5b56;"</eq>>{$row['type']}</td>
+                            <td>{$row['m_c_id']['name']}</td>
+                            <td>{$row['m_c_id']['phone']}</td>
+                            <td>{$row['m_c_id']['id_card']}</td>
+                            <td>{$row['m_c_id']['bank_id']}</td>
+                            <td>{$row['m_c_id']['card_number']}</td>
+                            <td style="color: red;">{$row['money']}</td>
+                            <td>{$row['create_time']|date='Y-m-d H:i:s',###}</td>
+                            <td>{$row['status']|withdrawStatus}</td>
+                            <td>
+                                <eq name="row['status']" value="0">
+                                    <a href="{:U('Withdraw/resume',array('model'=>'Withdraw','ids'=>$row['id'],'status'=>1))}" title="打款完成" class="confirm tip-bottom ajax-get">
+                                        <span class="label label-info">打款完成</span></a>&nbsp;
+                                    <else/>
+                                </eq>
+                            </td>
+                        </tr>
+                    </volist>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="pagination alternate">
+                {$page}
+            </div>
+
+        </div>
+    </div>
+    </div>
+</block>
+<block name="script">
+    <script src="__JS__/laydate/laydate.js"></script>
+    <script>
+        laydate({
+            elem: '#create_time', //目标元素。由于laydate.js封装了一个轻量级的选择器引擎，因此elem还允许你传入class、tag但必须按照这种方式 '#id .class'
+            istime: true, //是否开启时间选择
+            format: 'YYYY-MM-DD hh:mm:ss', //日期格式
+        });
+    </script>
+    <script>
+        $('#export').on('click',function(){
+            var ids = $('.ids:checked').map(function(k, v) {
+                return $(this).val();
+            }).get().join(',');
+            if(!ids){return false;}
+            window.location.href = '/Manager/Withdraw/exportExcel/ids/'+ids;
+        });
+
+    </script>
+</block>

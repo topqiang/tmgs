@@ -1,0 +1,763 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:s="http://www.w3.org/2001/XMLSchema" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" xmlns:tns="http://www.139130.net" xmlns:s1="http://microsoft.com/wsdl/types/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tm="http://microsoft.com/wsdl/mime/textMatching/" xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" targetNamespace="http://www.139130.net" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsdl:types>
+    <s:schema elementFormDefault="qualified" targetNamespace="http://www.139130.net">
+      <s:import namespace="http://microsoft.com/wsdl/types/" />
+      <s:element name="GetMOMessage">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="account" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="password" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="pagesize" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetMOMessageResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetMOMessageResult" type="tns:ArrayOfMOMsg" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="ArrayOfMOMsg">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="MOMsg" nillable="true" type="tns:MOMsg" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="MOMsg">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="1" name="Phone" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Content" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="MsgType" type="s:int" />
+          <s:element minOccurs="0" maxOccurs="1" name="SpecNumber" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="ServiceType" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="ReceiveTime" nillable="true" type="s:dateTime" />
+          <s:element minOccurs="0" maxOccurs="1" name="Reserve" type="s:string" />
+        </s:sequence>
+      </s:complexType>
+      <s:element name="GetBusinessType">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="account" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="password" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetBusinessTypeResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetBusinessTypeResult" type="tns:ArrayOfBusinessType" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="ArrayOfBusinessType">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="BusinessType" nillable="true" type="tns:BusinessType" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="BusinessType">
+        <s:sequence>
+          <s:element minOccurs="1" maxOccurs="1" name="Id" type="s:int" />
+          <s:element minOccurs="0" maxOccurs="1" name="Name" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="Priority" type="s:int" />
+          <s:element minOccurs="0" maxOccurs="1" name="StartTime" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="EndTime" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="ExtendFlag" type="s:boolean" />
+          <s:element minOccurs="1" maxOccurs="1" name="state" type="s:int" />
+          <s:element minOccurs="0" maxOccurs="1" name="bindChs" type="tns:ArrayOfBindChannel" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="ArrayOfBindChannel">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="BindChannel" nillable="true" type="tns:BindChannel" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="BindChannel">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="1" name="ChannelNum" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Carrier" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="SendType" type="s:string" />
+        </s:sequence>
+      </s:complexType>
+      <s:element name="GetAccountInfo">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="account" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="password" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetAccountInfoResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetAccountInfoResult" type="tns:AccountInfo" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="AccountInfo">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="1" name="Account" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Name" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Identify" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="BizNames" type="tns:ArrayOfString" />
+          <s:element minOccurs="0" maxOccurs="1" name="Userbrief" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="Balance" type="s:decimal" />
+          <s:element minOccurs="0" maxOccurs="1" name="Reserve" type="s:string" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="ArrayOfString">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="string" nillable="true" type="s:string" />
+        </s:sequence>
+      </s:complexType>
+      <s:element name="ModifyPassword">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="account" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="old_password" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="new_password" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="ModifyPasswordResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="ModifyPasswordResult" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="Post">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="account" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="password" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="mtpack" type="tns:MTPacks" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="MTPacks">
+        <s:sequence>
+          <s:element minOccurs="1" maxOccurs="1" name="uuid" type="s1:guid" />
+          <s:element minOccurs="1" maxOccurs="1" name="batchID" type="s1:guid" />
+          <s:element minOccurs="0" maxOccurs="1" name="batchName" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="sendType" type="s:int" />
+          <s:element minOccurs="1" maxOccurs="1" name="msgType" type="s:int" />
+          <s:element minOccurs="0" maxOccurs="1" name="medias" type="tns:ArrayOfMediaItems" />
+          <s:element minOccurs="0" maxOccurs="1" name="msgs" type="tns:ArrayOfMessageData" />
+          <s:element minOccurs="1" maxOccurs="1" name="bizType" type="s:int" />
+          <s:element minOccurs="1" maxOccurs="1" name="distinctFlag" type="s:boolean" />
+          <s:element minOccurs="1" maxOccurs="1" name="scheduleTime" type="s:long" />
+          <s:element minOccurs="0" maxOccurs="1" name="remark" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="customNum" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="deadline" type="s:long" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="ArrayOfMediaItems">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="MediaItems" nillable="true" type="tns:MediaItems" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="MediaItems">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="1" name="meta" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="data" type="s:base64Binary" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="ArrayOfMessageData">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="MessageData" nillable="true" type="tns:MessageData" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="MessageData">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="1" name="Phone" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Content" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="vipFlag" type="s:boolean" />
+          <s:element minOccurs="0" maxOccurs="1" name="customMsgID" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="customNum" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="medias" type="tns:ArrayOfMediaItems" />
+        </s:sequence>
+      </s:complexType>
+      <s:element name="PostResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="PostResult" type="tns:GsmsResponse" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="GsmsResponse">
+        <s:sequence>
+          <s:element minOccurs="1" maxOccurs="1" name="result" type="s:int" />
+          <s:element minOccurs="1" maxOccurs="1" name="uuid" type="s1:guid" />
+          <s:element minOccurs="0" maxOccurs="1" name="message" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="attributes" type="s:string" />
+        </s:sequence>
+      </s:complexType>
+      <s:element name="PostSingle">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="account" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="password" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="mobile" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="content" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="subid" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="PostSingleResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="PostSingleResult" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="PostMass">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="account" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="password" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="mobiles" type="tns:ArrayOfString" />
+            <s:element minOccurs="0" maxOccurs="1" name="content" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="subid" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="PostMassResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="PostMassResult" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="PostGroup">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="account" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="password" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="mssages" type="tns:ArrayOfMessageData" />
+            <s:element minOccurs="0" maxOccurs="1" name="subid" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="PostGroupResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="PostGroupResult" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="account" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="password" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="PageSize" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetResponseResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetResponseResult" type="tns:ArrayOfMTResponse" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="ArrayOfMTResponse">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="MTResponse" nillable="true" type="tns:MTResponse" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="MTResponse">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="1" name="batchID" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="msgID" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="customMsgID" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="state" type="s:int" />
+          <s:element minOccurs="0" maxOccurs="1" name="phone" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="total" nillable="true" type="s:int" />
+          <s:element minOccurs="1" maxOccurs="1" name="number" nillable="true" type="s:int" />
+          <s:element minOccurs="1" maxOccurs="1" name="submitRespTime" nillable="true" type="s:dateTime" />
+          <s:element minOccurs="0" maxOccurs="1" name="originResult" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="reserve" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="id" type="s:long" />
+        </s:sequence>
+      </s:complexType>
+      <s:element name="GetReport">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="account" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="password" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="PageSize" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetReportResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetReportResult" type="tns:ArrayOfMTReport" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="ArrayOfMTReport">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="MTReport" nillable="true" type="tns:MTReport" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="MTReport">
+        <s:sequence>
+          <s:element minOccurs="1" maxOccurs="1" name="id" type="s:long" />
+          <s:element minOccurs="0" maxOccurs="1" name="batchID" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="phone" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="msgID" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="customMsgID" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="state" type="s:int" />
+          <s:element minOccurs="1" maxOccurs="1" name="total" nillable="true" type="s:int" />
+          <s:element minOccurs="1" maxOccurs="1" name="number" nillable="true" type="s:int" />
+          <s:element minOccurs="1" maxOccurs="1" name="submitTime" nillable="true" type="s:dateTime" />
+          <s:element minOccurs="1" maxOccurs="1" name="doneTime" nillable="true" type="s:dateTime" />
+          <s:element minOccurs="0" maxOccurs="1" name="originResult" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="reserve" type="s:string" />
+        </s:sequence>
+      </s:complexType>
+      <s:element name="FindResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="account" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="password" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="batchid" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="mobile" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="pageindex" type="s:int" />
+            <s:element minOccurs="1" maxOccurs="1" name="flag" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="FindResponseResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="FindResponseResult" type="tns:ArrayOfMTResponse" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="FindReport">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="account" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="password" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="batchid" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="mobile" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="pageindex" type="s:int" />
+            <s:element minOccurs="1" maxOccurs="1" name="flag" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="FindReportResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="FindReportResult" type="tns:ArrayOfMTReport" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="SetMedias">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="fullPath" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="SetMediasResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="SetMediasResult" type="tns:ArrayOfMediaItems" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+    </s:schema>
+    <s:schema elementFormDefault="qualified" targetNamespace="http://microsoft.com/wsdl/types/">
+      <s:simpleType name="guid">
+        <s:restriction base="s:string">
+          <s:pattern value="[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}" />
+        </s:restriction>
+      </s:simpleType>
+    </s:schema>
+  </wsdl:types>
+  <wsdl:message name="GetMOMessageSoapIn">
+    <wsdl:part name="parameters" element="tns:GetMOMessage" />
+  </wsdl:message>
+  <wsdl:message name="GetMOMessageSoapOut">
+    <wsdl:part name="parameters" element="tns:GetMOMessageResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetBusinessTypeSoapIn">
+    <wsdl:part name="parameters" element="tns:GetBusinessType" />
+  </wsdl:message>
+  <wsdl:message name="GetBusinessTypeSoapOut">
+    <wsdl:part name="parameters" element="tns:GetBusinessTypeResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetAccountInfoSoapIn">
+    <wsdl:part name="parameters" element="tns:GetAccountInfo" />
+  </wsdl:message>
+  <wsdl:message name="GetAccountInfoSoapOut">
+    <wsdl:part name="parameters" element="tns:GetAccountInfoResponse" />
+  </wsdl:message>
+  <wsdl:message name="ModifyPasswordSoapIn">
+    <wsdl:part name="parameters" element="tns:ModifyPassword" />
+  </wsdl:message>
+  <wsdl:message name="ModifyPasswordSoapOut">
+    <wsdl:part name="parameters" element="tns:ModifyPasswordResponse" />
+  </wsdl:message>
+  <wsdl:message name="PostSoapIn">
+    <wsdl:part name="parameters" element="tns:Post" />
+  </wsdl:message>
+  <wsdl:message name="PostSoapOut">
+    <wsdl:part name="parameters" element="tns:PostResponse" />
+  </wsdl:message>
+  <wsdl:message name="PostSingleSoapIn">
+    <wsdl:part name="parameters" element="tns:PostSingle" />
+  </wsdl:message>
+  <wsdl:message name="PostSingleSoapOut">
+    <wsdl:part name="parameters" element="tns:PostSingleResponse" />
+  </wsdl:message>
+  <wsdl:message name="PostMassSoapIn">
+    <wsdl:part name="parameters" element="tns:PostMass" />
+  </wsdl:message>
+  <wsdl:message name="PostMassSoapOut">
+    <wsdl:part name="parameters" element="tns:PostMassResponse" />
+  </wsdl:message>
+  <wsdl:message name="PostGroupSoapIn">
+    <wsdl:part name="parameters" element="tns:PostGroup" />
+  </wsdl:message>
+  <wsdl:message name="PostGroupSoapOut">
+    <wsdl:part name="parameters" element="tns:PostGroupResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetResponseSoapIn">
+    <wsdl:part name="parameters" element="tns:GetResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetResponseSoapOut">
+    <wsdl:part name="parameters" element="tns:GetResponseResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetReportSoapIn">
+    <wsdl:part name="parameters" element="tns:GetReport" />
+  </wsdl:message>
+  <wsdl:message name="GetReportSoapOut">
+    <wsdl:part name="parameters" element="tns:GetReportResponse" />
+  </wsdl:message>
+  <wsdl:message name="FindResponseSoapIn">
+    <wsdl:part name="parameters" element="tns:FindResponse" />
+  </wsdl:message>
+  <wsdl:message name="FindResponseSoapOut">
+    <wsdl:part name="parameters" element="tns:FindResponseResponse" />
+  </wsdl:message>
+  <wsdl:message name="FindReportSoapIn">
+    <wsdl:part name="parameters" element="tns:FindReport" />
+  </wsdl:message>
+  <wsdl:message name="FindReportSoapOut">
+    <wsdl:part name="parameters" element="tns:FindReportResponse" />
+  </wsdl:message>
+  <wsdl:message name="SetMediasSoapIn">
+    <wsdl:part name="parameters" element="tns:SetMedias" />
+  </wsdl:message>
+  <wsdl:message name="SetMediasSoapOut">
+    <wsdl:part name="parameters" element="tns:SetMediasResponse" />
+  </wsdl:message>
+  <wsdl:portType name="WebServiceSoap">
+    <wsdl:operation name="GetMOMessage">
+      <wsdl:input message="tns:GetMOMessageSoapIn" />
+      <wsdl:output message="tns:GetMOMessageSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetBusinessType">
+      <wsdl:input message="tns:GetBusinessTypeSoapIn" />
+      <wsdl:output message="tns:GetBusinessTypeSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetAccountInfo">
+      <wsdl:input message="tns:GetAccountInfoSoapIn" />
+      <wsdl:output message="tns:GetAccountInfoSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="ModifyPassword">
+      <wsdl:input message="tns:ModifyPasswordSoapIn" />
+      <wsdl:output message="tns:ModifyPasswordSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="Post">
+      <wsdl:input message="tns:PostSoapIn" />
+      <wsdl:output message="tns:PostSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="PostSingle">
+      <wsdl:input message="tns:PostSingleSoapIn" />
+      <wsdl:output message="tns:PostSingleSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="PostMass">
+      <wsdl:input message="tns:PostMassSoapIn" />
+      <wsdl:output message="tns:PostMassSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="PostGroup">
+      <wsdl:input message="tns:PostGroupSoapIn" />
+      <wsdl:output message="tns:PostGroupSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetResponse">
+      <wsdl:input message="tns:GetResponseSoapIn" />
+      <wsdl:output message="tns:GetResponseSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetReport">
+      <wsdl:input message="tns:GetReportSoapIn" />
+      <wsdl:output message="tns:GetReportSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="FindResponse">
+      <wsdl:input message="tns:FindResponseSoapIn" />
+      <wsdl:output message="tns:FindResponseSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="FindReport">
+      <wsdl:input message="tns:FindReportSoapIn" />
+      <wsdl:output message="tns:FindReportSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="SetMedias">
+      <wsdl:input message="tns:SetMediasSoapIn" />
+      <wsdl:output message="tns:SetMediasSoapOut" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="WebServiceSoap" type="tns:WebServiceSoap">
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="GetMOMessage">
+      <soap:operation soapAction="http://www.139130.net/GetMOMessage" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetBusinessType">
+      <soap:operation soapAction="http://www.139130.net/GetBusinessType" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetAccountInfo">
+      <soap:operation soapAction="http://www.139130.net/GetAccountInfo" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ModifyPassword">
+      <soap:operation soapAction="http://www.139130.net/ModifyPassword" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="Post">
+      <soap:operation soapAction="http://www.139130.net/Post" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="PostSingle">
+      <soap:operation soapAction="http://www.139130.net/PostSingle" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="PostMass">
+      <soap:operation soapAction="http://www.139130.net/PostMass" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="PostGroup">
+      <soap:operation soapAction="http://www.139130.net/PostGroup" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetResponse">
+      <soap:operation soapAction="http://www.139130.net/GetResponse" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetReport">
+      <soap:operation soapAction="http://www.139130.net/GetReport" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="FindResponse">
+      <soap:operation soapAction="http://www.139130.net/FindResponse" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="FindReport">
+      <soap:operation soapAction="http://www.139130.net/FindReport" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SetMedias">
+      <soap:operation soapAction="http://www.139130.net/SetMedias" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:binding name="WebServiceSoap12" type="tns:WebServiceSoap">
+    <soap12:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="GetMOMessage">
+      <soap12:operation soapAction="http://www.139130.net/GetMOMessage" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetBusinessType">
+      <soap12:operation soapAction="http://www.139130.net/GetBusinessType" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetAccountInfo">
+      <soap12:operation soapAction="http://www.139130.net/GetAccountInfo" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ModifyPassword">
+      <soap12:operation soapAction="http://www.139130.net/ModifyPassword" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="Post">
+      <soap12:operation soapAction="http://www.139130.net/Post" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="PostSingle">
+      <soap12:operation soapAction="http://www.139130.net/PostSingle" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="PostMass">
+      <soap12:operation soapAction="http://www.139130.net/PostMass" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="PostGroup">
+      <soap12:operation soapAction="http://www.139130.net/PostGroup" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetResponse">
+      <soap12:operation soapAction="http://www.139130.net/GetResponse" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetReport">
+      <soap12:operation soapAction="http://www.139130.net/GetReport" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="FindResponse">
+      <soap12:operation soapAction="http://www.139130.net/FindResponse" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="FindReport">
+      <soap12:operation soapAction="http://www.139130.net/FindReport" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SetMedias">
+      <soap12:operation soapAction="http://www.139130.net/SetMedias" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="WebService">
+    <wsdl:port name="WebServiceSoap" binding="tns:WebServiceSoap">
+      <soap:address location="http://211.147.239.62/Service/WebService.asmx" />
+    </wsdl:port>
+    <wsdl:port name="WebServiceSoap12" binding="tns:WebServiceSoap12">
+      <soap12:address location="http://211.147.239.62/Service/WebService.asmx" />
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

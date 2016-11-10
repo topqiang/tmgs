@@ -1,0 +1,100 @@
+<extend name="Public/base" />
+
+<block name="main">
+
+    <div class="row-fluid">
+
+        <div class="span12">
+            <div class="widget-box">
+
+                <div class="widget-title widget-title-search" >
+                    <form action="{:U('Member/index')}" method="post" class="form">
+                        <input type="text" name="id" value="{$_REQUEST['id']}" placeholder="请输入用户的ID" style="width:136px;">
+                        <input type="text" name="account" value="{$_REQUEST['account']}" placeholder="请输入用户的账号" style="width:136px;">
+                        <input type="text" name="nickname" value="{$_REQUEST['nickname']}" placeholder="请输入用户的昵称" style="width:136px;">
+                        <input type="text" name="create_time" value="{$_REQUEST['create_time']}" class="laydate-icon" id="create_time" placeholder="请输入注册的时间" style="width:136px;">
+                        <input type="text" name="inv_id" value="{$_REQUEST['inv_id']}" placeholder="请输入上级用户账号" style="width:136px;">
+                        <input type="text" name="invite_code" value="{$_REQUEST['invite_code']}" placeholder="请输入用户邀请码" style="width:136px;">
+                        <select name="type" style="width: 136px;margin:1px;">
+                            <option value="">请选择注册来源</option>
+                            <option value="1">微信</option>
+                            <option value="2">QQ</option>
+                            <option value="3">新浪</option>
+                            <option value="4">普通注册</option>
+                        </select>
+                        <select name="status"  style="width: 136px;margin:1px;">
+                            <option value="">请选择用户状态</option>
+                            <option value="1">禁用</option>
+                            <option value="2">启用</option>
+                        </select>
+                        <button class="btn btn-inverse">查询</button>
+                    </form>
+                </div>
+
+                <div class="widget-content nopadding">
+                    <table class="table table-bordered table-striped with-check">
+                        <thead>
+                        <tr>
+                            <th><input type="checkbox" id="title-checkbox" name="title-checkbox" class="check-all"/><!--<i class="icon-resize-vertical"></i>--></th>
+                            <th>ID</th>
+                            <th>账号</th>
+                            <th>用户名</th>
+                            <th>创建时间</th>
+                            <th>注册来源</th>
+                            <th>用户邀请码</th>
+                            <th>上级用户账号</th>
+                            <th>状态</th>
+                            <th>操作</th>
+                        </tr>
+                        </thead>
+                        <tbody class="tbody">
+                        <volist name="list" id="row">
+                            <tr>
+                                <td><input type="checkbox" name="ids[]" value="{$row['id']}" class="ids"/></td>
+                                <td>{$row['id']}</td>
+                                <td>{$row['account']|default="<span style='color:#C0C0C0;'>暂无账号</span>"}</td>
+                                <td>{$row['nickname']|default="<span style='color:#C0C0C0;'>暂无用户名</span>"}</td>
+                                <td>{$row['create_time']|date='Y-m-d H:i',###}</td>
+                                <td>{$row['type']|userRegisterType}</td>
+                                <td>{$row['invite_code']}</td>
+                                <td>{$row['superior']|default="<span style='color:#C0C0C0;'>平台</span>"}</td>
+                                <td>{$row['status']|get_user_type}</td>
+                                <td>
+                                    <a href="{:U('Member/update',array('id'=>$row['id']))}" title="编辑" class="tip-bottom">
+                                        <span class="label label-success">编辑</span></a>&nbsp;
+                                    <eq name="row['status']" value="0">
+                                        <a href="{:U('Member/resume',array('model'=>'Member','ids'=>$row['id'],'status'=>abs(1-$row['status'])))}" title="{$row['status']|get_user_status}" class="tip-bottom ajax-get">
+                                            <span class="label label-info">{$row['status']|get_user_status}</span></a>&nbsp;
+                                        <else/>
+                                        <a href="{:U('Member/forbid',array('model'=>'Member','ids'=>$row['id'],'status'=>abs(1-$row['status'])))}" title="{$row['status']|get_user_status}" class="tip-bottom ajax-get">
+                                            <span class="label label-inverse">{$row['status']|get_user_status}</span></a>&nbsp;
+                                    </eq>
+                                    <!--<a href="{:U('Member/delete',array('model'=>'Member','ids'=>$row['id'],'status'=>9))}" title="删除" class="tip-bottom confirm ajax-get">-->
+                                        <!--<span class="label label-important">删除</span></a>-->
+                                </td>
+                            </tr>
+                        </volist>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="pagination alternate">
+                    {$page}
+                </div>
+
+            </div>
+        </div>
+    </div>
+</block>
+
+<block name="script">
+    <script src="__JS__/laydate/laydate.js"></script>
+    <script>
+        laydate({
+            elem: '#create_time', //目标元素。由于laydate.js封装了一个轻量级的选择器引擎，因此elem还允许你传入class、tag但必须按照这种方式 '#id .class'
+            istime: true, //是否开启时间选择
+            format: 'YYYY-MM-DD hh:mm:ss', //日期格式
+        });
+    </script>
+
+</block>

@@ -1,0 +1,139 @@
+<extend name="Public/base" />
+
+<block name="main">
+
+    <div class="row-fluid">
+
+        <div class="span12">
+            <div class="widget-box">
+
+                <div class="widget-title widget-title-search">
+                    <!--// `功能区`-->
+                    <form action="{:U('OrderOut/index')}" method="post" class="form">
+                        <input type="text" name="id" value="{$_REQUEST['id']}" placeholder="ID" style="width:136px;">
+                        <input type="text" name="order_id" value="{$_REQUEST['order_id']}" placeholder="订单号" style="width:136px;">
+                        <input type="text" name="nickname" value="{$_REQUEST['nickname']}" placeholder="用户昵称" style="width:136px;">
+                        <input type="text" name="account" value="{$_REQUEST['account']}" placeholder="用户账号" style="width:136px;">
+                        <input type="text" name="merchant_name" value="{$_REQUEST['merchant_name']}" placeholder="商家名称" style="width:136px;">
+                        <input type="text" name="g_id" value="{$_REQUEST['g_id']}" placeholder="商品名称" style="width:136px;">
+                        <!--退货流程  1 发起退货(用户) 2 卖家同意退货并确认地址/说明 3代配送 4配送中 5收货并确认 6完成 -->
+                        <select name="type" style="width: 136px;margin:1px;">
+                            <option value="">选择退货步奏</option>
+                            <option value="1">买家发起退货</option>
+                            <option value="2">同意退货</option>
+                            <option value="3">等待买家邮寄</option>
+                            <option value="4">邮寄中</option>
+                            <option value="5">已收货</option>
+                            <option value="6">完成</option>
+                        </select>
+                        <button class="btn btn-inverse">查询</button>
+                    </form>
+                </div>
+
+                <div class="widget-content nopadding">
+                    <table class="table table-bordered table-striped with-check">
+                        <thead>
+                        <tr>
+                            <th><input type="checkbox" id="title-checkbox" name="title-checkbox" class="check-all"/><!--<i class="icon-resize-vertical"></i>--></th>
+                            <th>ID</th>
+                            <th>订单号</th>
+                            <th>用户账号</th>
+                            <th>用户昵称</th>
+                            <th>商家名称</th>
+                            <th>商品名称</th>
+                            <th>状态</th>
+                            <th>操作</th>
+                        </tr>
+                        </thead>
+                        <tbody class="tbody">
+                        <volist name="list" id="row">
+                            <tr>
+                                <td><input type="checkbox" name="ids[]" value="{$row['id']}" class="ids"/></td>
+                                <td>{$row['id']}</td>
+                                <td>{$row['order_id']}</td>
+                                <td>{$row['m_id']['account']}</td>
+                                <td>{$row['m_id']['nickname']}</td>
+                                <td>{$row['merchant_id']['merchant_name']}</td>
+                                <td>{$row['g_id']}</td>
+                                <td>{$row['step']|orderOutFlow}</td>
+
+                                <!--<td>{$row['status']|get_status_title}</td>-->
+                                <td>
+                                    <a href="{:U('OrderOut/update',array('id'=>$row['id']))}" title="查看详情" class="tip-bottom">
+                                        <span class="label label-success">查看详情</span></a>&nbsp;
+                                    <eq name="row['step']" value="1">
+                                        <a href="{:U('OrderOut/changeStep',array('model'=>'OrderOut','ids'=>$row['id'],'step'=>2))}" title="同意" class="tip-bottom ajax-get">
+                                            <span class="label label-info">同意</span></a>&nbsp;
+                                        <a href="{:U('OrderOut/changeStep',array('model'=>'OrderOut','ids'=>$row['id'],'step'=>9))}" title="拒绝" class="tip-bottom confirm ajax-get">
+                                            <span class="label label-important">拒绝</span></a>
+                                    </eq>
+                                    <eq name="row['step']" value="2">
+                                        <a href="javascript:;" title="填写配送地址" class="tip-bottom open-tag" data-toggle="modal" data-id="{$row['id']}">
+                                            <span class="label label-info">填写配送地址</span></a>&nbsp;
+                                    </eq>
+
+                                </td>
+                            </tr>
+                        </volist>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="pagination alternate">
+                    {$page}
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+
+
+    <div id="myModal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="width: 264px;left:60%">
+        <div class="modal-body">
+            <input type="hidden" name="out-id" value="" class="order-out-id"> <!--`退单ID`-->
+            <input type="text" name="name" placeholder="真实姓名">
+            <br>
+            <input type="text" name="address" placeholder="邮寄地址">
+            <br>
+            <input type="text" name="phone" placeholder="联系电话">
+            <br>
+            <input type="text" name="explain" placeholder="退货说明">
+            <br>
+            <button class="btn btn-primary submit-btn">确认</button>
+        </div>
+    </div>
+</block>
+<block name="script">
+    <script>
+        $(document).on('click','.open-tag',function(){
+            var id = $(this).data('id');
+            $('.order-out-id').val(id);
+            $('#myModal').modal('show');
+        });
+    </script>
+    <script>
+        $(document).on('click','.submit-btn',function(){
+            name  = $('input[name="name"]').val(); // 姓名
+            address  = $('input[name="address"]').val(); // 地址
+            phone  = $('input[name="phone"]').val(); // 电话
+            explain  = $('input[name="explain"]').val(); // 说明
+            id = $('.order-out-id').val(); // id
+            step = '3';
+            model = 'OrderOut';
+            option = {name:name,address:address,phone:phone,id:id,model:model,step:step,explain:explain};
+            $.ajax({
+                url : "{:U('OrderOut/update')}",
+                data :option,
+                type : 'post',
+                success: function(d){
+                    if(d.status == 1){
+                        window.location.reload();
+                    }else{
+                        alert(d.info);
+                    }
+                }
+            })
+        })
+    </script>
+</block>

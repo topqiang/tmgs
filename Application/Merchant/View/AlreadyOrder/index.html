@@ -1,0 +1,124 @@
+<extend name="Public/base" />
+<block name="style">
+    <link rel="stylesheet" href="__CSS__/ui-dialog.css">
+</block>
+<block name="head-script">
+    <script src="__JS__/dialog-min.js"></script>
+</block>
+<block name="main">
+
+    <div class="row-fluid">
+
+        <div class="span12">
+            <div class="widget-box">
+
+                <div class="widget-title widget-title-search">
+
+                    <form action="{:U('AlreadyOrder/index')}" method="post" class="form">
+                        <input type="text" name="submit_order_time" value="{$_REQUEST['submit_order_time']}" class="laydate-icon" id="create_time" placeholder="请输入下单时间" style="width:136px;">
+                        <input type="text" name="order_sn" value="{$_REQUEST['order_sn']}" placeholder="请输入订单号">
+                        <button class="btn btn-inverse">查询</button>
+                    </form>
+                </div>
+                <div class="widget-content nopadding">
+                    <table class="table table-bordered table-striped with-check">
+                        <thead>
+                        <tr>
+                            <th><input type="checkbox" id="title-checkbox" name="title-checkbox" class="check-all"/></th>
+                            <th>订单号</th>
+                            <th>订单用户</th>
+                            <th>联系方式</th>
+                            <th>联系地址</th>
+                            <th>下单时间</th>
+                            <th>支付方式</th>
+                            <th>状态</th>
+                            <th>操作</th>
+                        </tr>
+                        </thead>
+                        <tbody class="tbody">
+                        <volist name="list" id="row">
+                            <tr>
+                                <td><input type="checkbox" name="ids[]" value="{$row['id']}" class="ids"/></td>
+                                <td>{$row['order_sn']}</td>
+                                <td>{$row['address']['name']}</td>
+                                <td>{$row['address']['tel']}</td>
+                                <td>{$row['address']['address']}</td>
+                                <td>{$row['submit_order_time']|date='Y-m-d H:i',###}</td>
+                                <td>{$row['pay_type']|get_order_type}</td>
+                                <td>{$row['status']|get_order_status}</td>
+                                <td>
+                                    <a href="{:U('AlreadyOrder/update',array('id'=>$row['id']))}" title="详情" class="tip-bottom">
+                                        <span class="label" style="background: #2A2A2A;">详情</span></a>&nbsp;
+                                    <switch name="row['status']" >
+                                        <case value="1">
+                                            <a href="{:U('AlreadyOrder/resume',array('model'=>'Order','ids'=>$row['id'],'status'=>2))}" title="接单" class="tip-bottom confirm ajax-get">
+                                                <span class="label label-info">接单</span></a>&nbsp;
+                                        </case>
+                                        <case value="2">
+                                            <a href="javascript:void(0);" title="发货" class="tip-bottom shipments"  data-id="{$row['id']}">
+                                                <span class="label label-success">发货</span></a>&nbsp;
+                                        </case>
+                                        <default />
+                                    </switch>
+                                </td>
+                            </tr>
+                        </volist>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="pagination alternate">
+                    {$page}
+                </div>
+
+            </div>
+        </div>
+    </div>
+</block>
+
+<block name="script">
+    <script src="__JS__/laydate/laydate.js"></script>
+    <script>
+        laydate({
+            elem: '#create_time', //目标元素。由于laydate.js封装了一个轻量级的选择器引擎，因此elem还允许你传入class、tag但必须按照这种方式 '#id .class'
+            istime: true, //是否开启时间选择
+            format: 'YYYY-MM-DD hh:mm:ss', //日期格式
+        });
+    </script>
+    <script type="text/javascript">
+        $('.shipments').on('click',function(){
+            var id = $(this).data('id'); // 获取当前订单的Id
+            var d = dialog({
+                title: '选择配送快递',
+                content: '{$str}',
+                okValue: '确定',
+                ok: function () {
+                    var delivery_code =$('.delivery').val(); // 快递编号
+                    var delivery_sn =$('.delivery_sn').val(); // 快递单号
+                    if(delivery_sn == ''){
+                        return false;
+                    }
+                    $.ajax({
+                        url : '{:U("AlreadyOrder/update")}',
+                        type : 'POST',
+                        data : {id:id,model:'order',delivery_code:delivery_code,status:3,delivery_sn:delivery_sn},
+                        success :function(data){
+                            if(data.status == 1){
+                                alert(data.info);
+                                window.location.reload();
+                            }
+                        },
+                        error :function(e){
+                            alert(e);
+                        }
+                    });
+                },
+                cancelValue: '取消',
+                cancel: function () {
+                }
+            });
+            d.show();
+        });
+
+    </script>
+</block>

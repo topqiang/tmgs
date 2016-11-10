@@ -1,0 +1,91 @@
+<extend name="Public/base"/>
+
+<block name="main">
+
+    <div class="row-fluid">
+
+        <div class="span12">
+            <div class="widget-box">
+
+                <!--<div class="widget-title widget-title-search">
+
+                </div>-->
+
+                <div class="widget-content nopadding">
+                    <table class="table table-bordered table-striped">
+                        <thead>
+                        <tr>
+                            <th>备份名称</th>
+                            <th>卷数</th>
+                            <th>压缩</th>
+                            <th>数据大小</th>
+                            <th>备份时间</th>
+                            <th>状态</th>
+                            <th>操作</th>
+                        </tr>
+                        </thead>
+                        <tbody class="tbody">
+                        <volist name="list" id="row">
+                            <tr>
+                                <td>{$row['time']|date='Ymd-His',###}</td>
+                                <td>{$row['part']}</td>
+                                <td>{$row['compress']}</td>
+                                <td>{$row['size']|format_bytes}</td>
+                                <td>{$key}</td>
+                                <td>-</td>
+                                <td>
+                                    <a href="{:U('Import/import',array('time'=>$row['time']))}" title="还原" class="tip-bottom db-import">
+                                        <span class="label label-info">还原</span></a>&nbsp;
+                                    <a href="{:U('Import/del',array('time'=>$row['time']))}" title="删除" class="tip-bottom ajax-get confirm">
+                                        <span class="label label-important">删除</span></a>
+                                </td>
+                            </tr>
+                        </volist>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="pagination alternate">
+                    {$page}
+                </div>
+
+            </div>
+        </div>
+    </div>
+</block>
+
+<block name="script">
+    <script type="text/javascript">
+        $(".db-import").click(function(){
+            var self = this, status = ".";
+            $.get(self.href, success, "json");
+            window.onbeforeunload = function(){ return "正在还原数据库，请不要关闭！" }
+            return false;
+        
+            function success(data){
+                if(data.status){
+                    if(data.gz){
+                        data.info += status;
+                        if(status.length === 5){
+                            status = ".";
+                        } else {
+                            status += ".";
+                        }
+                    }
+                    $(self).parent().prev().text(data.info);
+                    if(data.part){
+                        $.get(self.href, 
+                            {"part" : data.part, "start" : data.start}, 
+                            success, 
+                            "json"
+                        );
+                    }  else {
+                        window.onbeforeunload = function(){ return null; }
+                    }
+                } else {
+                    updateAlert(data.info,'alert-error');
+                }
+            }
+        });
+    </script>
+</block>

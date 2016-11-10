@@ -1,0 +1,149 @@
+<extend name="Public/base" />
+
+<block name="main">
+
+    <div class="row-fluid">
+
+        <div class="span12">
+            <div class="widget-box">
+                <div class="widget-title">
+                    <ul class="nav nav-tabs">
+                        <li class="active">
+                            <a href="javascript:void(0);" data-toggle="">基本资料</a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="widget-content nopadding">
+                    <form class="form-horizontal" method="post" action="{:U('Merchant/attestation')}">
+                        <input type="hidden" name="model" value="Merchant">
+                        <input type="hidden" name="id" value="{$row['id']}">
+                        <div class="control-group">
+                            <label class="control-label">店铺头像</label>
+                            <div class="controls">
+                                {:hook('upload',array('is_first'=>1,'unique_sign'=>'head_pic','field_name'=>'head_pic','field_value'=>$row['head_pic'],'save_path'=>'Merchant'))}
+                                <span class="help-block">上传头像(请上传1:1大小的图片,并且大小不能超过2M)</span>
+
+                            </div>
+                        </div>
+                        <!--// 商家账号-->
+                        <div class="control-group">
+                            <label class="control-label">商家账号</label>
+                            <div class="controls">
+                                <input type="text" value="{$row['account']}" disabled><button class="btn btn-info href" url="{:U('Merchant/alertPhone',array('id'=>$row['id']))}" id="alert-account" type="button">修改</button>
+                                <span class="help-block">请输入手机号</span>
+                            </div>
+                        </div>
+                        <div class="control-group">
+                            <label class="control-label">店铺名称</label>
+                            <div class="controls">
+                                <input type="text" name="merchant_name" value="{$row['merchant_name']}">
+                                <span class="help-block">请输入店铺名称</span>
+                            </div>
+                        </div>
+
+                        <div class="control-group">
+                            <label class="control-label">真实姓名</label>
+                            <div class="controls">
+                                <input type="text" name="really_name" value="{$row['really_name']}">
+                                <span class="help-block">请输入真实姓名</span>
+                            </div>
+                        </div>
+
+                        <div class="control-group">
+                            <label class="control-label">推荐人手机号</label>
+                            <div class="controls">
+                                <input type="text" name="" value="{$row['recommend_phone']}" disabled>
+                            </div>
+                        </div>
+
+                        <div class="control-group">
+                            <label class="control-label">联系电话</label>
+                            <div class="controls">
+                                <input type="text" name="contact_mobile" value="{$row['contact_mobile']}">
+                                <span class="help-block">请输入可以联系到商家的电话</span>
+                            </div>
+                        </div>
+
+                        <div class="control-group">
+                            <label class="control-label">性别</label>
+                            <div class="controls">
+                                <select name="sex" id="" style="width:315px;">
+                                    <option value="1" <eq name="row['sex']" value="1">selected</eq>>男</option>
+                                    <option value="2" <eq name="row['sex']" value="2">selected</eq>>女</option>
+                                </select>
+                                <span class="help-block">真实性别</span>
+                            </div>
+                        </div>
+
+                        <div class="control-group">
+                            <label class="control-label">联系邮箱</label>
+                            <div class="controls">
+                                <input type="text" value="{$row['contact_email']}" name="contact_email">
+                                <span class="help-block">常用联系邮箱</span>
+                            </div>
+                        </div>
+
+                        <div class="control-group">
+                            <label class="control-label">联系地址</label>
+                            <div class="controls">
+                                <input type="text" value="{$row['address']}" name="address">
+                                <span class="help-block">常用地址</span>
+                            </div>
+                        </div>
+                        <div class="control-group">
+                            <label class="control-label">地区</label>
+                            <div class="controls">
+                                <!--// 省-->
+                                <select name="province" id="province">
+                                    <option value="">请选择地区</option>
+                                    <volist name="region_province" id="re">
+                                        <option value="{$re['id']}" <eq name="row['province']" value="$re['id']">selected</eq>>{$re['region_name']}</option>
+                                    </volist>
+                                </select>
+                                <!--// 市-->
+                                <select name="city" id="city">
+                                    <option value="">请选择地区</option>
+                                    <volist name="region_city" id="re">
+                                        <option value="{$re['id']}" <eq name="row['city']" value="$re['id']">selected</eq>>{$re['region_name']}</option>
+                                    </volist>
+                                </select>
+                                <!--// 区-->
+                                <select name="district" id="district">
+                                    <option value="">请选择地区</option>
+                                    <volist name="region_district" id="re">
+                                        <option value="{$re['id']}" <eq name="row['district']" value="$re['id']">selected</eq>>{$re['region_name']}</option>
+                                    </volist>
+                                </select>
+                                <span class="help-block">请选择地区</span>
+                            </div>
+                        </div>
+                        <div class="form-actions">
+                            <button class="btn" onclick="javascript:history.back(-1);return false;">返 回</button>　
+                            <button class="btn btn-info ajax-post" target-form="form-horizontal" type="submit">保 存</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="__JS__/region.js"></script>
+
+    <script>
+        // 选择下级列表
+        $(document).on('change','#province',function(){
+            var url = '{:U("Merchant/getRegionList")}';
+            var parent_id = $(this).val();
+            var param = '#city';
+            getRegion(url,parent_id,param);
+        });
+
+        // 选择下级列表
+        $(document).on('change','#city',function(){
+            var url = '{:U("Merchant/getRegionList")}';
+            var parent_id = $(this).val();
+            var param = '#district';
+            getRegion(url,parent_id,param);
+        });
+
+    </script>
+</block>

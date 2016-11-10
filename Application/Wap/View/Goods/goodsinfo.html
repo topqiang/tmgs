@@ -1,0 +1,203 @@
+<extend name="Public/base" />
+<block name="main">
+    <body>
+    <header class="bgz colb">
+        <span class="poab icongley" linkto="gley.html"></span>
+    		<span class="pfr rigshe pfr">
+    			<span class="jiaob poab bgr colb fs12 textcen lh14">3</span>
+    		</span>
+        <span class="left" linkto="javascript:history.go(-1)"></span>
+        商品详情
+    </header>
+    <div class="content" style="padding-top: 50px;">
+        <div class="slider">
+            <ul>
+                <volist name="goods_info['goods_info'][goods_pic]" id="g_pic">
+                    <li><a href="#" target="_blank"><img src="{$g_pic['goods_pic']}" alt="" class="width"></a></li>
+                </volist>
+
+            </ul>
+        </div>
+        <div class="pad10-20 lh25 bgb">
+            <div class="texovh">{$goods_info['goods_info']['goods_name']}</div>
+            <div class="colr">
+                <span class="mar10">￥{$goods_info['goods_info']['price']}</span>
+                <span class="fs12">消费返利:￥{$goods_info['goods_info']['return_price']}</span>
+            </div>
+            <div class="fs12 cole">
+                <span class="mar30">销量：{$goods_info['goods_info']['sales']}</span>
+                <span class="">品牌：{$goods_info['goods_info']['goods_brands']}</span>
+                <div>运费：{$goods_info['goods_info']['delivery_cost']}</div>
+            </div>
+        </div>
+        <eq name="goods_info['goods_info']['is_integrity_fourteen']" value="1">
+            <div class="lh40 fs12 iconsafe">
+                14天无理由退换货
+            </div>
+        </eq>
+
+
+        <div class="lh30 bgb pad0-20 mat10 checkargs">
+            <span class="right fr mat5"></span>
+            <span class="fs14">选择&nbsp;颜色&nbsp;尺码</span>
+        </div>
+
+        <div class="pad10-20 bgb mat10">
+            <div class="lh40">商品评价（{$goods_info['goods_info']['comment_num']}）</div>
+            <div class="fs14 lh20">
+                <span class="mar20 bgc pad0-10 borad4">好评（{$goods_info['goods_info']['comment_good_num']}）</span>
+                <span class="mar20 bgc pad0-10 borad4">中评（{$goods_info['goods_info']['comment_middle_num']}）</span>
+                <span class="mar20 bgc pad0-10 borad4">差评（{$goods_info['goods_info']['comment_bad_num']}）</span>
+            </div>
+            <!--// 评论-->
+            <notempty name="goods_info['comment']['rand']">
+                <div class="mat10 rate borb31">
+                    <div class="lh40 usinfo">
+                        <span class="fr colbl">{$goods_info['comment']['rand']|get_evaluate_status_no}</span>
+                        <img src="{$goods_info['comment']['head_pic']}" />
+                        <span class="">{$goods_info['comment']['nickname']}</span>
+                    </div>
+                    <div class="lh14 fs14 ma5-0">
+                        {$goods_info['comment']['review']}
+                    </div>
+                    <div class="cole">
+                        <span class="fs14 cole fr">{$goods_info['comment']['evaluate_time']}</span>
+                        <span class="mar10">{$goods_info['comment']['goods_attr']}</span>
+                    </div>
+                </div>
+            </notempty>
+
+            <div class="textcen pad10">
+                <span class="pad5-10 lh30 bor1b colbl borad4" linkto="ratelist.html">查看全部评价</span>
+            </div>
+        </div>
+        <div class="gishop pad20 mat10 bgb">
+            <div class="lh50">
+                <img src="{$goods_info['goods_info']['merchant_head_pic']}" class="mar10"/>
+                <span>{$goods_info['goods_info']['merchant_name']}<span class="bor1b bora50 colbl disib fs12 wh20">诚</span></span>
+            </div>
+            <div class="gishopinfo disf mat20">
+                <div class="textcen">
+                    <p>{$goods_info['merchant_info']['goods_count']}</p>
+                    <p class="cole">全部产品</p>
+                </div>
+                <div class="textcen">
+                    <p>{$goods_info['merchant_info']['collect_count']}</p>
+                    <p class="cole">收藏人数</p>
+                </div>
+                <div class="cole fs12 textcen">
+                    <p>好评 {$goods_info['merchant_info']['goods_comment']}<eq name="goods_info['merchant_info']['goods_count_flag']" value="1">↑<else/>↓</eq></p>
+                    <p>中评    {$goods_info['merchant_info']['middle_comment']}<eq name="goods_info['merchant_info']['middle_count_flag']" value="1">↑<else/>↓</eq></p>
+                    <p>差评    {$goods_info['merchant_info']['bad_comment']}<eq name="goods_info['merchant_info']['bad_count_flag']" value="1">↑<else/>↓</eq></p>
+                </div>
+            </div>
+            <div class="textcen mat20">
+                <span class="iconstore lh30 bor1b colbl borad4">进店逛逛</span>
+            </div>
+        </div>
+        <div class="mat10 gooddesc pad10 bgb">
+            {$goods_info['goods_info']['goods_introduction']}
+        </div>
+    </div>
+    <div class="botarea bgz textcen fs12 colb">
+        <div class="fr bgbtn lh50 pad0-20 fs16">提交订单</div>
+        <div class="botbtn">
+            <div class="fl">
+                <span>店铺</span>
+            </div>
+            <div class="fl on">
+                <span>收藏</span>
+            </div>
+            <div class="fl">
+                <span>加入购物车</span>
+            </div>
+        </div>
+    </div>
+
+    <!--购物车详情    遮罩层-->
+    <div class="zhao" style="display: none;">
+        <div class="poab zhcon bgb pad0-10">
+            <div class="checkgood borb31">
+                <div class="fl bagimg bgb borad4">
+                    <img src="__IMG__/2.png" />
+                </div>
+                <div>
+                    <div class="colr">
+                        ￥500.00
+                    </div>
+                    <div class="fs14">选择尺码  颜色</div>
+                </div>
+                <span class="iconclose poab"></span>
+            </div>
+
+            <div class="borb31">
+                <div class="lh40"><b>尺码</b></div>
+                <div class="disf chimlist">
+                    <span class="top_radio on">165</span>
+                    <span class="top_radio">165</span>
+                    <span class="top_radio">165</span>
+                    <span class="top_radio">165</span>
+                    <span class="top_radio">165</span>
+                    <span class="top_radio">165</span>
+                </div>
+            </div>
+
+            <div class="borb31">
+                <div class="lh40"><b>颜色分类</b></div>
+                <div class="disf chimlist">
+                    <span class="top_radio on">蓝色</span>
+                    <span class="top_radio">绿色</span>
+                    <span class="top_radio">黄色</span>
+                    <span class="top_radio">墨绿</span>
+                    <span class="top_radio">草青涩</span>
+                    <span class="top_radio">黑色</span>
+                </div>
+            </div>
+
+            <div class="borb31 lh50">
+                <div class="playgley fr mat15">
+                    <span class="iconjian"></span>
+                    <span class="bge">1</span>
+                    <span class="iconadd"></span>
+                </div>
+                <span>购买数量</span>
+            </div>
+
+        </div>
+
+
+        <!--点击  颜色 尺码  进入-->
+        <div class="botarea bgz lh50 textcen colb">
+            <div class="fr bgbtn" style="width:50%;">提交订单</div>
+            <div class="fl bgyel" style="width:50%;">加入购物车</div>
+        </div>
+        <!--点击提交订单进入-->
+        <div class="botarea bgz textcen colb lh50 disn">
+            确定
+        </div>
+    </div>
+
+
+    <div class="disib gohead top_gohead">
+        <img src="__IMG__/gohead.png" />
+    </div>
+    </body>
+</block>
+<block name="script">
+    <script type="text/javascript" src="__JS__/yxMobileSlider.js" ></script>
+    <script type="text/javascript" src="__JS__/touch.min.js"></script>
+    <script type="text/javascript">
+        var w = document.documentElement ? document.documentElement.clientWidth : document.body.clientWidth;
+        $(".slider").yxMobileSlider({width:w,height:300,during:3000});
+
+        $(".checkargs").on('tap',function(){
+            $(".zhao").fadeIn();
+        });
+
+        $(".iconclose").on('tap',function(){
+            $(".zhao").fadeOut();
+        });
+
+
+    </script>
+</block>

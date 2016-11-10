@@ -1,0 +1,91 @@
+<extend name="Public/base" />
+<block name="head-script">
+    <script src="__JS__/hcharts/highcharts.js"></script>
+    <script src="__JS__/hcharts/modules/exporting.js"></script>
+    <!--时间-->
+    <!--<script type="text/javascript" src="__JS__/DatePicker/lhgcore.js"></script>-->
+    <!--<script type="text/javascript" src="__JS__/DatePicker/lhgcalendar.js"></script>-->
+    <script type="text/javascript" src="__JS__/laydate/laydate.js"></script>
+
+    <script>
+        $(function () {
+            $('#container').highcharts({
+                chart: {type: 'spline'},
+                title: {text: '', x: -20 ,style: {color: '#1B3243',fontWeight: 'bold',fontSize: '25px'}},
+                subtitle: { text: "{$day_date_flag}" ,x: -20,y:22},
+                xAxis: { categories: [{$x_date}]},
+                yAxis: {allowDecimals: false,title: {text: '人数（个）'},plotLines: [{value: 0,width: 1,color: '#808080'}]},
+                tooltip: {crosshairs: true,shared: true},
+                plotOptions: {spline: {marker: { radius: 4,lineColor: '#666666',lineWidth: 1 }}},
+                series: [{$day_line}]
+            });
+        });
+
+       
+    </script>
+</block>
+<block name="main">
+
+    <div class="row-fluid">
+
+        <div class="span12">
+            <div class="widget-box">
+                    <div class="widget-title widget-title-search">
+                        <div class="main-time">
+                            <form action="{:U('Statistics/userRegSta')}" method="post" class="form1">
+                                <select name="region" style="vertical-align: middle;margin-bottom: 0px;">
+                                    <option value="全市">全市注册人数</option>
+
+                                    <volist name="region" id="region">
+                                        <option value="{$region['register_province']}">{$region['register_province']}</option>
+                                    </volist>
+                                </select>
+                                <select name="isuser" style="vertical-align: middle;margin-bottom: 0px;">
+                                    <option value="3">全部注册人数</option>
+                                    <option value="1">用户注册人数</option>
+                                    <option value="2">商家注册人数</option>
+                                </select>
+                                <input type="text" id="start-time" name="start_time" class="text-input" style="width:270px;"  placeholder="起始时间" onfocus="this.blur()" />
+                                <input type="text" id="end-time" name="end_time" class="text-input" style="width:270px;"  placeholder="结束时间" onfocus="this.blur()"/>
+                                <input class="btn btn-default" type="submit" value="确定" />
+                            </form>
+                        </div>
+                </div>
+
+                <div class="widget-content nopadding">
+                    <div id="container" style="min-width: 310px; height: 400px; margin: 0 auto"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</block>
+<block name="script">
+<script>
+    var start = {
+           elem: '#start-time',
+           format: 'YYYY/MM/DD',
+           min: "{$time['min_time']|date='Y-m-d',###}", //设定最小日期为当前日期
+           max: "{$time['max_time']|date='Y-m-d',###}", //最大日期
+           istime: false,
+           istoday: false,
+           choose: function(datas){
+               end.min = datas; //开始日选好后，重置结束日的最小日期
+               end.start = datas //将结束日的初始值设定为开始日
+           },
+       };
+       var end = {
+           elem: '#end-time',
+           format: 'YYYY/MM/DD',
+           min: "{$time['min_time']|date='Y-m-d',###}",
+           max: "{$time['max_time']|date='Y-m-d',###}", //最大日期
+           istime: false,
+           istoday: false,
+           choose: function(datas){
+               start.max = datas; //结束日选好后，重置开始日的最大日期
+           }
+       };
+       laydate(start);
+       laydate(end);
+
+</script>
+</block>

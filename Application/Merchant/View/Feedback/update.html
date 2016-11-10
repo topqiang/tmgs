@@ -1,0 +1,36 @@
+<extend name="Public/base" />
+
+<block name="main">
+
+    <div class="row-fluid">
+
+        <div class="span12">
+            <div class="widget-box">
+                <div class="widget-title">
+                    <span class="icon">
+                        <i class="icon-plus"></i>
+                    </span>
+                    <h5></h5>
+                </div>
+                <div class="widget-content nopadding">
+                    <form class="form-horizontal" method="post" action="{:U('Feedback/update')}" autocomplete="off">
+                        <input type="hidden" name="model" value="Feedback">
+                        <input type="hidden" name="id" value="{$row['id']}">
+
+                        <div class="control-group">
+                            <label class="control-label">意见/建议</label>
+                            <div class="controls">
+                                <textarea name="content"></textarea>
+                                <span class="help-block">您的意见/建议是对我们最大的鼓励</span>
+                            </div>
+                        </div>
+                        <div class="form-actions">
+                            <button class="btn" onclick="javascript:history.back(-1);return false;">返 回</button>　
+                            <button class="btn btn-info ajax-post" target-form="form-horizontal" type="submit">提 交</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</block>

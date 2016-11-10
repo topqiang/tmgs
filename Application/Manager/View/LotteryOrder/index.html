@@ -1,0 +1,66 @@
+<extend name="Public/base" />
+
+<block name="main">
+
+    <div class="row-fluid">
+
+        <div class="span12">
+            <div class="widget-box">
+
+                <div class="widget-title widget-title-search">
+                    <button class="btn btn-success href" url="{:U('LotteryOrder/add')}" target-form="ids">新增</button>&nbsp;
+                    <button class="btn btn-inverse ajax-post" url="{:U('LotteryOrder/forbid',array('model'=>'LotteryOrder','status'=>0))}" target-form="ids">禁用</button>&nbsp;
+                    <button class="btn btn-info ajax-post" url="{:U('LotteryOrder/resume',array('model'=>'LotteryOrder','status'=>1))}" target-form="ids">启用</button>&nbsp;
+                    <button class="btn btn-danger confirm ajax-post" url="{:U('LotteryOrder/delete',array('model'=>'LotteryOrder','status'=>9))}" target-form="ids">删除</button>&nbsp;
+                </div>
+
+                <div class="widget-content nopadding">
+                    <table class="table table-bordered table-striped with-check">
+                        <thead>
+                        <tr>
+                            <th><input type="checkbox" id="title-checkbox" name="title-checkbox" class="check-all"/><!--<i class="icon-resize-vertical"></i>--></th>
+                            <th>ID</th>
+                            <th>用户ID</th>
+                            <th>用户联系方式</th>
+                            <th>奖励名称</th>
+                            <th>中奖时间</th>
+                            <th>状态</th>
+                            <th>操作</th>
+                        </tr>
+                        </thead>
+                        <tbody class="tbody">
+                        <volist name="list" id="row">
+                            <tr>
+                                <td><input type="checkbox" name="ids[]" value="{$row['id']}" class="ids"/></td>
+                                <td>{$row['id']}</td>
+                                <td>{$row['m_id']}</td>
+                                <td>{$row['phone']}</td>
+                                <td>{$row['lottery_id']}</td>
+                                <td>{$row['create_time']|date="Y-m-d H:i",###}</td>
+                                <td>
+                                    <eq name="row['status']" value="1">
+                                        已发放
+                                        <else/>
+                                        未发放
+                                    </eq>
+                                </td>
+                                <td>
+                                    <eq name="row['status']" value="0">
+                                        <a href="{:U('LotteryOrder/resume',array('model'=>'LotteryOrder','ids'=>$row['id'],'status'=>abs(1-$row['status'])))}" title="发放" class="tip-bottom ajax-get">
+                                            <span class="label label-info">发放</span></a>&nbsp;
+                                    </eq>
+                                </td>
+                            </tr>
+                        </volist>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="pagination alternate">
+                    {$page}
+                </div>
+
+            </div>
+        </div>
+    </div>
+</block>

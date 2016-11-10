@@ -1,0 +1,50 @@
+<extend name="Public/base" />
+
+<block name="main">
+
+    <div class="row-fluid">
+
+        <div class="span12">
+            <div class="widget-box">
+
+                <div class="widget-title widget-title-search">
+                    <form action="{:U('PayLog/index')}" method="post" class="form">
+                        <input type="text" name="title" value="{$_REQUEST['title']}" placeholder="标题" >
+                        <input type="text" name="content" value="{$_REQUEST['content']}" placeholder="内容">
+                        <button class="btn btn-inverse">查询</button>
+                    </form>
+                </div>
+
+                <div class="widget-content nopadding">
+                    <table class="table table-bordered table-striped with-check">
+                        <thead>
+                        <tr>
+                            <th><input type="checkbox" id="title-checkbox" name="title-checkbox" class="check-all"/><!--<i class="icon-resize-vertical"></i>--></th>
+                            <th>标题</th>
+                            <th>内容</th>
+                            <th>资金记录</th>
+                            <th>添加时间</th>
+                        </tr>
+                        </thead>
+                        <tbody class="tbody">
+                        <volist name="list" id="row">
+                            <tr>
+                                <td><input type="checkbox" name="ids[]" value="{$row['id']}" class="ids"/></td>
+                                <td>{$row['title']}</td>
+                                <td>{$row['content']}</td>
+                                <td><eq name="row['symbol']" value="1"><span style="color: green">+</span><else/><span style="color: red">-</span></eq>{$row['money']}</td>
+                                <td>{$row['create_time']|date="Y-m-d H:i:s",###}</td>
+                            </tr>
+                        </volist>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="pagination alternate">
+                    {$page}
+                </div>
+
+            </div>
+        </div>
+    </div>
+</block>

@@ -1,0 +1,158 @@
+<extend name="Public/base" />
+
+<block name="main">
+
+    <div class="row-fluid">
+
+        <div class="span12">
+            <div class="widget-box">
+
+                <div class="widget-title widget-title-search">
+                    <button class="btn btn-info ajax-post" url="/Manager/Goods/resume/model/Goods/is_shelves/1.shtml" target-form="ids">上架</button>
+                    <button class="btn btn-success ajax-post" url="/Manager/Goods/resume/model/Goods/is_shelves/0.shtml" target-form="ids">下架</button>
+                    <button class="btn btn-warning ajax-post" url="/Manager/Goods/resume/model/Goods/is_shelves/2.shtml" target-form="ids">平台下架</button>
+                    <!--<button class="btn btn-danger confirm ajax-post" url="{:U('Goods/delete',array('model'=>'Goods','status'=>9))}" target-form="ids">删除</button>&nbsp;-->
+                    <form action="{:U('Goods/index')}" method="post" class="form">
+                        <input type="text" name="id" value="{$_REQUEST['id']}" placeholder="请输入商品的ID" style="width:136px;">
+                        <input type="text" name="merchant_id" value="{$_REQUEST['merchant_id']}" placeholder="请输入店铺名" style="width:136px;">
+                        <input type="text" name="cn_goods_name" value="{$_REQUEST['cn_goods_name']}" placeholder="请输入商品名" style="width:136px;">
+                        <input type="text" name="article_number" value="{$_REQUEST['article_number']}" placeholder="请输入货号" style="width:136px;">
+                        <input type="text" name="create_time" value="{$_REQUEST['create_time']}" class="laydate-icon" id="create_time" placeholder="请输入创建时间" style="width:136px;">
+                        <select name="is_shelves" style="width: 136px;margin:1px;">
+                            <option value="">请选择上架状态</option>
+                            <option value="1">下架</option>
+                            <option value="2">上架</option>
+                            <option value="3">后台下架</option>
+                        </select>
+                        <select name="audit_status"  style="width: 136px;margin:1px;">
+                            <option value="">请选择审核状态</option>
+                            <option value="1">未审核</option>
+                            <option value="2">已审核</option>
+                            <option value="3">审核未通过</option>
+                        </select>
+                        <button class="btn btn-inverse">查询</button>
+                    </form>
+                </div>
+                <div class="widget-content nopadding">
+                    <table class="table table-bordered table-striped with-check">
+                        <thead>
+                        <tr>
+                            <th><input type="checkbox" id="title-checkbox" name="title-checkbox" class="check-all"/><!--<i class="icon-resize-vertical"></i>--></th>
+                            <th>ID</th>
+                            <th>店铺名</th>
+                            <th>商品名</th>
+                            <th>品牌</th>
+                            <th>销量</th>
+                            <th>货号</th>
+                            <th>排序</th>
+                            <th>好商品</th>
+                            <th>精品推荐</th>
+                            <th>七天</th>
+                            <th>上架状态</th>
+                            <th>审核状态</th>
+                            <th>创建时间</th>
+                            <th>操作</th>
+                        </tr>
+                        </thead>
+                        <tbody class="tbody">
+                        <volist name="list" id="row">
+                            <tr>
+                                <td><input type="checkbox" name="ids[]" value="{$row['id']}" class="ids"/></td>
+                                <td>{$row['id']}</td>
+                                <td>{$row['merchant_name']|default="<span style='color:#C0C0C0;'>暂无账号</span>"}</td>
+                                <td>{$row['cn_goods_name']}</td>
+                                <td>{$row['cn_goods_brands']|default="<span style='color:#C0C0C0;'>未填品牌</span>"}</td>
+                                <td>{$row['sales']}</td>
+                                <td>{$row['article_number']|default="<span style='color:#C0C0C0;'>无货号</span>"}</td>
+                                <td class="single-edit" data-model="Goods" data-id="{$row['id']}" data-field="sort">{$row['sort']}</td>
+                                <td style="text-align: center;" class="go-handle" data-id="{$row['id']}" data-status="{$row['good_product']}" data-type="good_product"><eq name="row['good_product']" value="1"><i class="icon-check "></i><else/><i class="icon-check-empty "></eq></td>
+                                <td style="text-align: center;" class="go-handle" data-id="{$row['id']}" data-status="{$row['giftware']}" data-type="giftware"><eq name="row['giftware']" value="1"><i class="icon-check "></i><else/><i class="icon-check-empty "></eq></td>
+                                <td>
+                                    <eq name="row['is_integrity_fourteen']" value="0">
+                                        不支持
+                                        <else/>
+                                        支持
+                                    </eq>
+                                </td>
+                                <td>{$row['is_shelves']|get_shelves_status}</td>
+                                <td>{$row['audit_status']|auditStatus}</td>
+                                <td>{$row['create_time']|date='Y-m-d H:i',###}</td>
+                                <td>
+                                    <a href="{:U('Goods/update',array('id'=>$row['id']))}" title="详情" class="tip-bottom">
+                                        <span class="label label-success">详情</span></a>&nbsp;
+                                    <eq name="row['audit_status']" value="0">
+                                        <a href="{:U('Goods/forbidAudit',array('model'=>'Goods','ids'=>$row['id'],'audit_status'=>1))}" title="审核通过" class="tip-bottom ajax-get"><span class="label label-info">审核通过</span></a>&nbsp; 
+                                        <a href="{:U('Goods/forbidAudit',array('model'=>'Goods','ids'=>$row['id'],'audit_status'=>2))}" title="审核不通过" class="tip-bottom ajax-get"><span class="label label-info">审核不通过</span></a>&nbsp; 
+                                    </eq>
+                                    <eq name="row['audit_status']" value="1">
+                                        <a href="{:U('Goods/forbidAudit',array('model'=>'Goods','ids'=>$row['id'],'audit_status'=>2))}" title="审核不通过" class="tip-bottom ajax-get"><span class="label label-info">审核不通过</span></a>&nbsp; 
+                                    </eq>
+                                    <eq name="row['audit_status']" value="2">
+                                        <a href="{:U('Goods/forbidAudit',array('model'=>'Goods','ids'=>$row['id'],'audit_status'=>1))}" title="审核通过" class="tip-bottom ajax-get"><span class="label label-info">审核通过</span></a>&nbsp; 
+                                    </eq>
+                                    <eq name="row['is_shelves']" value="0">
+                                        <a href="{:U('Goods/forbid',array('model'=>'Goods','ids'=>$row['id'],'is_shelves'=>1))}" title="上架" class="tip-bottom ajax-get">
+                                            <span class="label label-info">点击上架</span></a>&nbsp;
+                                        <else/>
+                                        <eq name="row['is_shelves']" value="1">
+                                            <a href="{:U('Goods/resume',array('model'=>'Goods','ids'=>$row['id'],'is_shelves'=>0))}" title="下架" class="tip-bottom ajax-get">
+                                                <span class="label label-important">下架</span></a>&nbsp;
+                                            <a href="{:U('Goods/resume',array('model'=>'Goods','ids'=>$row['id'],'is_shelves'=>2))}" title="平台下架" class="tip-bottom ajax-get">
+                                                <span class="label label-important">平台下架</span></a>&nbsp;
+                                            <else/>
+                                                <span class="label">已强制下架</span>
+                                        </eq>
+                                    </eq>
+                                </td>
+                            </tr>
+                        </volist>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="pagination alternate">
+                    {$page}
+                </div>
+
+            </div>
+        </div>
+    </div>
+</block>
+<block name="script">
+        <script type="text/javascript">
+            $('.go-handle').on('click',function(){
+                var id = $(this).data('id');
+                var type = $(this).data('type');
+                var status = $(this).data('status');
+                $.post('{:U("Goods/handleGood")}',{id:id,type:type,status:status},function(data){
+                        if(data.status == 1)alert('操作成功');
+                        window.location.reload();
+                    });
+            });
+
+
+            $('select[name="condition"]').on('change',function(){
+                if($(this).val() == 4){
+                    $('input[name="cn_goods_name"]').show();
+                    $('input[name="article_number"]').hide();
+                }else{
+                    if($(this).val() == 5){
+                        $('input[name="article_number"]').show();
+                        $('input[name="cn_goods_name"]').hide();
+                    }else{
+                        $('input[name="cn_goods_name"]').hide();
+                        $('input[name="article_number"]').hide();
+                    }
+                }
+
+            });
+        </script>
+    <script src="__JS__/laydate/laydate.js"></script>
+    <script>
+        laydate({
+            elem: '#create_time', //目标元素。由于laydate.js封装了一个轻量级的选择器引擎，因此elem还允许你传入class、tag但必须按照这种方式 '#id .class'
+            istime: true, //是否开启时间选择
+            format: 'YYYY-MM-DD hh:mm:ss', //日期格式
+        });
+    </script>
+</block>

@@ -1,0 +1,76 @@
+<extend name="Public/base" />
+
+<block name="main">
+
+    <div class="row-fluid">
+
+        <div class="span12">
+            <div class="widget-box">
+
+                <div class="widget-title widget-title-search">
+                    <!--<button class="btn btn-success href" url="{:U('IntegralMall/add')}" target-form="ids">新增</button>&nbsp;-->
+                    <form action="{:U('IntegralMall/index')}" method="post" class="form">
+                        <input type="text" name="goods_name" value="{$_REQUEST['goods_name']}" placeholder="商品名称">
+                        <button class="btn btn-inverse">查询</button>
+                    </form>
+                </div>
+
+                <div class="widget-content nopadding">
+                    <table class="table table-bordered table-striped with-check">
+                        <thead>
+                        <tr>
+                            <th><input type="checkbox" id="title-checkbox" name="title-checkbox" class="check-all"/><!--<i class="icon-resize-vertical"></i>--></th>
+                            <th>展示图</th>
+                            <th>商品名称</th>
+                            <th>需要积分</th>
+                            <th>添加时间</th>
+                            <th>修改时间</th>
+                            <th>状态</th>
+                            <th>操作</th>
+                        </tr>
+                        </thead>
+                        <tbody class="tbody">
+                        <volist name="list" id="row">
+                            <tr>
+                                <td><input type="checkbox" name="ids[]" value="{$row['id']}" class="ids"/></td>
+                                <td style="text-align: center;width: 100px;">
+                                    <volist name="row['pic']" id="path">
+                                        <img src="{$path['path']}" alt=""  style="width:100px;">
+                                    </volist>
+                                </td>
+                                <td>{$row['goods_name']}</td>
+                                <td>{$row['integral']}分/次</td>
+
+                                <td>{$row['create_time']|date="Y-m-d H:i:s",###}</td>
+                                <td>{$row['update_time']|date="Y-m-d H:i:s",###}</td>
+                                <td>
+                                    {$row['status']|manageIntegralStatus}
+                                </td>
+                                <td>
+                                    <eq name="row['status']" value="0">
+                                        <a href="{:U('IntegralMall/forbid',array('model'=>'IntegralMall','ids'=>$row['id'],'status'=>1))}" title="同意" class="tip-bottom confirm ajax-get">
+                                            <span class="label label-success">同意</span></a>&nbsp;
+                                        <a href="{:U('IntegralMall/forbid',array('model'=>'IntegralMall','ids'=>$row['id'],'status'=>2))}" title="拒绝" class="tip-bottom confirm ajax-get">
+                                            <span class="label label-important">拒绝</span></a>&nbsp;
+                                    </eq>
+                                    <a href="{:U('IntegralMall/delete',array('model'=>'IntegralMall','ids'=>$row['id'],'status'=>9))}" title="删除" class="tip-bottom confirm ajax-get">
+                                        <span class="label label-important">删除</span></a>
+                                    <eq name="row['status']" value="1">
+                                        <a href="{:U('Record/index',array('id'=>$row['id']))}" title="兑换记录" class="tip-bottom">
+                                            <span class="label label-success">兑换记录</span></a>&nbsp;
+                                    </eq>
+                                </td>
+                            </tr>
+                        </volist>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="pagination alternate">
+                    {$page}
+                </div>
+
+            </div>
+        </div>
+    </div>
+</block>

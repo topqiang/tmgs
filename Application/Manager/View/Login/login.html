@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>登录</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="__CSS__/bootstrap.min.css" />
+    <link rel="stylesheet" href="__CSS__/unicorn.login.css" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" /></head>
+<body>
+<div id="logo">
+    <!--<img src="__IMG__/logo.png" alt="" />-->
+</div>
+<div id="loginbox">
+    <form class="form-vertical" action="{:U('Login/doLogin')}" method="post"/>
+        <p>管理员登录</p>
+        <div class="control-group">
+            <div class="controls">
+                <div class="input-prepend">
+                    <span class="add-on"><i class="icon-user"></i></span>
+                    <input type="text" name="account" placeholder="账号" />
+                </div>
+            </div>
+        </div><br>
+        <div class="control-group">
+            <div class="controls">
+                <div class="input-prepend">
+                    <span class="add-on"><i class="icon-lock"></i></span>
+                    <input type="password" name="password" placeholder="密码" />
+                </div>
+            </div>
+        </div><br>
+        <div class="control-group">
+            <div class="controls">
+                <div class="input-prepend">
+                    <span class="add-on"><i class="icon-tag"></i></span>
+                    <input type="text" class="verify" name="verify" placeholder="验证码" />
+                    <!--<img class="verifyimg reloadverify" alt="点击切换" width="100" src="{:U('Login/verify')}">-->
+                </div>
+            </div>
+        </div><br>
+        <div class="control-group">
+            <div class="controls">
+                <div class="input-prepend">
+                    <img class="verifyimg reloadverify" alt="点击切换" width="250" src="{:U('Login/verify')}" onclick="change_verify()">
+                </div>
+            </div>
+        </div>
+        <div class="control-group" style="height:20px;">
+            <div class="controls">
+                <div class="alert" style="display:none;width:87%">
+                    <strong id="error">错误!</strong>
+                </div>
+            </div>
+        </div>
+        <div class="form-actions">
+            <span class="pull-left"><a href="#" class="flip-link" id="to-recover"></a></span>
+            <span class="pull-right"><button class="btn btn-inverse" type="submit" target-form="form-vertical">登录</button></span>
+            <!--<span class="pull-right"><button class="btn btn-inverse ajax-post" type="submit" target-form="form-vertical">登录</button></span>-->
+        </div>
+    </form>
+</div>
+<script src="__STATIC__/jquery.min.js"></script>
+<script src="__JS__/common.js"></script>
+<script>
+    //刷新验证码
+    function change_verify(){
+        var verifyimg = $(".verifyimg").attr("src");
+        if (verifyimg.indexOf('?') > 0) {
+            $(".verifyimg").attr("src", verifyimg + '&random=' + Math.random());
+        } else {
+            $(".verifyimg").attr("src", verifyimg.replace(/\?.*$/, '') + '?' + Math.random());
+        }
+    }
+    //登陆验证
+    $('form').submit(function(){
+        var _this = $(this);
+        $.post(_this.attr('action'), _this.serialize(), success, 'json');
+        return false;
+        function success(data){
+            if(data.status){
+                window.location.href = data.url;
+            }else{
+                $('.alert').addClass('alert-error').show();
+                $('#error').html(data.info);
+                change_verify();
+            }
+        }
+    });
+</script>
+</body>
+</html>

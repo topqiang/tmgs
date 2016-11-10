@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html>
+	<head>
+	<!-- // 网站TITLE名称 -->
+		<title>{:C('TITLENAME')}</title>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <!--基本-->
+		<link rel="stylesheet" href="__CSS__/bootstrap.min.css" />
+        <link rel="stylesheet" href="__CSS__/font-awesome.min.css" />
+        <link rel="stylesheet" href="__CSS__/unicorn.main.css" />
+        <link rel="stylesheet" href="__CSS__/unicorn.grey.css" class="skin-color" />
+        <!--基本-->
+        <!--表单表格-->
+        <link rel="stylesheet" href="__CSS__/uniform.css" />
+        <!--表单表格-->
+        <!--扩展样式-->
+        <link rel="stylesheet" href="__CSS__/custom.css" />
+        <!--扩展样式-->
+        <!--jquery-->
+        <script src="__STATIC__/jquery.min.js"></script>
+        <!--jquery-->
+        <block name="style"></block>
+        <block name="head-script"></block>
+	</head>
+	<body>
+
+        <!--logo-->
+		<div id="header">
+			<h1><a href=""></a></h1>
+		</div>
+
+        <!--右侧 管理员 退出-->
+		<div id="user-nav" class="navbar navbar-inverse">
+            <ul class="nav btn-group">
+                <li class="btn btn-inverse">
+                    <a title="" href="#">
+                        <i class="icon icon-user"></i><span class="text">{:session('merInfo.mer_account')}</span>
+                    </a>
+                </li>
+                <li class="btn btn-inverse">
+                    <a title="" href="{:U('Administrator/rePass')}">
+                        <i class="icon icon-lock"></i><span class="text">修改密码</span>
+                    </a>
+                </li>
+                <li class="btn btn-inverse">
+                    <a title="" href="{:U('Login/logOut')}">
+                        <i class="icon icon-share-alt"></i> <span class="text">退出</span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+        <!--菜单 start-->
+		<div id="sidebar">
+			<ul>
+                <volist name="menus" id="menu">
+                    <li class="<notempty name="menu['_child']">submenu</notempty> {$menu['group']['class']}">
+                    <!--菜单组-->
+                        <a href="{$menu['group']['url']|U}">
+                            <i class="icon {$menu['group']['icon']}"></i>
+                            <span>{$menu['group']['title']}</span>
+                            <if condition="count($menu['_child']) gt 0">
+                            <span class="label">{:count($menu['_child'])}</span>
+                            </if>
+                        </a>
+                    <!--菜单组-->
+                    <!--子菜单-->
+                        <notempty name="menu['_child']">
+                        <ul <eq name="menu['group']['class']" value="active">style="display: block"</eq>>
+                            <volist name="menu['_child']" id="child">
+                            <li class="{$child['class']}"><a href="{$child['url']|U}">{$child['title']}</a></li>
+                            </volist>
+                        </ul>
+                        </notempty>
+                    <!--子菜单-->
+                    </li>
+                </volist>
+			</ul>
+		</div>
+        <!--菜单 end-->
+
+        <!--主体内容-->
+		<div id="content">
+            <div id="content-header"></div>
+
+            <!--导航-->
+            <div id="breadcrumb">
+                <a href="#" title="" class=""><i class="icon-home"></i> 首页</a>
+                <a href="#" class="current">{$breadcrumb_nav}</a>
+            </div>
+
+            <div class="container-fluid">
+                <include file="Public/notification"/>
+                <block name="main"></block>
+
+                <div class="row-fluid">
+                    <div id="footer" class="span12">
+                        © 2015-<?php echo date('Y');?> <a href="javascript:void(0);" target="_blank">{:C('ADMINCOPYRIGHT')}</a> 版权所有
+                    </div>
+                </div>
+            </div>
+            <div id="audio"></div>
+            <div id="audio_s"></div>
+		</div>
+        <!--基本-->
+        <!--<script src='//kefu.easemob.com/webim/easemob.js?tenantId=21375&hide=false&sat=false' async='async'></script>-->
+
+        <script src="__JS__/bootstrap.min.js"></script>
+        <script src="__JS__/unicorn.js"></script>
+        <!--基本-->
+        <!--表单加载-->
+        <script src="__JS__/jquery.uniform.js"></script>
+        <!--表单加载-->
+        <script src="__JS__/common.js"></script>
+        <script src="__JS__/js.js"></script>
+		<block name="script"></block>
+	</body>
+</html>

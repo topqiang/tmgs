@@ -1,0 +1,66 @@
+<extend name="Public/base" />
+
+<block name="main">
+
+    <div class="row-fluid">
+
+        <div class="span12">
+            <div class="widget-box">
+
+                <div class="widget-title widget-title-search">
+                    <form action="{:U('CloudSpread/index')}" method="post" class="form">
+                        <input type="text" name="goods_id" value="{$_REQUEST['goods_id']}" placeholder="商品名称">
+                        <input type="text" name="order_sn" value="{$_REQUEST['order_sn']}" placeholder="订单号">
+                        <input type="text" name="merchant_id" value="{$_REQUEST['merchant_id']}" placeholder="商家名称">
+                        <button class="btn btn-inverse">查询</button>
+                    </form>
+                </div>
+
+                <div class="widget-content nopadding">
+                    <table class="table table-bordered table-striped with-check">
+                        <thead>
+                        <tr>
+                            <th><input type="checkbox" id="title-checkbox" name="title-checkbox" class="check-all"/><!--<i class="icon-resize-vertical"></i>--></th>
+                            <th>ID</th>
+                            <th>订单号</th>
+                            <th>办理商家</th>
+                            <th>办理次数</th>
+                            <th>商品名称</th>
+                            <th>支付价格</th>
+                            <th>支付类型</th>
+                            <th>剩余次数</th>
+                            <th>添加时间</th>
+                            <th>操作</th>
+                        </tr>
+                        </thead>
+                        <tbody class="tbody">
+                        <volist name="list" id="row">
+                            <tr>
+                                <td><input type="checkbox" name="ids[]" value="{$row['id']}" class="ids"/></td>
+                                <td>{$row['id']}</td>
+                                <td>{$row['order_sn']}</td>
+                                <td>{$row['merchant_id']}</td>
+                                <td>{$row['total_number']}</td>
+                                <td>{$row['goods_id']}</td>
+                                <td>{$row['pay_money']}</td>
+                                <td>{$row['pay_type']|get_pay_type}</td>
+                                <td>{$row['change_number']}</td>
+                                <td>{$row['create_time']|date="Y-m-d H:i:s",###}</td>
+                                <td>
+                                    <a href="{:U('CloudSpread/details',array('cloud_spread_id'=>$row['id']))}" title="点击记录" class="tip-bottom">
+                                        <span class="label label-success">点击记录</span></a>&nbsp;
+                                </td>
+                            </tr>
+                        </volist>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="pagination alternate">
+                    {$page}
+                </div>
+
+            </div>
+        </div>
+    </div>
+</block>

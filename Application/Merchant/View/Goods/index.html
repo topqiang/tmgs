@@ -1,0 +1,115 @@
+<extend name="Public/base" />
+
+<block name="main">
+
+    <div class="row-fluid">
+
+        <div class="span12">
+            <div class="widget-box">
+
+                <div class="widget-title widget-title-search">
+                    <button class="btn btn-success href" url="{:U('Goods/add')}" target-form="ids">新增</button>&nbsp;
+                    <!--<button class="btn btn-danger confirm ajax-post" url="{:U('Goods/delete',array('model'=>'Goods','status'=>9))}" target-form="ids">删除</button>&nbsp;-->
+                    <form action="{:U('Goods/index')}" method="post" class="form">
+                        <input type="text" name="create_time" value="{$_REQUEST['create_time']}" class="laydate-icon" id="create_time" placeholder="请输入提现时间" style="width:136px;">
+                        <input type="text" name="cn_goods_name" value="{$_REQUEST['cn_goods_name']}" placeholder="请输入商品名称">
+                        <input type="text" name="article_number" value="{$_REQUEST['article_number']}" placeholder="请输入商品货号">
+                        <input type="text" name="cn_goods_brands" value="{$_REQUEST['cn_goods_brands']}" placeholder="请输入商品品牌">
+                        <button class="btn btn-inverse">查询</button>
+                    </form>
+                </div>
+                <div class="widget-content nopadding">
+                    <table class="table table-bordered table-striped with-check">
+                        <thead>
+                        <tr>
+                            <th><input type="checkbox" id="title-checkbox" name="title-checkbox" class="check-all"/><!--<i class="icon-resize-vertical"></i>--></th>
+                            <th>ID</th>
+                            <th>商品名</th>
+                            <th>品牌</th>
+                            <th>销量</th>
+                            <th>货号</th>
+                            <th>七天退货</th>
+                            <th>上架状态</th>
+                            <th>创建时间</th>
+                            <th>操作</th>
+                        </tr>
+                        </thead>
+                        <tbody class="tbody">
+                        <volist name="list" id="row">
+                            <tr>
+                                <td><input type="checkbox" name="ids[]" value="{$row['id']}" class="ids"/></td>
+                                <td>{$row['id']}</td>
+                                <td>{$row['cn_goods_name']}</td>
+                                <td>{$row['cn_goods_brands']}</td>
+                                <td>{$row['sales']}</td>
+                                <td>{$row['article_number']}</td>
+                                <td>
+                                    <eq name="row['is_integrity_fourteen']" value="0">
+                                        不支持
+                                        <else/>
+                                        支持
+                                    </eq>
+                                </td>
+                                <eq name="row['audit_status']" value="2">
+                                    <td>审核失败</td>
+                                    <else/>
+                                    <td>{$row['is_shelves']|get_shelves_status}</td>
+                                </eq>
+                                <td>{$row['create_time']|date='Y-m-d H:i',###}</td>
+                                <td>
+                                    <a href="{:U('goods/attrUpdate',array('goods_id'=>$row['id'],'thr'=>$row['thr_g_t_id']))}" title="商品属性" class="tip-bottom">
+                                        <span class="label label-info">产品管理</span></a>&nbsp;
+                                    </a>
+                                    <a href="{:U('Goods/update',array('id'=>$row['id']))}" title="详情" class="tip-bottom">
+                                        <span class="label label-success">详情</span></a>&nbsp;
+
+                                    <eq name="row['is_shelves']" value="0">
+                                        <a href="{:U('Goods/forbid',array('model'=>'Goods','ids'=>$row['id'],'is_shelves'=>1))}" title="上架" class="tip-bottom ajax-get">
+                                            <span class="label label-info">上架</span></a>&nbsp;
+                                        <else/>
+                                        <eq name="row['is_shelves']" value="1">
+                                            <a href="{:U('Goods/resume',array('model'=>'Goods','ids'=>$row['id'],'is_shelves'=>0))}" title="下架" class="tip-bottom ajax-get">
+                                                <span class="label label-important">下架</span></a>&nbsp;
+                                            <else/>
+                                                <span class="label">平台下架</span>
+                                        </eq>
+                                    </eq>
+                                    <a href="{:U('Goods/delete',array('model'=>'Goods','ids'=>$row['id'],'status'=>9))}" title="删除" class="tip-bottom confirm ajax-get">
+                                        <span class="label label-important">删除</span></a>
+                                </td>
+
+                            </tr>
+
+                        </volist>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="pagination alternate">
+                    {$page}
+                </div>
+
+            </div>
+        </div>
+    </div>
+</block>
+<block name="script">
+    <script src="__JS__/laydate/laydate.js"></script>
+    <script>
+        laydate({
+            elem: '#create_time', //目标元素。由于laydate.js封装了一个轻量级的选择器引擎，因此elem还允许你传入class、tag但必须按照这种方式 '#id .class'
+            istime: true, //是否开启时间选择
+            format: 'YYYY-MM-DD hh:mm:ss', //日期格式
+        });
+    </script>
+    <script type="text/javascript">
+        $('.customize').change(function(){
+            if($(this).val() == 4){
+                $('#cn_goods_name').show();
+            }
+            if($(this).val() != 4){
+                $('#cn_goods_name').hide();
+            }
+        });
+    </script>
+</block>

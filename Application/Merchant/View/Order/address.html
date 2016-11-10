@@ -1,0 +1,55 @@
+<extend name="Public/base" />
+
+<block name="main">
+
+    <div class="row-fluid">
+
+        <div class="span12">
+            <div class="widget-box">
+                <div class="widget-title">
+                    <span class="icon">
+                        <i class="icon-plus"></i>
+                    </span>
+                    <h5></h5>
+                </div>
+                <div class="widget-content nopadding">
+                    <form class="form-horizontal" method="post" action="{:U('Order/addAddress')}">
+                        <input type="hidden" name="order_id" value="{$_REQUEST['id']}">
+                        <div class="control-group">
+                            <label class="control-label">收货人</label>
+                            <div class="controls">
+                                <input type="text" name="name" value="{$row['name']}">
+                                <span class="help-block"></span>
+                            </div>
+                        </div>
+                        <div class="control-group">
+                            <label class="control-label">手机号</label>
+                            <div class="controls">
+                                <input type="text" name="phone" value="{$row['phone']}" class="number-only">
+                                <span class="help-block"></span>
+                            </div>
+                        </div>
+                        <div class="control-group">
+                            <label class="control-label">收货地址</label>
+                            <div class="controls">
+                                <input type="text" name="address" value="{$row['address']}">
+                                <span class="help-block"></span>
+                            </div>
+                        </div>
+                        <div class="control-group">
+                            <label class="control-label">退货描述</label>
+                            <div class="controls">
+                                <textarea name="explain">{$row['explain']}</textarea>
+                                <span class="help-block"></span>
+                            </div>
+                        </div>
+                        <div class="form-actions">
+                            <button class="btn" onclick="javascript:history.back(-1);return false;">返 回</button>　
+                            <button class="btn btn-info ajax-post" target-form="form-horizontal" type="submit">保 存</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</block>

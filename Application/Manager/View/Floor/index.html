@@ -1,0 +1,62 @@
+<extend name="Public/base" />
+
+<block name="main">
+
+    <div class="row-fluid">
+
+        <div class="span12">
+            <div class="widget-box">
+
+                <div class="widget-title widget-title-search">
+                    <!-- <button class="btn btn-success href" url="{:U('Floor/add')}" target-form="ids">新增</button>&nbsp; -->
+                </div>
+
+                <div class="widget-content nopadding">
+                    <table class="table table-bordered table-striped with-check">
+                        <thead>
+                        <tr>
+                            <th><input type="checkbox" id="title-checkbox" name="title-checkbox" class="check-all"/><!--<i class="icon-resize-vertical"></i>--></th>
+                            <th>楼层名</th>
+                            <th><i class="icon-pencil"></i>排序</th>
+                            <th>模板</th>
+                            <th>状态</th>
+                            <th>操作</th>
+                        </tr>
+                        </thead>
+                        <tbody class="tbody">
+                        <volist name="list" id="row">
+                            <tr>
+                                <td><input type="checkbox" name="ids[]" value="{$row['id']}" class="ids"/></td>
+                                <td>{$row['name']}</td>
+                                <td class="single-edit" data-model="Floor" data-id="{$row['id']}" data-field="sequence">{$row['sequence']}</td>
+                                <td>{$row['mold']|floor_mold_status}</td>
+                                <td>{$row['status']|get_user_type}</td>
+                                <td style="width: 20%;">
+                                    <a href="{:U('Floor/update',array('id'=>$row['id']))}" title="编辑" class="tip-bottom">
+                                        <span class="label label-success">编辑</span></a>&nbsp;
+                                    <a href="{:U('Floor/floorpic',array('id'=>$row['id'],'mold'=>$row['mold']))}" title="图片列表" class="tip-bottom">
+                                        <span class="label label-success">图片列表</span></a>&nbsp;
+                                    <eq name="row['status']" value="0">
+                                        <a href="{:U('Floor/resume',array('model'=>'Floor','ids'=>$row['id'],'status'=>abs(1-$row['status'])))}" title="{$row['status']|get_user_status}" class="tip-bottom confirm ajax-get">
+                                            <span class="label label-info">{$row['status']|get_user_status}</span></a>&nbsp;
+                                        <else/>
+                                       <!--  <a href="{:U('Floor/forbid',array('model'=>'Floor','ids'=>$row['id'],'status'=>abs(1-$row['status'])))}" title="{$row['status']|get_user_status}" class="tip-bottom confirm ajax-get">
+                                            <span class="label label-inverse">{$row['status']|get_user_status}</span></a>&nbsp; -->
+                                    </eq>
+                                    <!-- <a href="{:U('Floor/remove',array('model'=>'Floor','ids'=>$row['id']))}" title="删除" class="tip-bottom confirm ajax-get">
+                                        <span class="label label-important">删除</span></a> -->
+                                </td>
+                            </tr>
+                        </volist>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="pagination alternate">
+                    {//$page}
+                </div>
+
+            </div>
+        </div>
+    </div>
+</block>

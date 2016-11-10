@@ -1,0 +1,154 @@
+<extend name="Public/base" />
+<block name="head-script">
+    <script src="__JS__/hcharts/highcharts.js"></script>
+    <script src="__JS__/hcharts/modules/exporting.js"></script>
+    <script src="__JS__/laydate/laydate.js"></script>
+</block>
+<block name="main">
+
+    <div class="row-fluid">
+        <div class="span3">
+            <div class="widget-box">
+                <div class="widget-title" style="text-align: center;">
+                    <span style="line-height: 35px;font-size: 20px;">平台收益统计</span>
+                </div>
+                <div class="widget-content nopadding ">
+                    <div  style="min-width: 310px; height: 450px; margin: 0 auto" class="">
+                        <!--// 折叠-->
+                        <div class="accordion" id="accordion2">
+                            <!--// 组别1 -->
+                            <div class="accordion-group">
+                                <div class="accordion-heading">
+                                    <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#collapseOne">
+                                        <i class="icon-desktop" style="color:#F32043;"></i><span style="color:#4A4A4A;">&nbsp;平台分成收益池</span>
+                                    </a>
+                                </div>
+                                <div id="collapseOne" class="accordion-body collapse in">
+                                    <div class="accordion-inner">
+                                        <div class="hero-unit">
+                                            <h3 style="text-align:center;">当前获得收益</h3>
+                                            <h2 style="text-align:center;">{$row['account_platform_balance_b']}</h2>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!--// 组别2 -->
+                            <div class="accordion-group">
+                                <div class="accordion-heading">
+                                    <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#collapseTwo">
+                                        <i class="icon-desktop" style="color:#F32043;"></i><span style="color:#4A4A4A;">&nbsp;分销获利剩余池</span>
+                                    </a>
+                                </div>
+                                <div id="collapseTwo" class="accordion-body collapse">
+                                    <div class="accordion-inner">
+                                        <div class="hero-unit">
+                                            <h3 style="text-align:center;">当前获得收益</h3>
+                                            <h2 style="text-align:center;">{$row['account_platform_balance_a']}</h2>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!--// 组别3 -->
+                            <div class="accordion-group">
+                                <div class="accordion-heading">
+                                    <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#collapseThree">
+                                        <i class="icon-desktop" style="color:#F32043;"></i><span style="color:#4A4A4A;">&nbsp;平台商品销售额</span>
+                                    </a>
+                                </div>
+                                <div id="collapseThree" class="accordion-body collapse">
+                                    <div class="accordion-inner">
+                                        <div class="hero-unit">
+                                            <h3 style="text-align:center;">当前销售总额</h3>
+                                            <h2 style="text-align:center;">{$row['sale']}</h2>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!--// 组别3 -->
+                            <div class="accordion-group">
+                                <div class="accordion-heading">
+                                    <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#collapseFour">
+                                        <i class="icon-desktop" style="color:#F32043;"></i><span style="color:#4A4A4A;">&nbsp;用户充值总额</span>
+                                    </a>
+                                </div>
+                                <div id="collapseFour" class="accordion-body collapse">
+                                    <div class="accordion-inner">
+                                        <div class="hero-unit">
+                                            <h3 style="text-align:center;">当前充值总额</h3>
+                                            <h2 style="text-align:center;">{$row['recharge']}</h2>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="span9">
+            <div class="widget-box">
+                <div class="widget-title" >
+                    <form action="{:U('Statistics/saleSta')}" method="post">
+                        <input name="start_time" class="laydate-icon" id="start" style="width:200px; margin:5px 10px 0 20px;" placeholder="请输入起始时间">
+                        <input name="end_time" class="laydate-icon" id="end" style="width:200px; margin:5px 10px 0 0px;" placeholder="请输入结束时间">
+                        <input type="submit" class="btn btn-small" value="查询" style="margin:5px 10px 0 0px;">
+                    </form>
+
+                </div>
+                <div class="widget-content nopadding">
+                    <div style="min-width: 310px; height: 400px; margin: 0 auto">
+                        <!--// 折线-->
+                        <div id="container" style="min-width:310px;height:400px"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</block>
+<block name="script">
+    <script>
+        $(function () {
+            $('#container').highcharts({
+                title: {text: '平台销售额',x: -20},
+                chart: {},
+                subtitle: {},
+                xAxis: {categories: [{$abscissa}]},
+                yAxis: {
+                    title: {text: '销售额 (元)'},
+                    plotLines: [{value: 0,width: 1,color: '#808080'}]
+                },
+                tooltip: {valueSuffix: '元'},
+                legend: {layout: 'vertical',align: 'right',verticalAlign: 'middle',borderWidth: 0},
+                series: [{$data}]
+            });
+        });
+        var start = {
+            elem: '#start',
+            format: 'YYYY/MM/DD hh:mm:ss',
+            min: "{$time['min']}", //设定最小日期为当前日期
+            max: "{$time['max']}", //最大日期
+            istime: true,
+            istoday: false,
+            choose: function(datas){
+                end.min = datas; //开始日选好后，重置结束日的最小日期
+                end.start = datas //将结束日的初始值设定为开始日
+            }
+        };
+        var end = {
+            elem: '#end',
+            format: 'YYYY/MM/DD hh:mm:ss',
+            min:"{$time['min']}",
+            max: "{$time['max']}",
+            istime: true,
+            istoday: false,
+            choose: function(datas){
+                start.max = datas; //结束日选好后，重置开始日的最大日期
+            }
+        };
+        laydate(start);
+        laydate(end);
+    </script>
+</block>

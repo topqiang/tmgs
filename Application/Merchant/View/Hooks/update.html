@@ -1,0 +1,62 @@
+w<extend name="Public/base" />
+
+<block name="main">
+
+    <div class="row-fluid">
+
+        <div class="span12">
+            <div class="widget-box">
+                <div class="widget-title">
+                    <span class="icon">
+                        <i class="icon-plus"></i>
+                    </span>
+                    <h5></h5>
+                </div>
+                <div class="widget-content nopadding">
+                    <form class="form-horizontal" method="post" action="{:U('Hooks/update')}">
+                        <input type="hidden" name="model" value="Hooks">
+                        <input type="hidden" name="id" value="{$row['id']}">
+                        <div class="control-group">
+                            <label class="control-label">钩子名称</label>
+                            <div class="controls">
+                                <input type="text" name="name" value="{$row['name']}">
+                                <span class="help-block">驼峰法命名，必须为英文字母，30字符以内，必填</span>
+                            </div>
+                        </div>
+                        <div class="control-group">
+                            <label class="control-label">钩子描述</label>
+                            <div class="controls">
+                                <input type="text" name="description" value="{$row['description']}">
+                                <span class="help-block">描述其主要功能，225字符以内，必填</span>
+                            </div>
+                        </div>
+                        <div class="control-group">
+                            <label class="control-label">钩子类型</label>
+                            <div class="controls">
+                                <div class="btn-group">
+                                    <button type="button" class="btn checked" data-default="--选择类型--"></button>
+                                    <button class="btn dropdown-toggle" data-toggle="dropdown">
+                                        <!--<span class="checked" data-default="--选择类型--"></span>--><span class="caret"></span>
+                                    </button>
+                                    <ul class="dropdown-menu">
+                                        <volist name=":C('HOOKS_TYPE')" id="type">
+                                            <li data-value="{$key}" data-title="{$type}" <eq name="key" value="$row['type']">class="selected"</eq>>
+                                            <a href="javascript:void(0)">{$type}</a>
+                                            </li>
+                                        </volist>
+                                    </ul>
+                                </div>
+                                <input type="hidden" name="type" value="{$row['type']|default=1}">
+                                <span class="help-block">可选，默认为视图类型</span>
+                            </div>
+                        </div>
+                        <div class="form-actions">
+                            <button class="btn" onclick="javascript:history.back(-1);return false;">返 回</button>　
+                            <button class="btn btn-info ajax-post" target-form="form-horizontal" type="submit">保 存</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</block>

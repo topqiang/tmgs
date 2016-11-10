@@ -1,0 +1,75 @@
+<extend name="Public/base" />
+<block name="style">
+    <link rel="stylesheet" href="__CSS__/ui-dialog.css">
+</block>
+<block name="head-script">
+    <script src="__JS__/dialog-min.js"></script>
+</block>
+<block name="main">
+
+    <div class="row-fluid">
+
+        <div class="span12">
+            <div class="widget-box">
+
+                <div class="widget-title widget-title-search">
+                    <!--<button class="btn btn-success href" url="{:U('AdPosition/add')}" target-form="ids" >申请办理</button>&nbsp;-->
+
+                    <form action="{:U('AdPosition/index')}" method="post" class="form">
+                        <input type="text" name="order_sn" value="{$_REQUEST['order_sn']}" placeholder="请输入订单号">
+                        <button class="btn btn-inverse">查询</button>
+                    </form>
+                </div>
+                <div class="widget-content nopadding">
+                    <table class="table table-bordered table-striped with-check">
+                        <thead>
+                        <tr>
+                            <th><input type="checkbox" id="title-checkbox" name="title-checkbox" class="check-all"/></th>
+                            <th>订单号</th>
+                            <th>链接</th>
+                            <th>下单时间</th>
+                            <th>支付方式</th>
+                            <th>操作</th>
+                        </tr>
+                        </thead>
+                        <tbody class="tbody">
+                        <volist name="list" id="row">
+                            <tr>
+                                <td><input type="checkbox" name="ids[]" value="{$row['id']}" class="ids"/></td>
+                                <td>{$row['order_sn']}</td>
+                                <td>{$row['url']}</td>
+                                 <td>{$row['create_time']|date='Y-m-d H:i',###}</td>
+                                <td>{$row['pay_type']|get_order_type}</td>
+                                <td>
+                                    <a href="{:U('AdPosition/update',array('id'=>$row['id']))}" title="详情" class="tip-bottom">
+                                        <span class="label" style="background: #2A2A2A;">详情</span></a>&nbsp;
+                                    <switch name="row['status']" >
+                                        <case value="1">
+                                            <a href="{:U('AdPosition/resume',array('model'=>'Order','ids'=>$row['id'],'status'=>2))}" title="接单" class="tip-bottom confirm ajax-get">
+                                                <span class="label label-info">接单</span></a>&nbsp;
+                                        </case>
+                                        <case value="2">
+                                            <a href="javascript:void(0);" title="发货" class="tip-bottom shipments"  data-id="{$row['id']}">
+                                                <span class="label label-success">发货</span></a>&nbsp;
+                                        </case>
+                                        <default />
+                                    </switch>
+                                </td>
+                            </tr>
+                        </volist>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="pagination alternate">
+                    {$page}
+                </div>
+
+            </div>
+        </div>
+    </div>
+</block>
+
+<block name="script">
+    <script src="__JS__/laydate/laydate.js"></script>
+</block>

@@ -1,0 +1,108 @@
+<extend name="Public/base" />
+
+<block name="main">
+    <link rel="stylesheet" href="/Public/Static/datetimepicker/css/datetimepicker.css">
+    <script src="/Public/Static/datetimepicker/js/bootstrap-datetimepicker.min.js"></script>
+    <script src="/Public/Static/datetimepicker/js/locales/bootstrap-datetimepicker.zh-CN.js"></script>
+    <div class="row-fluid">
+
+        <div class="span12">
+            <div class="widget-box">
+                <div class="widget-title">
+                    <span class="icon">
+                        <i class="icon-plus"></i>
+                    </span>
+                    <h5></h5>
+                </div>
+                <div class="widget-content nopadding">
+                    <form class="form-horizontal" method="post" action="{:U('AdPosition/addAdPosition')}" id="form">
+                        <input type="hidden" name="model" value="AdPosition">
+                        <input type="hidden" name="id" value="{$row['id']}">
+                        <div class="control-group">
+                            <label class="control-label">链接地址</label>
+                            <div class="controls">
+                                <input type="text" name="url" value="{$row['url']}">
+                                <span class="help-block">请输入要跳转的链接</span>
+                            </div>
+                        </div>
+                        <div class="control-group">
+                            <label class="control-label">轮播图片</label>
+                            <div class="controls">
+                                {:hook('upload',array('is_first'=>1,'unique_sign'=>'adposition_pic','field_name'=>'pic','field_value'=>$row['pic'],'save_path'=>'AdPosition'))}
+                                <span class="help-block">请上传您的轮播图 5:2 大小不超过 200k(例如:1242*500)</span>
+                            </div>
+                        </div>
+                        <div class="control-group">
+                            <label class="control-label">推广地区</label>
+                            <div class="controls">
+                                <select name="" id="province">
+                                    <option value="">请选择省级地区</option>
+                                    <option value="0">全国</option>
+                                    <volist name="province" id="province">
+                                        <option value="{$province['id']}">{$province['region_name']}</option>
+                                    </volist>
+                                </select>
+                                <select name="region" id="city">
+                                    <option value="">请选择市级地区</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="control-group">
+                            <label class="control-label">支付方式</label>
+                            <div class="controls">
+                                <select name="pay_type" id="">
+                                    <option value="1">支付宝</option>
+                                    <option value="2">微信</option>
+                                    <option value="3">银联</option>
+                                    <option value="4">余额</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="control-group" >
+                            <label class="control-label">投放位置</label>
+                            <div class="controls" >
+                                <select name="type" >
+                                    <option value="1" selected>投放首页</option>
+                                    <option value="2">投放签到页</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="control-group">
+                            <label class="control-label">投放排名</label>
+                            <div class="controls">
+                                <select name="location" class="">
+                                    <volist name="Advert" id="AdvertList" key="key">
+                                        <option value="{$AdvertList['location']}" data-id="{$AdvertList['id']}" data-money="{$AdvertList['money']}">位置{$key}-价格{$AdvertList['money']}</option>
+                                    </volist>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="control-group">
+                            <label class="control-label" >投放时间</label>
+
+                            <div class="controls" id="select-time">
+                                <div style="border: 1px solid #CCCCCC;width:500px;height: 100px;border-radius: 5px;padding: 5px;overflow: auto" class="show-date">
+                                </div>
+                                <button size="16" type="button" readonly class="form_datetime-btn btn btn-info" >增加</button>
+                                <input type="hidden" id="form_datetime">
+                                <span class="help-block">双击日期取消</span>
+                            </div>
+                        </div>
+                        <div class="control-group" style="line-height: 30px;">
+                            <label class="control-label">总价格</label>
+                            <div class="controls total-money">
+                            0元
+                            </div>
+                        </div>
+                        <div class="form-actions">
+                            <button class="btn" onclick="javascript:history.back(-1);return false;">返 回</button>　
+                            <button class="btn btn-info ajax-post no-refresh" type="button" id="submit" target-form="form-horizontal">去 支 付</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="__JS__/position.js"></script>
+</block>

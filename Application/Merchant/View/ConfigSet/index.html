@@ -1,0 +1,73 @@
+<extend name="Public/base" />
+
+<block name="main">
+
+    <div class="row-fluid">
+
+        <div class="span12">
+            <div class="widget-box">
+                <div class="widget-title">
+                    <ul class="nav nav-tabs">
+                        <volist name="groups" id="row">
+                            <li <eq name="key" value="$_REQUEST['config_group']">class="active"</eq>>
+                            <a href="{:U('ConfigSet/index',array('config_group'=>$key))}" data-toggle="">{$row}配置</a>
+                            </li>
+                        </volist>
+                    </ul>
+                </div>
+                <div class="widget-content tab-content">
+                    <form class="form-horizontal" method="post" action="{:U('ConfigSet/update')}" autocomplete="off">
+                    <volist name="list" id="row">
+                        <div class="control-group">
+                            <label class="control-label">{$row['title']}</label>
+                            <div class="controls">
+                                <switch name="row['type']">
+                                    <case value="1">
+                                        <input type="text" name="config[{$row['name']}]" value="{$row['value']}" class="number-only">
+                                        <span class="help-block">{$row['remark']}</span>
+                                    </case>
+                                    <case value="2">
+                                        <input type="text" name="config[{$row['name']}]" value="{$row['value']}">
+                                        <span class="help-block">{$row['remark']}</span>
+                                    </case>
+                                    <case value="3">
+                                        <textarea name="config[{$row['name']}]">{$row['value']}</textarea>
+                                        <span class="help-block">{$row['remark']}</span>
+                                    </case>
+                                    <case value="4">
+                                        <textarea name="config[{$row['name']}]">{$row['value']}</textarea>
+                                        <span class="help-block">{$row['remark']}</span>
+                                    </case>
+                                    <case value="5">
+                                        <div class="btn-group">
+                                            <button type="button" class="btn checked" data-default=""></button>
+                                            <button class="btn dropdown-toggle" data-toggle="dropdown">
+                                                <span class="caret"></span>
+                                            </button>
+                                            <ul class="dropdown-menu">
+                                                <volist name=":parse_config_attr($row['extra'])" id="ext">
+                                                    <li data-value="{$key}" data-title="{$ext}" <eq name="key" value="$row['value']">class="selected"</eq>>
+                                                        <a href="javascript:void(0)">{$ext}</a>
+                                                    </li>
+                                                </volist>
+                                            </ul>
+                                        </div>
+                                        <input type="hidden" name="config[{$row['name']}]" value="{$row['value']}">
+                                        <span class="help-block">{$row['remark']}</span>
+                                    </case>
+                                </switch>
+
+                            </div>
+                        </div>
+                    </volist>
+
+                    <div class="form-actions">
+                        <button class="btn" onclick="javascript:history.back(-1);return false;">返 回</button>　
+                        <button class="btn btn-info ajax-post" target-form="form-horizontal" type="submit">保 存</button>
+                    </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</block>

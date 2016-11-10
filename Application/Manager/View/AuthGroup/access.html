@@ -1,0 +1,60 @@
+<extend name="Public/base" />
+
+<block name="main">
+
+    <div class="row-fluid">
+
+        <div class="span12">
+            <div class="widget-box">
+                <div class="widget-title">
+                    <span class="icon">
+                        <i class="icon-eye-open"></i>
+                    </span>
+                    <h5>访问授权</h5>
+                </div>
+                <form class="form-horizontal" method="post" action="{:U('AuthGroup/update')}">
+                <input type="hidden" name="model" value="AuthGroup">
+                <input type="hidden" name="id" value="{$_GET['id']}">
+                <div class="widget-content nopadding">
+
+                    <volist name="list" id="row">
+                    <div class="new-update clearfix">
+                        <i class=""><input type="checkbox" class="check-nexts-all"></i>
+                        <div class="update-done">
+                            <a href="javascript:void(0)" title=""><strong>{$row['title']}</strong></a>
+                            <span style="margin-top: 10px;">
+                                <volist name="row['_child']" id="child">
+                                <input type="checkbox" name="rules[]" value="{$child['id']}" <if condition="in_array($child['id'],$rules)">checked='checked'</if>>{$child['title']}　
+                                </volist>
+                            </span>
+                        </div>
+                        <div class="update-date"><span class="update-day"></span></div>
+                    </div>
+                    </volist>
+                    <div class="form-actions">
+                        <button class="btn" onclick="javascript:history.back(-1);return false;">返 回</button>　
+                        <button class="btn btn-info ajax-post" target-form="form-horizontal" type="submit">保 存</button>
+                    </div>
+                </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</block>
+<block name="script">
+<script>
+    $(function(){
+        // 全选子权限
+        $('.check-nexts-all').click(
+            function(){
+                $(this).parents('i').next('div.update-done').find("input[type='checkbox']").attr('checked', $(this).is(':checked'));
+                if($(this).is(':checked') == true) {
+                    $(this).parents('i').next('div.update-done').find("div.checker span").addClass('checked');
+                } else {
+                    $(this).parents('i').next('div.update-done').find("div.checker span").removeClass('checked');
+                }
+            }
+        );
+    })
+</script>
+</block>

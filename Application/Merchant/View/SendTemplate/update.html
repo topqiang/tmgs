@@ -1,0 +1,82 @@
+<extend name="Public/base" />
+
+<block name="main">
+
+    <div class="row-fluid">
+
+        <div class="span12">
+            <div class="widget-box">
+                <div class="widget-title">
+                    <span class="icon">
+                        <i class="icon-plus"></i>
+                    </span>
+                    <h5></h5>
+                </div>
+                <div class="widget-content nopadding">
+                    <form class="form-horizontal" method="post" action="{:U('SendTemplate/update')}">
+                        <input type="hidden" name="model" value="SendTemplate">
+                        <input type="hidden" name="id" value="{$row['id']}">
+                        <div class="control-group">
+                            <label class="control-label">模板标识</label>
+                            <div class="controls">
+                                <input type="text" name="unique_code" value="{$row['unique_code']}">
+                                <span class="help-block">必须为英文字母</span>
+                            </div>
+                        </div>
+                        <div class="control-group">
+                            <label class="control-label">模板描述</label>
+                            <div class="controls">
+                                <input type="text" name="description" value="{$row['description']}">
+                                <span class="help-block">该模板在什么时机使用</span>
+                            </div>
+                        </div>
+                        <div class="control-group">
+                            <label class="control-label">模板类型</label>
+                            <div class="controls">
+                                <div class="btn-group">
+                                    <button type="button" class="btn checked" data-default="--选择类型--"></button>
+                                    <button class="btn dropdown-toggle" data-toggle="dropdown">
+                                        <span class="caret"></span>
+                                    </button>
+                                    <ul class="dropdown-menu select-type">
+                                        <volist name="types" id="type">
+                                            <li data-value="{$key}" data-title="{$type}" <eq name="key" value="$row['type']">class="selected"</eq>>
+                                            <a href="javascript:void(0)">{$type}</a>
+                                            </li>
+                                        </volist>
+                                    </ul>
+                                </div>
+                                <input type="hidden" name="type" value="{$row['type']}">
+                                <span class="help-block">是“短信”还是“邮件”</span>
+                            </div>
+                        </div>
+                        <div class="control-group">
+                            <label class="control-label">模板标题</label>
+                            <div class="controls">
+                                <input type="text" name="subject" value="{$row['subject']}">
+                                <span class="help-block">该模板标题 发送消息时标题性文字</span>
+                            </div>
+                        </div>
+                        <div class="control-group">
+                            <label class="control-label">模板内容</label>
+                            <div class="controls">
+                                <textarea name="template">{$row['template']}</textarea>
+                                {:hook('adminArticleEdit', array('name'=>'template','value'=>$row['template']))}
+                                <span class="help-block">模板主体内容，其中{}部分不能修改或删除</span>
+                            </div>
+                        </div>
+                        <div class="form-actions">
+                            <button class="btn" onclick="javascript:history.back(-1);return false;">返 回</button>　
+                            <button class="btn btn-info ajax-post" target-form="form-horizontal" type="submit">保 存</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</block>
+<block name="script">
+    <script>
+//        $(function(){})
+    </script>
+</block>

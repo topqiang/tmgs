@@ -1,0 +1,103 @@
+<extend name="Public/base" />
+
+<block name="main">
+
+    <div class="row-fluid">
+
+        <div class="span12">
+            <div class="widget-box">
+                <div class="widget-title">
+                    <span class="icon">
+                        <i class="icon-plus"></i>
+                    </span>
+                    <h5></h5>
+                </div>
+                <div class="widget-content nopadding">
+                    <form class="form-horizontal" method="post" action="{:U('Config/update')}" autocomplete="off">
+                        <input type="hidden" name="model" value="Config">
+                        <input type="hidden" name="id" value="{$row['id']}">
+                        <div class="control-group">
+                            <label class="control-label">配置标识/名称</label>
+                            <div class="controls">
+                                <input type="text" name="name" value="{$row['name']}">
+                                <span class="help-block">用于C函数调用，只能使用英文且不能重复，30字符以内</span>
+                            </div>
+                        </div>
+                        <div class="control-group">
+                            <label class="control-label">配置标题</label>
+                            <div class="controls">
+                                <input type="text" name="title" value="{$row['title']}">
+                                <span class="help-block">用于后台显示的配置标题，50字符以内</span>
+                            </div>
+                        </div>
+                        <div class="control-group">
+                            <label class="control-label">配置类型</label>
+                            <div class="controls">
+                                <div class="btn-group">
+                                    <button type="button" class="btn checked" data-default="--选择类型--"></button>
+                                    <button class="btn dropdown-toggle" data-toggle="dropdown">
+                                        <!--<span class="checked" data-default="--选择类型--"></span>--><span class="caret"></span>
+                                    </button>
+                                    <ul class="dropdown-menu">
+                                        <volist name="types" id="type">
+                                            <li data-value="{$key}" data-title="{$type}" <eq name="key" value="$row['type']">class="selected"</eq>>
+                                                <a href="javascript:void(0)">{$type}</a>
+                                            </li>
+                                        </volist>
+                                    </ul>
+                                </div>
+                                <input type="hidden" name="type" value="{$row['type']}">
+                                <span class="help-block">系统会根据不同类型解析配置值</span>
+                            </div>
+                        </div>
+                        <div class="control-group">
+                            <label class="control-label">配置分组</label>
+                            <div class="controls">
+                                <div class="btn-group">
+                                    <button type="button" class="btn checked" data-default="--选择分组--"></button>
+                                    <button class="btn dropdown-toggle" data-toggle="dropdown">
+                                        <!--<span class="checked" data-default="--选择分组--"></span>--><span class="caret"></span>
+                                    </button>
+                                    <ul class="dropdown-menu">
+                                        <volist name="groups" id="group">
+                                            <li data-value="{$key}" data-title="{$group}" <eq name="key" value="$row['config_group']">class="selected"</eq>>
+                                                <a href="javascript:void(0)">{$group}</a>
+                                            </li>
+                                        </volist>
+                                    </ul>
+                                </div>
+                                <input type="hidden" name="config_group" value="{$row['config_group']}">
+                                <span class="help-block">配置分组 用于批量显示及区分配置内容</span>
+                            </div>
+                        </div>
+                        <div class="control-group">
+                            <label class="control-label">配置值</label>
+                            <div class="controls">
+                                <textarea name="value">{$row['value']}</textarea>
+                                <span class="help-block">当前该配置的值</span>
+                            </div>
+                        </div>
+                        <div class="control-group">
+                            <label class="control-label">配置项</label>
+                            <div class="controls">
+                                <textarea name="extra">{$row['extra']}</textarea>
+                                <span class="help-block">如果是枚举型 需要配置该项</span>
+                            </div>
+                        </div>
+                        <div class="control-group">
+                            <label class="control-label">配置说明</label>
+                            <div class="controls">
+                                <textarea name="remark">{$row['remark']}</textarea>
+                                <span class="help-block">配置详细说明，作用用处</span>
+                            </div>
+                        </div>
+                        <div class="form-actions">
+                            <button class="btn" onclick="javascript:history.back(-1);return false;">返 回</button>　
+                            <button class="btn btn-info ajax-post" target-form="form-horizontal" type="submit">保 存</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</block>

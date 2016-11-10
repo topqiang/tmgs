@@ -1,0 +1,70 @@
+<extend name="Public/base" />
+
+<block name="main">
+
+    <div class="row-fluid">
+
+        <div class="span12">
+            <div class="widget-box">
+
+                <div class="widget-title widget-title-search">
+                    <button class="btn btn-success href" url="{:U('Withdraw/add')}" target-form="ids">新增</button>&nbsp;
+                    <span>当前余额: <i style="font-size: 15px;color: green">{$balance}</i>元</span>
+                    <span>结余中资金: <i style="font-size: 15px;color:#CCCCCC">{$awaitBalance|default="0"}</i>元</span>
+                    <form action="{:U('Withdraw/index')}" method="post" class="form">
+                        <input type="text" name="create_time" value="{$_REQUEST['create_time']}" class="laydate-icon" id="create_time" placeholder="请输入提现时间" style="width:136px;">
+                        <input type="text" name="name" value="{$_REQUEST['name']}" placeholder="请输入提现姓名">
+                        <input type="text" name="card_number" value="{$_REQUEST['card_number']}" placeholder="请输入提现卡号">
+                        <input type="text" name="money" value="{$_REQUEST['money']}" placeholder="请输入提现金额">
+                        <button class="btn btn-inverse">查询</button>
+                    </form>
+                    <!--<button class="btn btn-danger confirm ajax-post" url="{:U('Unit/delete',array('model'=>'Unit','status'=>9))}" target-form="ids">删除</button>&nbsp;-->
+                </div>
+
+                <div class="widget-content nopadding">
+                    <table class="table table-bordered table-striped with-check">
+                        <thead>
+                        <tr>
+                            <th><input type="checkbox" id="title-checkbox" name="title-checkbox" class="check-all"/><!--<i class="icon-resize-vertical"></i>--></th>
+                            <th>ID</th>
+                            <th>提现金额</th>
+                            <th>提现时间</th>
+                            <th>卡主姓名</th>
+                            <th>提现卡号</th>
+                            <th>状态</th>
+                        </tr>
+                        </thead>
+                        <tbody class="tbody">
+                        <volist name="list" id="row">
+                            <tr>
+                                <td><input type="checkbox" name="ids[]" value="{$row['id']}" class="ids"/></td>
+                                <td>{$row['id']}</td>
+                                <td style="color: red">{$row['money']}</td>
+                                <td>{$row['create_time']|date="Y-m-d H:i:s",###}</td>
+                                <td>{$row['m_c_id']['name']}</td>
+                                <td>{$row['m_c_id']['card_number']}</td>
+                                <td <eq name="row['status']" value="1">style="color:green;"<else/>style="color:red;"</eq>>{$row['status']|get_withdraw_status}</td>
+                            </tr>
+                        </volist>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="pagination alternate">
+                    {$page}
+                </div>
+
+            </div>
+        </div>
+    </div>
+</block>
+<block name="script">
+    <script src="__JS__/laydate/laydate.js"></script>
+    <script>
+        laydate({
+            elem: '#create_time', //目标元素。由于laydate.js封装了一个轻量级的选择器引擎，因此elem还允许你传入class、tag但必须按照这种方式 '#id .class'
+            istime: true, //是否开启时间选择
+            format: 'YYYY-MM-DD hh:mm:ss', //日期格式
+        });
+    </script>
+</block>

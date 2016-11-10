@@ -1,0 +1,52 @@
+<extend name="Public/base" />
+
+<block name="main">
+    <div class="row-fluid">
+        <div class="span12">
+            <div class="widget-box">
+                <div class="widget-title">
+                    <span class="icon">
+                        <i class="icon-plus"></i>
+                    </span>
+                    <h5></h5>
+                </div>
+                <div class="widget-content nopadding">
+                    <form class="form-horizontal" method="post" action="{:U('Withdraw/update')}">
+                        <input type="hidden" name="model" value="Withdraw">
+                        <input type="hidden" name="id" value="{$row['id']}">
+
+                        <div class="control-group">
+                            <label class="control-label" >银行卡号选择</label>
+                            <div class="controls">
+                                <select name="m_c_id" style="width: 315px;">
+                                    <option value="" class="">请选择银行卡号</option>
+                                    <volist name="row['MemberCard']" id="MemberCard">
+                                        <option value="{$MemberCard['id']}" >{$MemberCard['card_number']}</option>
+                                    </volist>
+                                </select>
+                                <span class="help-block">请选择你的银行卡</span>
+                            </div>
+                        </div>
+
+                        <div class="control-group">
+                            <label class="control-label" >提现金额</label>
+                            <div class="controls">
+                                <input type="text" name="money" value="{$row['money']}">
+                                <span class="help-block">请输入提现金额(现剩余:<span style="color: #0e0e0e">{$row['balance']}</span>)</span>
+                            </div>
+                        </div>
+
+                        <div class="form-actions">
+                            <button class="btn" onclick="javascript:history.back(-1);return false;">返 回</button>　
+                            <button class="btn btn-info ajax-post" target-form="form-horizontal" type="submit">保 存</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</block>
+<block name="script">
+    <script type="text/javascript">
+    </script>
+</block>

@@ -1,0 +1,70 @@
+<extend name="Public/base" />
+
+<block name="main">
+  <div class="row-fluid">
+        <div class="span12">
+            <div class="widget-box">
+                <div class="widget-title">
+                    <h5>菜单管理</h5>
+                </div>
+                <div class="widget-content nopadding">
+                    <form class="form-horizontal" method="post" action="{:U('WechatMenu/update')}">
+                        <input type="hidden" name="model" value="WechatMenu">
+                        <input type="hidden" name="id" value="{$row['id']}">
+                        
+                        <div class="control-group">
+                            <label class="control-label">上级菜单</label>
+                            <div class="controls">
+                                <select name="parent_id" id="" style="width: 315px;">
+                                    <option value="0">顶级菜单</option>
+                                    <volist name="menuList" id="list">
+                                        <option value="{$list['id']}" <eq name="row['parent_id']" value="$list['id']">selected</eq> >{$list['name']}</option>
+                                    </volist>
+                                </select>
+                                <span class="help-block"></span>
+                            </div>
+                        </div>
+
+                        <div class="control-group">
+                            <label class="control-label">菜单名称</label>
+                            <div class="controls">
+                                <input type="text" name="name" value="{$row['name']}">
+                                <span class="help-block"></span>
+                            </div>
+                        </div>
+                        
+                        <div class="control-group">
+                            <label class="control-label">关键词</label>
+                            <div class="controls">
+                                <input type="text" name="keywords" value="{$row['keywords']}">
+                                <span class="help-block">关联关键词和外链URL选填一项，外链URL的优先级高</span>
+                            </div>
+                        </div>
+                        
+                        <div class="control-group">
+                            <label class="control-label">外链</label>
+                            <div class="controls">
+                                <input type="text" name="url" value="{$row['url']}">
+                                <span class="help-block">请在这里填写网址(例如：http://baidu.com，记住必须有http://)</span>
+                            </div>
+                        </div>
+                        
+                        <div class="control-group">
+                            <label class="control-label">排序</label>
+                            <div class="controls">
+                                <input type="text" name="sort" value="{$row['sort']}">
+                                <span class="help-block">数值越大越靠前</span>
+                            </div>
+                        </div>
+                    
+                        <div class="form-actions">
+                            <button class="btn" onclick="javascript:history.back(-1);return false;">返 回</button>　
+                            <button class="btn btn-info ajax-post no-refresh" type="submit" id="submit" target-form="form-horizontal">保 存</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</block>

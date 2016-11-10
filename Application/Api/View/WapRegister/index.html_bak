@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta name="viewport" content="width=device-width,initail-scale=1.0,user-scalable=no">
+	<meta charset="Utf-8">
+	<title>欢迎注册</title>
+	<link rel="stylesheet" type="text/css" href="http://vip.51sales.org/eatcake/xq.css">
+	<style type="text/css">
+		*{margin:0px; padding: 0px}
+		.content{
+			overflow: hidden;
+		}
+		.content > img{
+			display: block;
+			margin-top: 50px;
+			width: 100%;
+		}
+		input{
+			outline: none;
+		}
+		.title{
+			width: 40%;
+			margin: 50px auto;
+		}
+		.title img{
+			width: 100%;
+		}
+		ul li{
+			list-style: none;
+			width: 90%;
+			margin: 0px auto;
+			margin-bottom: 10px;
+		}
+		ul li:last-child{
+			font-size: 12px;
+			line-height: 100%;
+			text-align: center;
+		}
+		ul li input{
+			height: 18px;
+			padding:8px 0px;
+			width: 75%;
+			padding-left:60px;
+			background-position: 20px center;
+			background-size:20px 20px;
+			background-repeat: no-repeat;
+			border-radius: 2px;
+			border: 1px solid #9c9c9c;
+			color: #9c9c9c;
+		}
+		ul li:nth-child(1) input{
+			background-image: url('/Public/Api/image/tel.png');
+		}
+		ul li:nth-child(2) input{
+			background-image: url('/Public/Api/image/code.png');
+		}
+		ul li:nth-child(3) input{
+			background-image: url('/Public/Api/image/pass.png');
+		}
+		ul li:nth-child(4) input{
+			background-image: url('/Public/Api/image/pass.png');
+		}
+		.form{
+			width: 90%;
+			margin: 0px 5%;
+		}
+		.submit{
+			width: 100%;
+			height: 45px;
+			border: none;
+			text-align: center;
+			background: #5481fd;
+			border-radius: 4px;
+			color: #fff;
+			margin-top: 20px;
+			font-size: 24px;
+		}
+		.code{
+			width: 40%;
+		}
+		.getcode{
+			height: 36px;
+			background: #5481fd;
+			width: 25%;
+			color: #fff;
+			border: 0px;
+			border-radius: 4px;
+			float: right;
+			margin-right: 5%;
+		}
+		.lab{
+			height: 2px;
+			background: #f0f0f0;
+			width: 60%;
+			margin: 40px 20%;
+			position: relative;
+		}
+		.lab p{
+			position: absolute;
+			height: 30px;
+			line-height: 30px;
+			top: -15px;
+			left: 50%;
+			margin-left: -50px;
+			background: #fff;
+			width: 100px;
+			text-align: center;
+		}
+		.ycode{
+			margin: 0px auto;
+			width: 100px;
+			border: 1px solid #ccc;
+			text-align: center;
+			height: 30px;
+			line-height: 30px;
+		}
+		.flag{
+			width: 24px;
+			height: 24px;
+			display: inline-block;
+			background: url('/Public/Api/image/true.png') center bottom no-repeat;
+			background-size: 12px 12px;
+		}
+	</style>
+</head>
+<body>
+<div class="content">
+	<div class="title"><img src="/Public/Api/image/logo.png"></div>
+	<div class="form">
+		<ul>
+			<li>
+				<input type="tel" id="tel" class="tel" placeholder="请输入手机号">
+			</li>
+			<li>
+				<button class="getcode">获取验证码</button><input type="text" id="code" class="code" placeholder="输入验证码" placeholde="请设置新密码">
+			</li>
+			<li>
+				<input type="password" id="pass" class="pass" placeholder="密码不得小于六位">
+			</li>
+			<li>
+				<input type="password" id="repass" class="repass" placeholder="再次输入密码">
+			</li>
+			<li>
+				<span class="flag" flag="true"></span>阅读并同意<a href="#">《淘米公社用户注册协议》</a>
+			</li>
+		</ul>
+		<button class="submit" type="button">注册</button>
+	</div>
+	<div class="lab">
+		<p>好友邀请码</p>
+	</div>
+	<div class="ycode">{$invite_code}</div>
+	<img src="/Public/Api/image/ad.png">
+</div>
+
+<div class="xq_out">
+	<div class="xq_in"></div>
+</div>
+</body>
+<script type="text/javascript" src="http://cdn.bootcss.com/zepto/1.1.6/zepto.min.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.0.0/jquery.min.js"></script>
+<script type="text/javascript" src="http://touch.code.baidu.com/touch-0.2.14.min.js"></script>
+<script type="text/javascript">
+	$(function () {
+		$(".flag").on('tap',function(){
+			if ($(this).attr("flag") && $(this).attr("flag")=="true") {
+				$(this).css({'background-image':'url("/Public/Api/image/false.png")'}).attr("flag","false");
+			}else{
+				$(this).css({'background-image':'url("/Public/Api/image/true.png")'}).attr("flag","true");
+			}
+		});
+		// 发送验证码
+		$('.getcode').on('click',function(){
+			var account  = $('.tel').val();
+			if(account == ''){
+				alert('请输入手机号');return false;
+			}
+			$.ajax({
+				url : "{:U('RegisterLog/sendVerify')}",
+				type : 'POST',
+				data : {
+					account :  account,
+					type : 'activity'
+				},
+				success : function(data){
+					var myObject = objTEST=eval("("+data+")");
+					if(myObject.flag == 'success'){
+						alert(myObject.message);
+	                	$('.getcode').attr('disabled',true); // 开启禁用
+						countDown(60); // 倒计时六十秒
+					}else{
+						alert(myObject.message);
+						$('.getcode').attr('disabled',true); // 开启禁用
+						countDown(60); // 倒计时六十秒
+						return false;
+					}
+				},
+				error : {}
+			});
+		});
+		// 验证验证码
+		$('.submit').on('click',function(){
+			var account = $('.tel').val(); // 手机号
+			var code    = $('.code').val(); // 验证码
+			var repass  = $('.repass').val(); // 重复密码 
+			var pass    = $('.pass').val(); // 密码
+			var invite = $('.ycode').text();
+			// 验证密码是否正确
+			if(account == ''){
+				alert('请输入手机号');return false;
+			}
+			if(code == ''){
+				alert('请输入验证码');return false;
+			}
+			if(repass != pass){
+				alert('两次输入密码不同');return false;
+			}
+			if(pass.length < 6){
+				alert('密码不能小于6位');return false;
+			}
+			$.ajax({
+				url: '{:U("WapRegister/doRegister")}',
+				type: 'POST',
+				dataType: 'json',
+				data: {account: account,code:code,pass:pass,invite:invite},
+				success :function(data){
+					if(data.status == 1){
+						alert(data.info);
+//						setTimeout(window.location.reload(),20000);
+						$('input').val('');
+
+					}else{
+						alert(data.info);return false;
+					}
+				}
+			})
+		});
+
+		// 验证码 倒计时
+		var countDown = function(count) {
+            window.setTimeout(function(){ 
+                count--; 
+                if(count > 0) { 
+	            	$('.getcode').text(count + '秒后重新获取');
+                    $('#num').attr('innerHTML', count); 
+                    countDown(count);
+                } else { 
+                	$('.getcode').text('获取验证码');
+                    $('.getcode').removeAttr('disabled');
+                } 
+            }, 1000); 
+		}
+	});
+</script>
+</html>

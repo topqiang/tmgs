@@ -1,0 +1,62 @@
+<extend name="Public/base" />
+
+<block name="main">
+
+    <div class="row-fluid">
+
+        <div class="span12">
+            <div class="widget-box">
+                <div class="widget-title widget-title-search">
+                    <form action="{:U('Security/index')}" method="post" class="form">
+                        <input type="text" name="order_security_sn" value="{$_REQUEST['order_security_sn']}" placeholder="订单号">
+                        <input type="text" name="merchant_id" value="{$_REQUEST['merchant_id']}" placeholder="商家名称">
+                        <button class="btn btn-inverse">查询</button>
+                    </form>
+                </div>
+                <div class="widget-content nopadding">
+                    <table class="table table-bordered table-striped with-check">
+                        <thead>
+                        <tr>
+                            <th><input type="checkbox" id="title-checkbox" name="title-checkbox" class="check-all"/></th>
+                            <th>商家名称</th>
+                            <th>订单号</th>
+                            <th>支付方式</th>
+                            <th>支付金额</th>
+                            <th>支付时间</th>
+                        </tr>
+                        </thead>
+                        <tbody class="tbody">
+                        <volist name="list" id="row">
+                            <tr>
+                                <td><input type="checkbox" name="ids[]" value="{$row['id']}" class="ids"/></td>
+                                <td>{$row['merchant_id']}</td>
+                                <td>{$row['order_security_sn']}</td>
+                                <td>{$row['type']|rechargeType}</td>
+                                <td>{$row['money']}</td>
+                                <td>{$row['create_time']|date="Y-m-d H:i:s",###}</td>
+                            </tr>
+                        </volist>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="pagination alternate">
+                    {$page}
+                </div>
+
+            </div>
+        </div>
+    </div>
+</block>
+
+<block name="script">
+    <script src="__JS__/laydate/laydate.js"></script>
+    <script>
+        laydate({
+            elem: '#create_time', //目标元素。由于laydate.js封装了一个轻量级的选择器引擎，因此elem还允许你传入class、tag但必须按照这种方式 '#id .class'
+            istime: true, //是否开启时间选择
+            format: 'YYYY-MM-DD hh:mm:ss', //日期格式
+        });
+    </script>
+
+</block>

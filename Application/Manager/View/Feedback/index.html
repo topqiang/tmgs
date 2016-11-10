@@ -1,0 +1,54 @@
+<extend name="Public/base" />
+
+<block name="main">
+
+    <div class="row-fluid">
+
+        <div class="span12">
+            <div class="widget-box">
+
+                <div class="widget-title widget-title-search">
+                </div>
+
+                <div class="widget-content nopadding">
+                    <table class="table table-bordered table-striped with-check">
+                        <thead>
+                        <tr>
+                            <th><input type="checkbox" id="title-checkbox" name="title-checkbox" class="check-all"/><!--<i class="icon-resize-vertical"></i>--></th>
+                            <!--<th>ID</th>-->
+                            <th>反馈账号</th>
+                            <th>反馈时间</th>
+                            <th>类型</th>
+                            <th>状态</th>
+                            <th>操作</th>
+                        </tr>
+                        </thead>
+                        <tbody class="tbody">
+                        <volist name="list" id="row">
+                            <tr>
+                                <td><input type="checkbox" name="ids[]" value="{$row['id']}" class="ids"/></td>
+                                <!--<td>{$row['id']}</td>-->
+                                <td>{$row['object_id']}</td>
+                                <td>{$row['create_time']}</td>
+                                <td>{$row['type']}</td>
+                                <td><eq name="row['status']" value="0"><span style="color: red">未读</span> <else/> <span style="color:green">已读</span></eq></td>
+                                <td>
+                                    <a href="{:U('Feedback/update',array('id'=>$row['id']))}" title="查看" class="tip-bottom">
+                                        <span class="label label-success">查看</span></a>&nbsp;
+                                    <!--<a href="{:U('Feedback/delete',array('Feedback'=>'Action','ids'=>$row['id'],'status'=>9))}" title="删除" class="tip-bottom confirm ajax-get">-->
+                                        <!--<span class="label label-important">删除</span></a>-->
+                                </td>
+                            </tr>
+                        </volist>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="pagination alternate">
+                    {$page}
+                </div>
+
+            </div>
+        </div>
+    </div>
+</block>

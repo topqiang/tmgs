@@ -1,0 +1,62 @@
+<extend name="Public/base" />
+
+    <block name="main">
+
+    <div class="row-fluid">
+
+        <div class="span12">
+            <div class="widget-box">
+
+               <div class="widget-title widget-title-search">
+                   <button class="btn btn-danger confirm ajax-post" url="{:U('SendLog/remove',array('model'=>'SendLog'))}" target-form="ids">删除记录</button>&nbsp;
+                   <form action="{:U('SendLog/index')}" method="post" class="form">
+
+                   </form>
+                </div>
+
+                <div class="widget-content nopadding">
+                    <table class="table table-bordered table-striped with-check">
+                        <thead>
+                        <tr>
+                            <th><input type="checkbox" id="title-checkbox" name="title-checkbox" class="check-all"/><!--<i class="icon-resize-vertical"></i>--></th>
+                            <th>ID</th>
+                            <th>接收账号</th>
+                            <th>模板标识</th>
+                            <th>类型</th>
+                            <th>发送者</th>
+                            <th>发送时间</th>
+                            <th>发送状态</th>
+                            <th>操作</th>
+                        </tr>
+                        </thead>
+                        <tbody class="tbody">
+                        <volist name="list" id="row">
+                        <tr>
+                            <td><input type="checkbox" name="ids[]" value="{$row['id']}" class="ids"/></td>
+                            <td>{$row['id']}</td>
+                            <td>{$row['receiver']}</td>
+                            <td>{$row['unique_code']|default='未使用模板'}</td>
+                            <td>{$row['type'],SEND_TEMPLATE_TYPES|get_config_title}</td>
+                            <td>{$row['account']|default='系统'}</td>
+                            <td>{$row['create_time']|date='Y-m-d H:i',###}</td>
+                            <td>{$row['status']|get_send_status}</td>
+                            <td>
+                                <a href="{:U('SendLog/detail',array('id'=>$row['id']))}" title="明细" class="tip-bottom">
+                                    <span class="label label-info">明细</span></a>&nbsp;
+                                <a href="{:U('SendLog/remove',array('model'=>'SendLog','ids'=>$row['id']))}" title="移除" class="tip-bottom confirm ajax-get">
+                                    <span class="label label-important">移除</span></a>
+                            </td>
+                        </tr>
+                        </volist>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="pagination alternate">
+                    {$page}
+                </div>
+
+            </div>
+        </div>
+    </div>
+    </block>

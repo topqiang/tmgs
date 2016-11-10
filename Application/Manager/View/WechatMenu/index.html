@@ -1,0 +1,120 @@
+<extend name="Public/base" />
+
+<block name="main">
+
+  
+    <div class="row-fluid">
+        <div class="span12">
+            <div class="widget-box">
+                <div class="widget-title widget-title-search">
+                    <button class="btn btn-success href" url="{:U('WechatMenu/add')}" target-form="ids">新增</button>&nbsp;
+                    <button class="btn btn-info make-menu" type="button">上传菜单</button>&nbsp;
+                </div>
+
+                <div class="widget-content nopadding">
+                    <table class="table table-bordered table-striped with-check">
+                        <thead>
+                        <tr>
+                            <th><input type="checkbox" id="title-checkbox" name="title-checkbox" class="check-all"/><!--<i class="icon-resize-vertical"></i>--></th>
+                            <th>菜单名称</th>
+                            <th>关键词</th>
+                            <th>外链</th>
+                            <th>上级菜单</th>
+                            <th>排序</th>
+                            <th>操作</th>
+                        </tr>
+                        </thead>
+                        <tbody class="tbody">
+                        <volist name="list" id="row">
+                            <tr>
+                                <td><input type="checkbox" name="ids[]" value="{$row['id']}" class="ids"/></td>
+                                <td>{$row['name']}</td>
+                                <td>{$row['keywords']}</td>
+                                <td>{$row['url']}</td>
+                                <td>{$row['parent_id']}</td>
+                                <td>{$row['sort']}</td>
+                                <td>
+                                    <a href="{:U('WechatMenu/update',array('id'=>$row['id']))}" title="编辑" class="tip-bottom">
+                                        <span class="label label-success">编辑</span></a>&nbsp;
+                                    <a href="{:U('WechatMenu/remove',array('model'=>'WechatMenu','ids'=>$row['id'],'status'=>9))}" title="删除" class="tip-bottom confirm ajax-get">
+                                        <span class="label label-important">删除</span></a>
+                                </td>
+                            </tr>
+                        </volist>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="pagination alternate">
+                    <!-- {$page} -->
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <input type="hidden" value="0" class="numt">
+
+    <div class="row-fluid">
+        <div class="span12">
+            <h4 class="opasss"> 创建菜单规则 </h4>
+            <ul>
+                <li>自定义菜单最多包括3个一级菜单，每个一级菜单最多包含5个二级菜单。</li>
+                <li>一级菜单最多4个汉字，二级菜单最多7个汉字，多出来的部分将会以“...”代替。</li>
+                <li>上传菜单之后微信公众平台会在五分钟左右拉取一次菜单,测试的时候可以取消关注该公众号再次关注即可看到</li>
+                <li>点击'创建菜单规则'5次可查看AppId和AppSerret</li>
+                <li>服务号才能获得AppId和AppSecret</li>
+            </ul>
+
+            <div class="control-group noshow" style="display: none">
+                <label class="control-label">AppId</label>
+                <div class="controls">
+                    <input type="text" name="appid" value="{$tok['app_id']}">
+                    <span class="help-block"></span>
+                </div>
+            </div>
+            
+            <div class="control-group noshow" style="display: none;">
+                <label class="control-label">AppSecret</label>
+                <div class="controls">
+                    <input type="text" name="appsecret" value="{$tok['app_secret']}">
+                    <span class="help-block"></span>
+                </div>
+            </div>
+            <div class="control-group noshow" style="display:none ;">
+                <button type="button" class="btn btn-success up-is">提交</button>
+            </div>
+        </div>
+        <div>
+        </div>
+    </div>  
+</block>
+<block name="script">
+    <script type="text/javascript">
+        $('.make-menu').click(function(event) {
+            $.post('{:U("upMenu")}',{},function(data){
+                if(data == 1)alert('您还没有创建任何菜单');
+                if(data == 2)alert('创建菜单成功，需重新关注或隔天才能看到效果');
+                if(data == 3)alert('创建菜单失败，稍后请重试');
+                if(data == 4)alert('获取ACCESS_TOKEN失败，检查您的AppId或AppSecret是否正确');
+                window.location.reload();
+            })
+        });
+        $('.opasss').click(function(){
+            anum = $('.numt').val();
+            anum ++ ;
+            if(anum < 5){
+                $('.numt').val(anum);
+            }else{
+                $('.noshow').show();
+            }
+        });
+        $('.up-is').click(function(){
+            var appId = $("input[name='appid']").val();
+            var appSecret = $("input[name='appsecret']").val();
+            $.post('{:U("upInfo")}',{'app_id':appId,'app_secret':appSecret},function(data){
+                if(data == 1)alert('添加成功');
+                if(data == 2)alert('修改成功');
+                window.location.reload();
+            });
+        });
+    </script>
+</block>

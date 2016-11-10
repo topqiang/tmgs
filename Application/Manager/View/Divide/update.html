@@ -1,0 +1,72 @@
+<extend name="Public/base" />
+
+<block name="main">
+
+    <div class="row-fluid">
+
+        <div class="span12">
+            <div class="widget-box">
+                <div class="widget-title">
+                    <span class="icon">
+                        <i class="icon-plus"></i>
+                    </span>
+                    <h5></h5>
+                </div>
+                <div class="widget-content nopadding">
+                    <form class="form-horizontal" method="post" action="{:U('Divide/update')}">
+                        <input type="hidden" name="model" value="Divide">
+                        <input type="hidden" name="id" value="{$row['id']}">
+
+                        <div class="control-group">
+                            <label class="control-label" >一级分成比例</label>
+                            <div class="controls">
+                                <input type="text" name="divide_a" value="{$row['divide_a']}"  style="width: 50%;">
+                                <span class="help-block">请输入分成比例之和小于/等于1的两位小数</span>
+                            </div>
+                        </div>
+                        <div class="control-group">
+                            <label class="control-label" >二级分成比例</label>
+                            <div class="controls">
+                                <input type="text" name="divide_b" value="{$row['divide_b']}"  style="width: 50%;">
+                                <span class="help-block">请输入分成比例之和小于/等于1的两位小数</span>
+                            </div>
+                        </div>
+                        <div class="control-group">
+                            <label class="control-label" >三级分成比例</label>
+                            <div class="controls">
+                                <input type="text" name="divide_c" value="{$row['divide_c']}"  style="width: 50%;">
+                                <span class="help-block">请输入分成比例之和小于/等于1的两位小数</span>
+                            </div>
+                        </div>
+                        <div class="control-group">
+                            <label class="control-label" >四级分成比例</label>
+                            <div class="controls">
+                                <input type="text" name="divide_d" value="{$row['divide_d']}"  style="width: 50%;">
+                                <span class="help-block">请输入分成比例之和小于/等于1的两位小数</span>
+                            </div>
+                        </div>
+                        <div class="control-group">
+                            <label class="control-label" >用户返钱比例</label>
+                            <div class="controls">
+                                <input type="text" name="divide_m" value="{$row['divide_m']}"  style="width: 50%;">
+                                <span class="help-block">请输入分成比例之和小于/等于1的两位小数</span>
+                            </div>
+                        </div>
+                        <div class="control-group">
+                            <label class="control-label" >平台抽成比例</label>
+                            <div class="controls">
+                                <input type="text" name="divide_p" value="{$row['divide_p']}"  style="width: 50%;">
+                                <span style="color: #F32043;" class="help-block">请输入小于等于一的两位小数 例(0.6)</span>
+                            </div>
+                        </div>
+
+                        <div class="form-actions">
+                            <button class="btn" onclick="javascript:history.back(-1);return false;">返 回</button>　
+                            <button class="btn btn-info ajax-post" target-form="form-horizontal" type="submit">保 存</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</block>

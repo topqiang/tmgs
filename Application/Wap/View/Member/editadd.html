@@ -1,0 +1,44 @@
+<extend name="Public/base" />
+<block name="main">
+    <body>
+    <header class="bgz colb">
+        <span class="left"></span>
+        <span class="poab pfr mar10">保存</span>
+        修改地址
+    </header>
+    <div class="content" style="padding-top: 50px;">
+        <div class="formline pad0-10">
+            <div>
+                <span class="disib" style="width: 100px;">收货人：</span>
+                <input type="text" placeholder="请填写姓名"/>
+            </div>
+            <div>
+                <span class="disib" style="width: 100px;">联系电话：</span>
+                <input type="text" placeholder="请填写手机号码"/>
+            </div>
+            <div>
+                <span class="right fr mat15"></span>
+                <span class="fr mar5 cole">请选择</span>
+                <span class="disib" style="width: 100px;">所在地区：</span>
+                <input type="text" placeholder="选择取货地址" readonly="true"/>
+            </div>
+            <div>
+                <input type="text" placeholder="详细地址如门牌号等"/>
+            </div>
+        </div>
+
+        <div class="formline paytype mat20">
+            <div class="top_check on mar10"><span class="iconcheck fr"></span>设为默认地址</div>
+        </div>
+
+        <div class="botarea bgz colb textcen lh50 fs24">
+            删除
+        </div>
+
+    </div>
+    </body>
+</block>
+<block name="script">
+    <script type="text/javascript" src="__JS__/touch.min.js"></script>
+
+</block>

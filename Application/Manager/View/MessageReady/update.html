@@ -1,0 +1,55 @@
+<extend name="Public/base" />
+
+<block name="main">
+
+    <div class="row-fluid">
+
+        <div class="span12">
+            <div class="widget-box">
+                <div class="widget-title">
+                    <span class="icon">
+                        <i class="icon-plus"></i>
+                    </span>
+                    <h5></h5>
+                </div>
+                <div class="widget-content nopadding">
+                    <form class="form-horizontal" method="post" action="{:U('MessageReady/update')}" id="form">
+                        <input type="hidden" name="model" value="MessageReady">
+                        <input type="hidden" name="id" value="{$row['id']}">
+                        <div class="control-group">
+                            <label class="control-label">消息标题</label>
+                            <div class="controls">
+                                <input type="text" name="cn_title" value="{$row['cn_title']}">
+                                <span class="help-block"></span>
+                            </div>
+                        </div>
+                        <div class="control-group">
+                            <label class="control-label">文章内容</label>
+                            <div class="controls">
+                                <textarea name="cn_content">{$row['cn_content']}</textarea>
+                                {:hook('adminArticleEdit', array('is_first'=>1,'name'=>'cn_content','value'=>$row['cn_content']))}
+                                <span class="help-block"></span>
+                            </div>
+                        </div>
+                        <div class="control-group">
+                            <label class="control-label">系统消息类型</label>
+                            <div class="controls">
+                                <label class="radio inline">
+                                    <input type="radio" id="inlineCheckbox1" name="m_type" value="1"  <neq name="row['m_type']" value="2">checked</neq>> 用户
+                                </label>
+                                <label class="checkbox inline">
+                                    <input type="radio" id="inlineCheckbox2" name="m_type" value="2"  <eq name="row['m_type']" value="2">checked</eq>> 商家
+                                </label>
+                                <span class="help-block"></span>
+                            </div>
+                        </div>
+                        <div class="form-actions">
+                            <button class="btn" onclick="javascript:history.back(-1);return false;">返 回</button>　
+                            <button class="btn btn-info ajax-post no-refresh" type="submit" id="submit" target-form="form-horizontal">保 存</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</block>

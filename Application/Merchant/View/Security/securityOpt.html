@@ -1,0 +1,46 @@
+<extend name="Public/base" />
+
+<block name="main">
+
+    <div class="row-fluid">
+        <div class="span2"></div>
+        <div class="span8" style="padding: 30px;">
+            <div class="span3"></div>
+            <div class="span6 hero-unit" style="border:1px solid #3A3A3A;height: 650px;width: 522px;">
+                <div class="span12" style="text-align: center;">
+                    <h2 style="">保证金等级</h2>
+                    <hr>
+                </div>
+                <div class="span12" style="margin-left: -1px;">
+                    <volist name="merAdvert" id="merAdvert" key="key">
+                        <div  style="border-bottom:1px solid #CCCCCC;margin-bottom:15px;padding:5px 5px;height: 63px;">
+                            <img  src="{$merAdvert['pic']}" alt="" style="width: 62px;height: 62px">
+                            <div style="position:relative;left:65px;top:-62px;">{$merAdvert['title']}</div>
+                            <div style="position:relative;left:65px;top:-64px;">{$merAdvert['content']}</div>
+                            <div style="position:relative;left:275px;top:-107px;" class="money" data-id="{$merAdvert['id']}" data-money="{$merAdvert['money']}">￥{$merAdvert['money']}</div>
+                            <a href="javascript:;" class="check" style="position:relative;left:367px;top:-137px;"> <eq name="key" value="1"><i class="icon-check"></i> <else/> <i class="icon-check-empty"></i></eq></a>
+                            <!--<a href="javascript:;" style="position:relative;left:367px;top:-137px;"><i class="icon-check-empty"></i></a>-->
+                        </div>
+                    </volist>
+                </div>
+                <button class="btn btn-large btn-block btn-primary transaction" >确认办理</button>
+            </div>
+        </div>
+        <div class="span2"></div>
+    </div>
+    <script type="text/javascript">
+
+        $('.check').click(function(){
+            var check = $(this).children('i').attr('class');
+            if(check != 'icon-check'){
+                $(this).children('i').removeAttr('class').attr('class','icon-check');
+               var a = $(this).parent().siblings().children('a').children('i').removeAttr('class').attr('class','icon-check-empty');
+            }
+        });
+        // 选择价格之后办理
+        $('.transaction').click(function(){
+            var id = $('.icon-check').parent().siblings('.money').data('id'); // 获得 办理的ID
+            window.location.href = '/Merchant/Security/selectPayWay/id/'+id;
+        })
+    </script>
+</block>

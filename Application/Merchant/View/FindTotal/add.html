@@ -1,0 +1,80 @@
+<extend name="Public/base" />
+
+<block name="main">
+    <link rel="stylesheet" href="/Public/Static/datetimepicker/css/datetimepicker.css">
+    <script src="/Public/Static/datetimepicker/js/bootstrap-datetimepicker.min.js"></script>
+    <script src="/Public/Static/datetimepicker/js/locales/bootstrap-datetimepicker.zh-CN.js"></script>
+    <div class="row-fluid">
+
+        <div class="span12">
+            <div class="widget-box">
+                <div class="widget-title">
+                    <span class="icon">
+                        <i class="icon-plus"></i>
+                    </span>
+                    <h5></h5>
+                </div>
+                <div class="widget-content nopadding">
+                    <form class="form-horizontal" method="post" action="{:U('FindTotal/addFindTotal')}" id="form">
+                        <input type="hidden" name="model" value="FindTotal">
+                        <input type="hidden" name="id" value="{$row['id']}">
+                        <div class="control-group" >
+                            <label class="control-label">办理服务</label>
+                            <div class="controls" >
+                                <select name="type">
+                                    <option value="" selected>请选择要办理的服务</option>
+                                    <volist name="ma" id="ma">
+                                        <option value="{$ma.type}"  data-money="{$ma.money}">{$ma.title}</option>
+                                    </volist>
+                                </select>
+                            </div>
+                        </div>
+                        <!-- // 当办理服务选择的为 好商品的时候 出现好商品界面 -->
+                        <div class="control-group good_goods" style="display:none;">
+                            <label class="control-label">请选择商品</label>
+                            <div class="controls" >
+                                <input type="text" name="goods_name" placeholder="请输入商品名称关键字">
+                                <br>
+                                <select name=""  class="goods_name_list" size="10" style="width:315px;"></select>
+                                <span class="help-block" style="color: red;">请在列表中选择您的商品</span>
+                            </div>
+                        </div>
+                        <div class="control-group">
+                            <label class="control-label">支付方式</label>
+                            <div class="controls" >
+                                <select name="pay_type" id="">
+                                    <option value="" selected>请选择你的支付方式</option>
+                                    <volist name=":C('PAYTYPE')" id="type">
+                                          <option value="{$type['type_key']}">{$type['type_title']}</option>
+                                    </volist>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="control-group">
+                            <label class="control-label" >投放时间</label>
+
+                            <div class="controls" id="select-time">
+                                <div style="border: 1px solid #CCCCCC;width:500px;height: 100px;border-radius: 5px;padding: 5px;overflow: auto" class="show-date">
+                                </div>
+                                <button size="16" type="button" readonly class="form_datetime-btn btn btn-info" >增加</button>
+                                <input type="hidden" id="form_datetime">
+                                <span class="help-block">双击日期取消</span>
+                            </div>
+                        </div>
+                        <div class="control-group" style="line-height: 30px;">
+                            <label class="control-label">总价格</label>
+                            <div class="controls total-money">
+                                0元
+                            </div>
+                        </div>
+                        <div class="form-actions">
+                            <button class="btn" onclick="javascript:history.back(-1);return false;">返 回</button>　
+                            <button class="btn btn-info ajax-post no-refresh" type="button" id="submit" target-form="form-horizontal">去 支 付</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="__JS__/findtotal.js"></script>
+</block>

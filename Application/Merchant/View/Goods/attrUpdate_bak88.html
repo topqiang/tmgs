@@ -1,0 +1,245 @@
+<extend name="Public/base" />
+
+<block name="main">
+
+    <div class="row-fluid">
+
+        <div class="span12">
+            <div class="widget-box">
+                <div class="widget-title">
+                    <span class="icon">
+                        <i class="icon-plus"></i>
+                    </span>
+                    <h5></h5>
+                </div>
+                <div class="widget-content nopadding">
+                    <form class="form-horizontal" method="post" action="{:U('Goods/attrAdd')}" id="form">
+                        <!--<input type="hidden" name="model" value="Goods">-->
+                        <input type="hidden" name="goods_id" value="{$goods_id}">
+                        <input type="hidden" name="thr" value="{$thr}">
+                        <!--<input type="hidden" name="id" value="{//$row['id']}">-->
+                        <!--// 商品名称-->
+
+                        <div class="control-group" id="attr_select">
+                            <label class="control-label">属性选择</label>
+                            <!--// 商品属性-->
+                            <input type="hidden" value="" name="attr_key_group">
+                            <div class="controls">
+                            <select name="" size="10" id="attr">
+
+                                <volist name="row['attr']" id="attr" key="k">
+                                    <eq name="k" value="1">
+                                        <option value="{$attr['id']}" selected="selected">{$attr['cn_attr_name']}</option>
+                                        <else/>
+                                        <option value="{$attr['id']}">{$attr['cn_attr_name']}</option>
+                                    </eq>
+
+                                </volist>
+                            </select>
+                            <select name=""  size="10" id="attrValue">
+                                <volist name="row['attrValue']" id="attr" key="k">
+                                    <eq name="k" value="1">
+                                        <option value="{$attr['id']}" selected="selected">{$attr['cn_attr_con_name']}</option>
+                                        <else/>
+                                        <option value="{$attr['id']}">{$attr['cn_attr_con_name']}</option>
+                                    </eq>
+                                </volist>
+                            </select>
+                                <a href="javascript:void(0);" id="add_attr">增加该属性>></a>
+                                <select name="" multiple="multiple" size="10" id="show_attr"></select>(双击删除)
+                                没有你想要属性? <a href="#myModal" role="button" class="" data-toggle="modal">添加</a>
+                            </div>
+                        </div>
+                        <div class="control-group">
+                            <label class="control-label">商品销售价</label>
+                            <div class="controls">
+                                <input type="text" name="cn_price" value="{$row['cn_price']}">
+                                <span class="help-block" style="color:#CC0000;">此价格是商品销售价格,应高于商品批发价</span>
+                            </div>
+                        </div>
+                        <div class="control-group">
+                            <label class="control-label">商品批发价</label>
+                            <div class="controls">
+                                <input type="text" name="wholesale_prices" value="{$row['wholesale_prices']}">
+                                <span class="help-block" style="color:#CC0000;">此价格是商品的批发价,应低于商品销售价格</span>
+                            </div>
+                        </div>
+                        <!--// 菜单-->
+                        <div class="form-actions">
+                            <button class="btn" onclick="javascript:history.back(-1);return false;">返 回</button>　
+                            <button class="btn btn-info ajax-post no-refresh" type="submit" id="submit" target-form="form-horizontal">保 存</button>　
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 弹窗1  -->
+    <div id="myModal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-header">
+            <h3 id="myModalLabel">添加自定义属性</h3>
+        </div>
+        <!--// 主体-->
+        <div class="modal-body">
+            <select name="" id="custom_attr_select">
+                <option value="">请选择商品属性名称</option>
+                <volist name="row['attr']" id="attr" key="k">
+                    <option value="{$attr['id']}">{$attr['cn_attr_name']}</option>
+                </volist>
+                <option value="noAttr">我要自行添加商品属性名称</option>
+            </select>
+
+            <span id="new-attr-name" style="display: none;" >
+                <input type="text" name="new-attr-name" data-id="{$thr}"  placeholder="填写你想要的属性名称">
+                <button style="margin-top:-10px;" class="btn" id="btn_attr_name">确认</button>
+            </span>
+            <div id="fill_attr">
+                <p>填写属性值</p>
+                <input type="text" name="attr_id" value=""/>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button class="btn" data-dismiss="modal" aria-hidden="true">关闭</button>
+            <button class="btn btn-primary" id="attr-btn-add">添加</button>
+        </div>
+    </div>
+
+    <div class="widget-content nopadding">
+        <table class="table table-bordered table-striped with-check">
+            <thead>
+            <tr>
+                <th><input type="checkbox" id="title-checkbox" name="title-checkbox" class="check-all"/><!--<i class="icon-resize-vertical"></i>--></th>
+                <th>ID</th>
+                <th>价格</th>
+                <th>平台价格</th>
+                <th>差价</th>
+                <th>商品属性值</th>
+                <th>操作</th>
+            </tr>
+            </thead>
+            <tbody class="tbody">
+            <volist name="row['list']" id="row">
+                <tr>
+                    <td><input type="checkbox" name="ids[]" value="{$row['id']}" class="ids"/></td>
+                    <td>{$row['id']}</td>
+                    <td>{$row['cn_price']}</td>
+                    <td>{$row['wholesale_prices']}</td>
+                    <td>{$row['cn_price'] - $row['wholesale_prices']}</td>
+                    <td>{$row['attr_key_group']}</td>
+                    <td>
+                        <a href="{:U('Goods/remove',array('model'=>'goods_product','ids'=>$row['id'],'status'=>9))}" title="删除" class="tip-bottom confirm ajax-get">
+                            <span class="label label-important">删除</span></a>
+                    </td>
+                </tr>
+            </volist>
+            </tbody>
+        </table>
+    </div>
+
+    <script>
+        $('#attr').on('change',function(){
+            var id =$(this).val();
+            $.ajax({
+                url : '{:U("Goods/getAttrList")}',
+                type : 'POST',
+                data : {id:id},
+                success: function(data){
+                    $('#attrValue').html('');
+                    $.each(data,function(k,v){
+                        $('#attrValue').append('<option value="'+ v.id +'">'+ v.cn_attr_con_name+'</option>');
+                    })
+                }
+            });
+        });
+        // 添加属性到右侧
+        $('#add_attr').on('click',function(){
+            var text = $('#attrValue').find("option:selected").text();
+            if(text == ''){
+                return false;
+            }
+            var id = $('#attrValue').val();
+            var parent = $('#attr').val();
+            var array = $('#show_attr').children('option')
+            var a = '';
+            $.each(array,function(k,v){
+                if($(this).val() == id || $(this).data('id') == parent)a = 1;
+            });
+            if(a == 1)return false;
+            $('#show_attr').append('<option data-id="'+parent+'" value="'+id+'">'+text+'</option>');
+            var  a =  $('#show_attr').children().map(function(){
+                return $(this).val();
+            }).get().join(',');
+            $('input[name="attr_key_group"]').val(a);
+        });
+
+        // 双击删除
+        $('#show_attr').dblclick(function(){
+            $("option:selected", this).remove();
+            $('input[name="attr_key_group"]').val('');
+            var  a =  $('#show_attr').children().map(function(){
+                return $(this).val();
+            }).get().join(',');
+            $('input[name="attr_key_group"]').val(a);
+        });
+        // 选择商品属性名称
+        $('#custom_attr_select').on('change',function(){
+            if($(this).val() == 'noAttr'){
+                $('#new-attr-name').show();$('#fill_attr').hide();
+            }else{
+                $('#new-attr-name').hide();$('#fill_attr').show();
+            }
+        });
+        // 确认添加属性名称
+        $('#btn_attr_name').on('click',function(){
+            var name = $('input[name="new-attr-name"]').val();
+            var thr = $('input[name="new-attr-name"]').data('id');
+            if(name == '')return false;
+            $.ajax({
+                url : '{:U("Goods/addAttrName")}',
+                type : 'POST',
+                data : {name:name,thr:thr},
+                success: function(data){
+                    if(data.status == 1){
+                    $('#new-attr-name').hide();$('#fill_attr').show();
+                        $('#custom_attr_select').html('');
+                        $.each(data.attr,function(k,v){
+                            if(k+1 == data.attr.length){
+                                $('#custom_attr_select').append('<option value="'+v.id+'">'+ v.cn_attr_name+'</option>');
+                                $('#custom_attr_select').append('<option value="noAttr">没有想要的属性</option>');
+                            }else{
+                                $('#custom_attr_select').append('<option value="'+v.id+'">'+ v.cn_attr_name+'</option>');
+                            }
+                        });
+                    }else{
+                        alert(data.msg);
+                    }
+
+                }
+            })
+        });
+        // 点击添加属性值
+        $('#attr-btn-add').on('click',function(){
+            var attr_id = $('#custom_attr_select').val(); // 属性名称ID
+            var cn_attr_con_name = $('input[name="attr_id"]').val(); // 属性值名称
+            if(cn_attr_con_name == '')return false;
+            if(attr_id == '')return false;
+            $.ajax({
+                url : "{:U('Goods/addAttrValue')}",
+                type : 'POST',
+                data : {attr_id:attr_id,cn_name:cn_attr_con_name},
+                success:function(data){
+                    if(data.status == 1){
+//                        $('.modal').hide();
+//                        $('#myModal').modal('hide')
+                        window.location.reload();
+                    }else{
+                        alert(data.msg);
+                    }
+                }
+            });
+        });
+
+    </script>
+</block>
+

@@ -1,0 +1,121 @@
+<extend name="Public/base" />
+
+<block name="main">
+
+    <div class="row-fluid">
+
+        <div class="span12">
+            <div class="widget-box">
+                <div class="widget-title">
+                    <span class="icon">
+                        <i class="icon-plus"></i>
+                    </span>
+                    <h5></h5>
+                </div>
+                <div class="widget-content nopadding">
+                    <form class="form-horizontal" method="post" action="{:U('Advert/update')}" id="form">
+                        <input type="hidden" name="model" value="Advert">
+                        <input type="hidden" name="id" value="{$row['id']}">
+
+                        <div class="control-group">
+                            <label class="control-label">广告链接</label>
+                            <div class="controls">
+                                <input type="text" name="ad_url" value="{$row['ad_url']}" placeholder="http://www.baidu.com">
+                                <span class="help-block">请输入点击时访问的链接</span>
+                            </div>
+                        </div>
+
+                        <div class="control-group">
+                            <label class="control-label">广告商名称</label>
+                            <div class="controls">
+                                <input type="text" name="company_name" value="{$row['company_name']}" placeholder="百度">
+                                <span class="help-block">请输入合作广告商的公司名称</span>
+                            </div>
+                        </div>
+
+                        <div class="control-group">
+                            <label class="control-label">广告图</label>
+                            <div class="controls">
+                                {:hook('upload',array('is_first'=>1,'unique_sign'=>'ad_pic','field_name'=>'ad_pic','field_value'=>$row['ad_pic'],'save_path'=>'Manager'))}
+                                <span class="help-block">请上传320*128尺寸的大小不超过200KB的广告图</span>
+                            </div>
+                        </div>
+
+                        <div class="control-group">
+                            <label class="control-label">推广位置</label>
+                            <div class="controls">
+                                <select id="region_parent_id" name="region_parent_id" style="width: 156px;">
+                                    <!--推广位置 全国 or 省/直辖市/自治区-->
+                                    <volist name="region" id="region_parent">
+                                        <in name="region_parent['region_type']" value="0,1">
+                                            <option <eq name="row['region_parent_id']" value="$region_parent['id']">selected</eq>  value="{$region_parent['id']}">{$region_parent['region_name']}</option>
+                                        </in>
+                                    </volist>
+                                </select>
+                                <select id="region_id" name="region_id" style="width: 156px;">
+                                    <!--城市-->
+                                    <volist name="region" id="region">
+                                        <in name="region['region_type']" value="0,2">
+                                            <option <eq name="row['region_id']" value="$region['id']">selected</eq> value="{$region['id']}">{$region['region_name']}</option>
+                                        </in>
+                                    </volist>
+                                </select>
+                                <span class="help-block">请输入要推广到哪里</span>
+                            </div>
+                        </div>
+                        
+                        <notempty name="row['id']">
+                            <div class="control-group">
+                                <label class="control-label">广告点击量</label>
+                                <div class="controls">
+                                    <input type="text" value="{$row['click']}" disabled>
+                                    <span class="help-block">这里是广告点击的次数</span>
+                                </div>
+                            </div>
+                        </notempty>
+
+
+                        <div class="form-actions">
+                            <button class="btn" onclick="javascript:history.back(-1);return false;">返 回</button>　
+                            <button class="btn btn-info ajax-post no-refresh" type="submit" id="submit" target-form="form-horizontal">保 存</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</block>
+
+<block name="script">
+    <script>
+        // 选定一级地区分类
+        $('#region_parent_id').on('change',function(){
+            var parentId = $(this).val();
+            if(parentId == 1){
+                $('#region_id').html('<option value="1">中国</option>');
+            }else{
+                $.ajax({
+                    url : '{:U("Advert/getRegionList")}',
+                    data : {parentId:parentId},
+                    type : "POST",
+                    success : function(data){
+                        if(data.status == 1){
+                            $('#region_id').html('');
+                            $.each(data.region,function(k,v){
+                                if(k == 0) {
+                                    $('#region_id').append('<option value="'+ v.id+'">'+ v.region_name+'</option>');
+                                }else{
+                                    $('#region_id').append('<option value="'+ v.id+'">'+ v.region_name+'</option>');
+                                }
+                            });
+                        }
+                    },
+                    error : function(e){
+                        alert(e);
+                    }
+                });
+            }
+
+        });
+    </script>
+</block>

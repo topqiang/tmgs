@@ -1,0 +1,84 @@
+<extend name="Public/base" />
+
+<block name="main">
+
+    <div class="row-fluid">
+
+        <div class="span12">
+            <div class="widget-box">
+                <div class="widget-title">
+                    <span class="icon">
+                        <i class="icon-plus"></i>
+                    </span>
+                    <h5></h5>
+                </div>
+                <div class="widget-content nopadding">
+                    <form class="form-horizontal" method="post" action="{:U('DonateLove/update')}" id="form">
+                        <input type="hidden" name="model" value="DonateLove">
+                        <input type="hidden" name="id" value="{$row['id']}">
+                        <div class="control-group">
+                            <label class="control-label">项目名称</label>
+                            <div class="controls">
+                                <input type="text" name="project_name" value="{$row['project_name']}" style="width:50%">
+                                <span class="help-block">30个字符以内</span>
+                            </div>
+                        </div>
+                        <div class="control-group">
+                            <label class="control-label">封面图</label>
+                            <div class="controls">
+                                {:hook('upload',array('is_first'=>1,'unique_sign'=>'cover_pic','field_name'=>'cover_pic','field_value'=>$row['cover_pic'],'save_path'=>'DonateLove'))}
+                                <span class="help-block">文章封面图长宽比例 3:2</span>
+                            </div>
+                        </div>
+                        <div class="control-group">
+                            <label class="control-label">项目详情顶部简图</label>
+                            <div class="controls">
+                                {:hook('upload',array('unique_sign'=>'top_pic','field_name'=>'top_pic','field_value'=>$row['top_pic'],'save_path'=>'DonateLove'))}
+                                <span class="help-block">文章封面图长宽比例 3:2</span>
+                            </div>
+                        </div>
+
+                        <div class="control-group">
+                            <label class="control-label">目标金额</label>
+                            <div class="controls">
+                                <input type="text" name="project_aims_money" value="{$row['project_aims_money']}" style="width:50%" class="number-only">
+                                <span class="help-block">30个字符以内</span>
+                            </div>
+                        </div>
+
+                        <div class="control-group">
+                            <label class="control-label">联系方式</label>
+                            <div class="controls">
+                                <input type="text" name="contacts" value="{$row['contacts']}" style="width:50%">
+                                <span class="help-block">30个字符以内</span>
+                            </div>
+                        </div>
+
+                        <div class="control-group">
+                            <label class="control-label">项目简介</label>
+                            <div class="controls">
+                                <textarea name="project_introduction" id="" rows="3" style="width:50%;resize: none;">{$row['project_introduction']}</textarea>
+                                <span class="help-block">100个字符以内</span>
+                            </div>
+                        </div>
+
+                        <div class="control-group">
+                            <label class="control-label">项目详情</label>
+                            <div class="controls">
+                                <textarea name="project_content">{$row['project_content']}</textarea>
+                                {:hook('adminArticleEdit', array('is_first'=>1,'name'=>'project_content','value'=>$row['project_content']))}
+                                <span class="help-block"></span>
+                            </div>
+                        </div>
+
+
+                        <div class="form-actions">
+                            <button class="btn" onclick="javascript:history.back(-1);return false;">返 回</button>　
+                            <button class="btn btn-info ajax-post no-refresh" type="submit" id="submit" target-form="form-horizontal">保 存</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</block>

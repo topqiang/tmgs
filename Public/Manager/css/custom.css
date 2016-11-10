@@ -1,0 +1,49 @@
+.clear {clear:both}
+/*文件上传部分样式 start*/
+.upload-file-box .upload-pre-item {width:200px; float: left; position: relative;border: 1px solid #ededed;padding: 2px;margin-left: 10px;}
+.upload-file-box .upload-pre-item img {width: 200px;}
+.upload-file-box .upload-pre-item i{position: absolute; top: -7px;right:-7px;cursor: pointer}
+.upload-file-box .upload-pre-item a {display:block; padding: 5px;cursor: pointer}
+/*文件上传部分样式 end*/
+
+/*高级查询样式 start*/
+.senior-search {  position: absolute;  top: 35px;  right: 0;  z-index: 1000;  display: none;  padding: 10px 15px 0px 15px;  margin: 2px 0px 0px;  background-color: #FFF;  border: 1px solid rgba(0, 0, 0, 0.2);  border-radius: 6px;  box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.2);  background-clip: padding-box;  }
+.senior-search:before{  position: absolute;  top: -7px;  right: 9px;  display: inline-block;  border-right: 7px solid transparent;  border-bottom: 7px solid rgba(0, 0, 0, 0.2);  border-left: 7px solid transparent;  content: "";  }
+.senior-search:after {  position: absolute;  top: -6px;  right: 10px;  display: inline-block;  border-right: 6px solid transparent;  border-bottom: 6px solid #FFF;  border-left: 6px solid transparent;  content: "";  }
+/*高级查询样式 end*/
+
+/**评论页面样式 start**/
+.recent-posts li p img {border: 1px solid #ededed; padding: 2px; width:100px;margin-left: 3px;}
+/**评论页面样式 end**/
+
+.single-edit {cursor: pointer}
+
+.controls .input-sm{width: 150px; float: left;}
+.controls .attr-s{display: block; float: left;position: relative;}
+.controls .attr-s .control-label{width:100px; position: absolute; left: 5px; top: -8px; text-align: left;}
+.controls .attr-s .attr-price{position: absolute; left: 80px; top:0; width: 60px;}
+.controls .attr-s .spec{position: absolute; left: 160px; top:0; display: block; width: 30px; height: 30px; text-align: center; line-height: 30px;}
+.controls input.input-sm[type=text]{width: 136px;}
+.controls input[type=text],.controls input[type=password]{width: 300px;}
+.nopadding .table-bordered .tbody td{vertical-align: middle;}
+/**开关按钮 end**/
+.on-off{cursor: pointer;}
+
+/*订单浮动*/
+
+/** 订单浮动 **/
+.order-pop .order-position{position: absolute;top:0px;left:0px;padding:0;}
+.order-pop .order-info{border:1px solid #eee;}
+.order-pop .order-info tr.odd-row,.order-pop .table tr{background: #fff;}
+/*商品图集*/
+
+.gallery{width: 150px; height: 150px; padding: 10px; float: left; overflow: hidden; position: relative;}
+.gallery .icon-remove{position: absolute; top: 3px; right: 3px; cursor: pointer;}
+.gallery img{display: block;width: 140px; height: 140px;}
+
+#sidebar .icon{color: #fff;}
+.icon-remove{color: #bd362f;}
+.icon-ok{color: #5bb75b;}
+.nav .icon{font-size: 14px; margin-right: 5px; color: #fff;}
+/*订单状态*/
+.order-status-0{color: #b94a48;}

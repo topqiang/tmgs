@@ -1,0 +1,53 @@
+<div class="span6">
+    <div class="widget-box">
+        <div class="widget-title">
+            <span class="icon">
+                <i class="icon-cog"></i>
+            </span>
+            <h5>{$plugins_config['title']}</h5>
+        </div>
+        <div class="widget-content nopadding">
+            <table class="table table-bordered">
+                <thead>
+                <tr>
+                    <th width="30%"></th>
+                    <th></th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td>系统版本</td>
+                    <td>1.0.1</td>
+                </tr>
+                <tr>
+                    <td>ThinkPHP版本</td>
+                    <td>{$Think.VERSION}</td>
+                </tr>
+                <tr>
+                    <td>域名</td>
+                    <td>{$_SERVER["HTTP_HOST"]}</td>
+                </tr>
+                <tr>
+                    <td>服务器操作系统</td>
+                    <td>{$Think.const.PHP_OS}</td>
+                </tr>
+                <tr>
+                    <td>运行环境</td>
+                    <td>{$_SERVER['SERVER_SOFTWARE']}</td>
+                </tr>
+                <tr>
+                    <td>MySql版本</td>
+                    <php>
+                        $system_info_mysql = M()->query("select version() as v;");
+                    </php>
+                    <td>{$system_info_mysql.0.v}</td>
+                </tr>
+                <tr>
+                    <td>上传限制</td>
+                    <td>{:ini_get('upload_max_filesize')}</td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

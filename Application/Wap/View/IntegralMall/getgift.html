@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>转盘抽奖</title>
+    <!-- Sets initial viewport load and disables zooming  -->
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, minimal-ui">
+    <!-- Makes your prototype chrome-less once bookmarked to your phone's home screen -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="stylesheet" href="__CSS__/public.css" />
+    <link href="__CSS__/reset.css" rel="stylesheet"/>
+    <link href="__CSS__/style.css" rel="stylesheet"/>
+    <link href="__CSS__/bootstrap.min.css" rel="stylesheet"/>
+    <script src="__JS__/jquery-1.10.2.js"></script>
+    <script type="text/javascript" src="__JS__/public.js"></script>
+    <script src="__JS__/awardRotate.js"></script>
+    <style>
+        *{padding:0; margin:0;}
+        .getgift{
+            margin: 0px auto;
+            height: 450px;
+            width: 80%;
+            background-size: 300px auto;
+        }
+        .toptitle{
+            height: 55px;
+        }
+        .imgbtn{
+            width: 70px;
+            top: 252px;
+            left: 110px;
+        }
+    </style>
+</head>
+<body>
+<neq name="app_type" value="app">
+    <header class="bgz colb">
+        <span class="left"></span>
+        <span class="pfr mar10 fs14 iconhb" linkto="{:U('IntegralMall/redbag',array('m_id'=>$m_id))}">红包抽奖</span>
+        转盘抽奖
+    </header>
+</neq>
+
+<div class="content pore" <neq name="app_type" value="app">style="margin-top:50px;"</neq> >
+    <img src="{$pic}" class="width"/>
+    <div class="poab pfl width">
+        <div class="getgift">
+            <div class="banner mat30">
+                <div class="turnplate">
+                    <canvas class="item" id="wheelcanvas" width="422px" height="422px"></canvas>
+                    <img class="pointer" src="__IMAGES__/02.png">
+                </div>
+            </div>
+            <input type="hidden" value="{$lottery_list}" id="name">
+            <input hidden="hidden" value="" id="color">
+            <input hidden="hidden" value="{$m_id}" id="m_id">
+        </div>
+    </div>
+</div>
+</body>
+<script type="text/javascript" src="__JS__/touch.min.js"></script>
+<script type="text/javascript">
+    //canvas画圆
+    var turnplate={
+        turntable:[],
+        colors:[],
+        outsideRadius:192,
+        textRadius:155,
+        insideRadius:68,
+        startAngle:4.71,
+        bRotate:false
+    };
+
+    var lottery_json = $("#name").val();
+    var lottery_list = JSON.parse(lottery_json);
+    var length = 0;
+    $(function(){
+        var list  = new Array();
+        var color = new Array();
+        var arr = new Array();  //概率数组
+        var sup = 0;
+        for(var key in lottery_list){
+            list[sup] = lottery_list[key]["lo_name"];
+            if(sup%2==0){
+                color[sup] = "#ffd56f";
+            }else{
+                color[sup] = "#ffeb8c";
+            }
+
+            //['id':'percent','id':'percent','id':'percent']
+            //概率数组赋值
+            arr[lottery_list[key]["id"]] = lottery_list[key]["percent"];
+            sup++;
+            length++;
+        }
+        turnplate.turntable = list;
+        turnplate.colors    = color;
+
+        var rotateTimeOut = function (){
+            $('#wheelcanvas').rotate({
+                angle:0,
+                animateTo:2160,
+                duration:8000,
+                callback:function (){
+                    alert('网络超时！请检查连接状况！');
+                }
+            });
+        };
+        var rotateFn = function (item, txt, lo_id){
+
+            var angles = item;
+            $('#wheelcanvas').stopRotate();
+            $('#wheelcanvas').rotate({
+                angle:0,
+                //animateTo:angles+1800,
+                animateTo:angles,
+                duration:8000,
+                callback:function (){
+
+                    //获取抽到奖品的id
+                    var key = 0;
+                    var redirect = "{:U('IntegralMall/lottery')}";
+                    var m_id = document.getElementById("m_id").value;
+                    //将获取的内容进行加入记录
+                    $.ajax({
+                        url: redirect,
+                        type: 'get',
+                        data: {lo_id:lo_id,m_id:m_id,lo_type:1},
+                        success: function (data) {
+                            data = JSON.parse(data);
+                            if(data.flag == '2' && data.status=='3'){
+                                alert('您的积分不足!');return false;
+                            }else if(data.flag == '2' && data.status=='4'){
+                                alert('请先绑定手机号!');return false;
+                            }else if(data.flag == '2' && data.status=='5'){
+                                alert('服务器网络繁忙!');return false;
+                            }else if(data.flag == '2' && data.status=='6'){
+                                window.location.href = '{:U("IntegralMall/regret",array("m_id"=>$m_id,"app_type"=>$app_type))}';
+                            }else if(data.flag == '2' && data.status=='7'){
+                                alert('当前奖项已被抽完');return false;
+                            }
+                            else{
+                                window.location.href = '/index.php?m=Wap&c=IntegralMall&a=awards&m_id='+m_id+'&lo_pic='+data.lo_pic+'&app_type={$app_type}';
+
+                                //重新分配角度
+                                var k = 0;
+                                for(var key in lottery_list){
+                                    lottery_list[key]["radius"] = (360/length)*(length-k-1)
+                                            +(Math.floor(Math.random()*(360/length-10)+10))
+                                            +(360*3);
+                                    k++;
+                                }
+                                turnplate.bRotate = !turnplate.bRotate;
+                            }
+                        },
+                        error: function (data) {
+                            alert(data.status);
+                        }
+                    });
+
+                }
+            });
+        };
+
+        $('.pointer').click(function (){
+
+            if(turnplate.bRotate)return;
+            turnplate.bRotate = !turnplate.bRotate;
+            //var item = rnd(1,turnplate.turntable.length);
+
+            var id = get_rand(arr);
+//alert(id+'/'+lottery_list[id]['radius'])
+            rotateFn(lottery_list[id]['radius'], '恭喜您获得'+lottery_list[id]['lo_name'],id);
+
+            //console.log(item);
+        });
+    });
+    //['id':'percent','id':'percent','id':'percent']
+    //概率算法
+    function get_rand(arr) {
+        var result = '';
+        //概率数组的总概率精度
+        var proSum = 0;
+
+        for(var key in arr){
+            proSum = proSum + parseInt(arr[key]);
+        }
+        //概率数组循环
+        for(var key in arr){
+            var randNum = Math.floor(Math.random()*proSum+1);
+            if (randNum <= parseInt(arr[key])) {
+                result = key;
+                break;
+            } else {
+                proSum -= parseInt(arr[key]);
+            }
+        }
+        return result;
+
+    }
+
+
+    function rnd(n, m){
+        var random = Math.floor(Math.random()*(m-n+1)+n);
+        return random;
+
+    }
+    window.onload=function(){
+        drawRouletteWheel();
+    };
+    function drawRouletteWheel() {
+        var canvas = document.getElementById("wheelcanvas");
+        if (canvas.getContext) {
+            var arc = Math.PI / (turnplate.turntable.length/2);
+            var ctx = canvas.getContext("2d");
+            ctx.clearRect(0,0,422,422);
+            ctx.strokeStyle = "#FFBE04";
+            ctx.font = '16px Microsoft YaHei';
+            for(var i = 0; i < turnplate.turntable.length; i++) {
+                var angle = turnplate.startAngle + i * arc;
+                //alert(angle);
+                ctx.fillStyle = turnplate.colors[i];
+                ctx.beginPath();
+                ctx.arc(211, 211, turnplate.outsideRadius, angle, angle + arc, false);
+                ctx.arc(211, 211, turnplate.insideRadius, angle + arc, angle, true);
+                ctx.stroke();
+                ctx.fill();
+                ctx.save();
+                ctx.fillStyle = "#b26a18";
+                var text = turnplate.turntable[i];
+                var line_height = 17;
+                ctx.translate(211 + Math.cos(angle + arc / 2) * turnplate.textRadius, 211 + Math.sin(angle + arc / 2) * turnplate.textRadius);
+                ctx.rotate(angle + arc / 2 + Math.PI / 2);
+                if(text.indexOf("M")>0){
+                    var texts = text.split("M");
+                    for(var j = 0; j<texts.length; j++){
+                        ctx.font = j == 0?'bold 20px Microsoft YaHei':'16px Microsoft YaHei';
+                        if(j == 0){
+                            ctx.fillText(texts[j]+"M", -ctx.measureText(texts[j]+"M").width / 2, j * line_height);
+                        }else{
+                            ctx.fillText(texts[j], -ctx.measureText(texts[j]).width / 2, j * line_height);
+                        }
+                    }
+                }else if(text.indexOf("M") == -1 && text.length>6){
+                    text = text.substring(0,6)+"||"+text.substring(6);
+                    var texts = text.split("||");
+                    for(var j = 0; j<texts.length; j++){
+                        ctx.fillText(texts[j], -ctx.measureText(texts[j]).width / 2, j * line_height);
+                    }
+                }else{
+                    ctx.fillText(text, -ctx.measureText(text).width / 2, 0);
+                }
+                ctx.restore();
+            }
+        }
+    }
+</script>
+</html>

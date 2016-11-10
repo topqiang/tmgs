@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>转盘抽奖</title>
+    <!-- Sets initial viewport load and disables zooming  -->
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, minimal-ui">
+    <!-- Makes your prototype chrome-less once bookmarked to your phone's home screen -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="stylesheet" href="__CSS__/public.css" />
+    <link href="__CSS__/reset.css" rel="stylesheet"/>
+    <script src="__JS__/jquery-1.11.0.min.js"></script>
+    <script src="__JS__/public.js"></script>
+    <script src="__JS__/Rotate.js"></script>
+    <style>
+        *{padding:0; margin:0;}
+        .imgbtn{
+            top: 37%;
+            width: 80px;
+            left: 50%;
+            margin-left: -40px;
+        }
+    </style>
+</head>
+<body>
+<neq name="app_type" value="app">
+    <header class="bgz colb">
+        <span class="left"></span>红包抽奖
+    </header>
+</neq>
+
+<div class="content pore" <neq name="app_type" value="app">style="margin-top:50px;"</neq>>
+    <img src="{$pic}" class="width"/>
+    <input type="hidden" value="{$m_id}" id="m_id">
+    <input class="imgbtn poab" type="image" src="__IMAGES__/hbimgbtn.png"/>
+</div>
+</body>
+<script type="text/javascript" src="__JS__/touch.min.js"></script>
+<script>
+    $(function(){
+        var redirect = "{:U('IntegralMall/lottery')}";
+        var m_id = document.getElementById("m_id").value;
+        var lo_id = "{$lo_id}";
+        $(".imgbtn").click(function(){
+            $.ajax({
+                url: redirect,
+                type: 'get',
+                data: {lo_id:lo_id,m_id:m_id,lo_type:2},
+                success: function (data) {
+                    data = JSON.parse(data);
+                    if(data.flag == '2' && data.status=='3'){
+                        alert('您的积分不足!');return false;
+                    }else if(data.flag == '2' && data.status=='4'){
+                        alert('请先绑定手机号!');return false;
+                    }else if(data.flag == '2' && data.status=='5'){
+                        alert('服务器网络繁忙!');return false;
+                    }else if(data.flag == '2' && data.status=='6'){
+                        window.location.href = '{:U("IntegralMall/regret",array("m_id"=>$m_id,"app_type"=>$app_type))}';
+                    }else if(data.flag == '2' && data.status=='7'){
+                        alert('当前奖项已被抽完');return false;
+                    }
+                    else{
+                        window.location.href = '/index.php?m=Wap&c=IntegralMall&a=awards&m_id='+m_id+'&lo_pic='+data.lo_pic+'&app_type={$app_type}';
+                    }
+                },
+                error: function (data) {
+                    alert(data.status);
+                }
+            });
+        });
+    });
+</script>
+</html>

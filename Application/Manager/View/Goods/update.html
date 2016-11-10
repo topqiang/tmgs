@@ -1,0 +1,153 @@
+<extend name="Public/base" />
+<block name="style">
+    <style type="text/css">
+        .div-button {
+            border-bottom:1px solid #333333;
+            margin: 2px;
+        }
+    </style>
+</block>
+<block name="main">
+    <div class="row-fluid">
+        <div class="span12">
+            <div class="widget-box">
+                <div class="widget-title">
+                    <span class="icon">
+                        <i class="icon-plus"></i>
+                    </span>
+                    <h5></h5>
+                </div>
+                <div class="widget-content nopadding">
+                    <form class="form-horizontal" method="post" action="{:U('Goods/update')}">
+                        <input type="hidden" name="model" value="Goods">
+                        <input type="hidden" name="id" value="{$row['id']}">
+
+                        <div class="control-group">
+                            <label class="control-label" ><h3>商品信息:&nbsp;</h3></label>
+                            <div class=" controls ">
+                                <div class="row well " style="font-size: large;width:80%;margin-top:20px">
+                                    <div class="span12">
+                                        <div class="div-button">店铺名: {$row['merchant_id']}</div>
+                                        <div class="div-button">商品名(中文): {$row['cn_goods_name']}</div>
+                                        <div class="div-button">品牌(中文): {$row['cn_goods_brands']}</div>
+                                        <div class="div-button">配送费说明(中文): {$row['cn_delivery_cost']}</div>
+                                        <div class="div-button">商品分类: {$row['fir_g_t_id']} >> {$row['sec_g_t_id']} >> {$row['thr_g_t_id']}</div>
+                                        <div class="div-button">供应商信息: {$row['supply_info']}</div>
+                                        <div class="div-button">商品单价: ¥{$row['cn_price']}</div>
+                                        <div class="div-button">批发价格: ¥{$row['wholesale_prices']}</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="control-group">
+                            <label class="control-label" ><h3>商品简介:&nbsp;</h3></label>
+                            <div class=" controls ">
+                                    <div class="span12">
+                                        <textarea name="">{$row['cn_goods_introduction']}</textarea>
+                                        {:hook('adminArticleEdit', array('is_first'=>1,'name'=>'','value'=>$row['cn_goods_introduction']))}
+                                    </div>
+                            </div>
+                        </div>
+                        <div class="control-group">
+                            <label class="control-label" ><h3>商品图片:&nbsp;</h3></label>
+                            <div class=" controls ">
+                                <div class="row well" style="font-size: large;width:80%;margin-top:20px">
+                                    <div class="span12">
+                                        <volist name="row['goods_pic']" id="pic">
+                                                {$pic}
+                                        </volist>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!--// 商品列表详情-->
+
+                        <empty name="row['product']">
+                            <else/>
+                            <div class="control-group">
+                                <label class="control-label" ><h3>分类展示:&nbsp;</h3></label>
+                                <div class=" controls ">
+                                    <div class="row well" style="font-size: large;width:80%;margin-top:20px">
+                                        <div class="span12">
+                                            <!---->
+                                            <div class="widget-content nopadding">
+                                                <ul>
+                                                    <volist name="row['product']" id="item">
+                                                        <li>属性:{$item.attr_key_group}
+                                                        &nbsp;&nbsp;&nbsp;
+                                                        价格:¥{$item['cn_price']}
+                                                        &nbsp;&nbsp;&nbsp;
+                                                        批发价:¥{$item['wholesale_prices']}
+                                                        &nbsp;&nbsp;&nbsp;
+                                                        差价:¥{$item['cn_price'] - $item['wholesale_prices']}</li>
+                                                    </volist>
+
+
+                                                </ul>
+                                            </div>
+                                            <!---->
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </empty>
+
+
+                        <div class="control-group">
+                            <label class="control-label" ><h3>商品状态:&nbsp;</h3></label>
+                            <div class=" controls ">
+                                <div class="row well " style="font-size: large;width:80%;margin-top:20px">
+                                    <div class="span12">
+                                        <select name="is_shelves" style="margin-top:10px">
+                                            <option value="0" <eq name="row['is_shelves']" value="0">selected</eq> >下架</option>
+                                            <option value="1" <eq name="row['is_shelves']" value="1">selected</eq> >上架</option>
+                                            <option value="2" <eq name="row['is_shelves']" value="2">selected</eq> >后台下架</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="control-group">
+                            <label class="control-label" ><h3>七天退货:&nbsp;</h3></label>
+                            <div class=" controls ">
+                                <div class="row well " style="font-size: large;width:80%;margin-top:20px">
+                                    <div class="span12">
+                                        <select name="is_integrity_fourteen" style="margin-top:10px">
+                                            <option value="0" <eq name="row['is_integrity_fourteen']" value="0">selected</eq> >不支持</option>
+                                            <option value="1" <eq name="row['is_integrity_fourteen']" value="1">selected</eq> >支持</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-actions">
+                            <button class="btn" onclick="javascript:history.back(-1);return false;">返 回</button>　
+                            <button class="btn btn-info ajax-post" target-form="form-horizontal" type="submit">确认操作</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</block>
+<block name="script">
+        <script src="__JS__/layer.js"></script>  {// 放大插件}
+    <script type="text/javascript">
+        $('.test2').on('click', function(){
+            var a = $(this).html();
+            layer.open({
+                closeBtn: 0,
+                area: 'auto',
+                skin: 'layui-layer-nobg', //没有背景色
+                type: 1,
+                title: false,
+                shadeClose: true, //点击遮罩关闭
+                content: '\<\div style="padding:20px;">'+a+'\<\/div>'
+            });
+        });
+    </script>
+
+</block>

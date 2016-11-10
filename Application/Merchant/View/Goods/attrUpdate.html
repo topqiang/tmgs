@@ -1,0 +1,149 @@
+<extend name="Public/base" />
+
+<block name="main">
+
+    <div class="row-fluid">
+
+        <div class="span12">
+            <div class="widget-box">
+                <div class="widget-title">
+                    <span class="icon">
+                        <i class="icon-plus"></i>
+                    </span>
+                    <h5></h5>
+                </div>
+                <div class="widget-content nopadding">
+                    <form class="form-horizontal" method="post" action="{:U('Goods/attrAdd')}" id="form">
+                        <!--<input type="hidden" name="model" value="Goods">-->
+                        <input type="hidden" name="goods_id" value="{$goods_id}">
+                        <input type="hidden" name="thr" value="{$thr}">
+                        <input type="hidden" name="attr_count" value="{$attr_count}">
+                        <!--<input type="hidden" name="id" value="{//$row['id']}">-->
+                        <!--// 商品名称-->
+                        <volist name="row['attr_list']" id="alist"  key="k">
+                            <div class="control-group" style="width: 1000px;" >
+                                <label class="control-label">{$alist['cn_attr_name']}</label>
+                                <div class="controls">
+                                    <volist name="alist['attr_cont']" id="acont" key="kk">
+                                        <span style="margin-left: 10px;text-align: left;width: 150px;display: inline-block">
+                                            <input type="checkbox" name="attr_id_{$k}[]" value="{$acont['id']}">{$acont['cn_attr_con_name']}
+                                        </span>
+                                    </volist>
+                                    <br>
+                                    <a href="javascript:;" class="attr_add" data-id="{$alist['id']}"><i class="icon-plus" style="margin-left: 10px;">添加</i></a>
+                                    <input type="text" placeholder="请输入" class="add_attr_input" data-id="{$alist['id']}" style="display:none;">
+                                </div>
+                            </div>
+                        </volist>
+                        <div class="control-group">
+                            <label class="control-label"><a href="javascript:;" class="add_attr_name" style="color: #622A1D"><i class="icon-plus" style="margin-left: 10px;">添加</i></a></label>
+                            <div class="controls">
+                                <input type="text" placeholder="添加属性名称" style="display: none;" class="add_attr_name_input" data-id="{$thr}">
+                            </div>
+                        </div>
+                        <div class="control-group">
+                            <label class="control-label">添加其他属性</label>
+                            <div class="controls">
+                                <input type="text" name="cn_price" value="{$row['cn_price']}" placeholder="商品销售价">
+                                <input type="text" name="wholesale_prices" value="{$row['wholesale_prices']}" placeholder="商品批发价">
+                                <span class="help-block" style="color:#CC0000;">商品销售价应低于商品批发价</span>
+
+                            </div>
+                        </div>
+                        <!--// 菜单-->
+                        <div class="form-actions">
+                            <button class="btn" type="button" onclick="javascript:history.back(-1);return false;">返 回</button>　
+                            <button class="btn btn-info ajax-post no-refresh" type="submit" id="submit" target-form="form-horizontal">保 存</button>　
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="widget-content nopadding">
+        <table class="table table-bordered table-striped with-check">
+            <thead>
+            <tr>
+                <th><input type="checkbox" id="title-checkbox" name="title-checkbox" class="check-all"/><!--<i class="icon-resize-vertical"></i>--></th>
+                <!--<th>ID</th>-->
+                <th>商品平台价</th>
+                <th>商品批发价</th>
+                <th>差价</th>
+                <th>商品属性值</th>
+                <th>操作</th>
+            </tr>
+            </thead>
+            <tbody class="tbody">
+            <volist name="row['list']" id="row">
+                <tr>
+                    <td><input type="checkbox" name="ids[]" value="{$row['id']}" class="ids"/></td>
+                    <!--<td>{$row['id']}</td>-->
+                    <td>{$row['cn_price']}</td>
+                    <td>{$row['wholesale_prices']}</td>
+                    <td>{$row['cn_price'] - $row['wholesale_prices']}</td>
+                    <td>{$row['attr_key_group']}</td>
+                    <td>
+                        <a href="{:U('Goods/remove',array('model'=>'goods_product','ids'=>$row['id'],'status'=>9))}" title="删除" class="tip-bottom confirm ajax-get">
+                            <span class="label label-important">删除</span></a>
+                    </td>
+                </tr>
+            </volist>
+            </tbody>
+        </table>
+    </div>
+
+
+    <script>
+        // 添加属性界面
+        $(document).on('click','.attr_add',function(){
+            var add_id = $(this).data('id');
+            var title = $(this).parent().siblings('.control-label').text();
+            $('#attr_id').val(add_id);
+            $('.add_attr_input').hide().val('');
+            $(this).siblings('.add_attr_input').attr('placeholder','键入'+title+'的属性值').show();
+        });
+        // 添加 颜色属性值
+        $(document).on('focusout','.add_attr_input',function(){
+            var cn_attr_con_name = $(this).val(); // 属性名称
+            if(cn_attr_con_name == ''){
+                $(this).hide();
+                return false;
+            }
+            var attr_id = $(this).data('id'); // 属性组ID
+            $.ajax({
+                url : '{:U("Goods/attrValueAdd")}',
+                type : 'POST',
+                data :{cn_attr_con_name:cn_attr_con_name,attr_id:attr_id},
+                success :function(d){
+                    if(d.status == 1){
+                        alert(d.info);
+                        window.location.reload();
+                    }
+                },
+            });
+        });
+        // 添加属性
+        $('.add_attr_name').click(function(){
+            $('.add_attr_name_input').show();
+        });
+
+        $(document).on('focusout','.add_attr_name_input',function(){
+            var cn_attr_name = $(this).val();
+            if(cn_attr_name == ''){$(this).hide();return false;}
+            var thr_g_t_id = $(this).data('id'); // 三级分类ID
+            $.ajax({
+                url  : '{:U("Goods/attrNameAdd")}',
+                type : 'POST',
+                data : {cn_attr_name:cn_attr_name,thr_g_t_id:thr_g_t_id},
+                success :function(d){
+                    if(d.status == 1){
+                        alert(d.info);
+                        window.location.reload();
+                    }
+                }
+            })
+        });
+    </script>
+</block>
+

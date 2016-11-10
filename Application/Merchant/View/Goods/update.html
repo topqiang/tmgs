@@ -1,0 +1,225 @@
+<extend name="Public/base" />
+
+<block name="main">
+
+    <div class="row-fluid">
+
+        <div class="span12">
+            <div class="widget-box">
+                <div class="widget-title">
+                    <span class="icon">
+                        <i class="icon-plus"></i>
+                    </span>
+                    <h5></h5>
+                </div>
+                <div class="widget-content nopadding">
+                    <form class="form-horizontal" method="post" action="{:U('Goods/add')}" id="form" >
+                        <input type="hidden" name="model" value="Goods">
+                        <input type="hidden" name="id" value="{$row['id']}">
+                        <empty name="row['id']" >
+                            <div class="coltrol-group">
+                                <lebal class="control-label">商品分类</lebal>
+                                <div class="controls">
+                                        <select name="fir_g_t_id" id="fir_g_t_id" style="width:200px;">
+                                            <option value="">请选择商品分类</option>
+                                            <volist name="row['classify']" id="classify">
+                                                <option value="{$classify.id}">{$classify.cn_type_name}</option>
+                                            </volist>
+                                        </select>
+                                        <select name="sec_g_t_id" id="sec_g_t_id" style="width:200px;">
+                                            <option value="">请选择商品分类</option>
+                                        </select>
+                                        <select name="thr_g_t_id" id="thr_g_t_id" style="width:200px;">
+                                            <option value="">请选择商品分类</option>
+                                        </select>
+
+                                    <span class="help-block">请选择商品分类</span>
+                                </div>
+                            </div>
+
+                            <else/>
+
+                            <div class="coltrol-group">
+                                <lebal class="control-label">商品分类</lebal>
+                                <div class="controls">
+                                    <input type="text" style="width: 200px;" disabled value="{$row['fir_classify']['cn_type_name']|default='该分类以删除'}" >
+                                    <input type="text" style="width: 200px;" disabled value="{$row['sec_classify']['cn_type_name']|default='该分类以删除'}">
+                                    <input type="text" style="width: 200px;" disabled value="{$row['thr_classify']['cn_type_name']|default='该分类以删除'}">
+                                    <span class="help-block">商品分类</span>
+                            </div>
+                        </empty>
+                        <!--// 商品名称-->
+                        <div class="control-group">
+                            <label class="control-label">商品名称</label>
+                            <div class="controls">
+                                <input type="text" name="cn_goods_name" value="{$row['cn_goods_name']}">
+                                <span class="help-block">90个字以内</span>
+                            </div>
+                        </div>
+
+                        <div class="control-group">
+                            <label class="control-label">商品品牌</label>
+                            <div class="controls">
+                                <input type="text" name="cn_goods_brands" value="{$row['cn_goods_brands']}">
+                                <span class="help-block">10个字以内</span>
+                            </div>
+                        </div>
+
+                        <div class="control-group">
+                            <label class="control-label">平台价格</label>
+                            <div class="controls">
+                                <input type="text" name="cn_price" value="{$row['cn_price']}">
+                                <span class="help-block">请输入平台价格</span>
+                            </div>
+                        </div>
+
+                        <div class="control-group">
+                            <label class="control-label">批发价格</label>
+                            <div class="controls">
+                                <input type="text" name="wholesale_prices" value="{$row['wholesale_prices']}">
+                                <span class="help-block">请输入批发价格(平台价格应高于批发价格)</span>
+                            </div>
+                        </div>
+
+                        <div class="control-group">
+                            <label class="control-label">货号</label>
+                            <div class="controls">
+                                <input type="text" name="article_number" value="{$row['article_number']}">
+                                <span class="help-block">请输入你的商品货号</span>
+                            </div>
+                        </div>
+                        <div class="control-group">
+                            <label class="control-label">商品运费</label>
+                            <div class="controls">
+                                <input type="text" name="cn_delivery_cost" value="{$row['cn_delivery_cost']}">
+                                <span class="help-block">请输入运费价格</span>
+                            </div>
+                        </div>
+                        <!--// 商品销量-->
+                        <notempty name="row['id']">
+                            <div class="control-group">
+                                <label class="control-label">销量</label>
+                                <div class="controls">
+                                    <input type="text" name="" value="{$row['sales']}" disabled>
+                                    <span class="help-block">商品的销量</span>
+                                </div>
+                            </div>
+                        </notempty>
+
+                        <div class="control-group">
+                            <label class="control-label">供应商信息</label>
+                            <div class="controls">
+                                <input type="text" name="supply_info" value="{$row['supply_info']}" >
+                                <span class="help-block">此项买家不会看见</span>
+                            </div>
+                        </div>
+
+                        <div class="control-group">
+                            <label class="control-label">商品单位</label>
+                            <div class="controls">
+                                <select name="unit_id"  style="width:315px;">
+                                    <volist name="row['unit']" id="unit">
+                                        <eq name="row['unit_id']" value="$unit.id">
+                                            <option value="{$unit.id}" selected>{$unit.unit}</option>
+                                            <else/>
+                                            <option value="{$unit.id}">{$unit.unit}</option>
+                                        </eq>
+                                    </volist>
+                                </select>
+                                <span class="help-block">请选择商品单位</span>
+                            </div>
+                        </div>
+                        <div class="control-group">
+                            <label class="control-label">商品图片</label>
+                            <div class="controls">
+                                {:hook('upload',array('queue_limit'=>100,'is_first'=>1,'unique_sign'=>'goods_pic','field_name'=>'goods_pic','field_value'=>$row['goods_pic'],'save_path'=>'Merchant'))}
+                                <span class="help-block">商品轮播图(请上传1:1的图片)</span>
+                            </div>
+                        </div>
+
+                        <div class="control-group">
+                            <label class="control-label">商品描述</label>
+                            <div class="controls">
+                                <textarea name="cn_goods_introduction">{$row['cn_goods_introduction']}</textarea>
+                                {:hook('adminArticleEdit', array('is_first'=>1,'name'=>'cn_goods_introduction','value'=>$row['cn_goods_introduction']))}
+                                <span class="help-block">商品的描述</span>
+                            </div>
+                        </div>
+
+                        <div class="control-group">
+                            <label class="control-label">7天无理由退货</label>
+                            <div class="controls">
+                                <select name="is_integrity_fourteen" id="">
+                                    <option value="1" <eq name="row['is_integrity_fourteen']" value="1">selected</eq> >支持</option>
+                                    <option value="0" <eq name="row['is_integrity_fourteen']" value="0">selected</eq> >不支持</option>
+                                </select>
+                                <span class="help-block">该商品是否支持7天无理由退货</span>
+                            </div>
+                        </div>
+                        <!--// 商品状态-->
+                        <notempty name="row['id']">
+                            <div class="control-group">
+                                <label class="control-label">商品状态</label>
+                                <div class="controls">
+                                    <span>{$row['is_shelves']|get_shelves_status}</span>
+                                    <!--<input type="text" value="{$row['is_shelves']|get_shelves_status}" disabled>-->
+                                </div>
+                            </div>
+                        </notempty>
+                        <!--// 菜单-->
+                        <div class="form-actions">
+                            <button class="btn" onclick="javascript:history.back(-1);return false;">返 回</button>　
+                            <button class="btn btn-info ajax-post no-refresh" type="submit" id="submit" target-form="form-horizontal">保 存</button>　
+                            <!-- <notempty name="row['id']">
+                                <eq name="row['is_shelves']" value="1">
+                                    <button class="btn ajax-post btn-primary no-refresh" type="button">下 架</button>
+                                    <else/>
+                                    <button class="btn ajax-post btn-primary no-refresh" type="button">上 架</button>
+                                </eq>
+                            </notempty>
+ -->
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+        window.history.forward();
+        $('#fir_g_t_id').on('change',function(){
+            var ify_id = $(this).val();
+            var ify_type = 'fir_g_t_id';
+            var result = handle(ify_id,ify_type);
+        });
+        $('#sec_g_t_id').on('change',function(){
+            var ify_id = $(this).val();
+            var ify_type = 'sec_g_t_id';
+            var result = handle(ify_id,ify_type);
+        });
+        // 查询数据库
+        function handle(id,type){
+            $.ajax({
+                url:'{:U("Goods/getClassifyList")}',
+                type : 'post',
+                data : {id:id,type:type},
+                success :function(data){
+                    attrList(data,type);
+                },
+                error: function(e){}
+            });
+        }
+        function attrList(data,type){
+            if(type == 'fir_g_t_id'){
+                var handle = $('#sec_g_t_id');
+                handle.html('<option value="">请选择商品分类</option>');
+                $('#thr_g_t_id').html('<option value="">请选择商品分类</option>')
+            }else if(type == 'sec_g_t_id'){
+                var handle = $('#thr_g_t_id');
+                handle.html('<option value="">请选择商品分类</option>');
+            }
+            $.each(data,function(k,v){
+                handle.append('<option value="'+ v.id+'">'+ v.cn_type_name+'</option>');
+            });
+        }
+    </script>
+</block>

@@ -1,0 +1,109 @@
+<extend name="Public/base" />
+
+<block name="main">
+    <div class="row-fluid">
+        <div class="span12">
+            <div class="widget-box">
+                <div class="widget-title">
+                    <span class="icon">
+                        <i class="icon-plus"></i>
+                    </span>
+                    <h5></h5>
+                </div>
+                <!-- ["id"] => string(2) "38"
+  ["m_id"] => string(12) "闪电之刃"
+  ["g_id"] => string(12) "蜜饯果干"
+  ["merchant_id"] => string(12) "弯月红刀"
+  ["evaluate_pic"] => string(42) "/Uploads/Home/2016-06-14/575fd53933ee0.png"
+  ["review"] => string(504) "buhaobuhgaobuhaobuhaobuhaobuhgaobuhaobuhaobuhaobuhgaobuhaobuhaobuhaobuhgaobuhaobuhaobuhaobuhgaobuhaobuhaobuhaobuhgaobuhaobuhaobuhaobuhgaobuhaobuhaobuhaobuhgaobuhaobuhaobuhaobuhgaobuhaobuhaobuhaobuhgaobuhaobuhaobuhaobuhgaobuhaobuhaobuhaobuhgaobuhaobuhaobuhaobuhgaobuhaobuhaobuhaobuhgaobuhaobuhaobuhaobuhgaobuhaobuhaobuhaobuhgaobuhaobuhaobuhaobuhgaobuhaobuhaobuhaobuhgaobuhaobuhaobuhaobuhgaobuhaobuhaobuhaobuhgaobuhaobuhaobuhaobuhgaobuhaobuhaobuhaobuhgaobuhaobuhaobuhaobuhgaobuhaobuhaobuhaobuhgaobuhaobuhao"
+  ["rank"] => string(1) "2"
+  ["order_sn"] => string(15) "146589800550724"
+  ["order_id"] => string(3) "160"
+  ["goods_attr"] => string(0) ""
+  ["evaluate_time"] => string(10) "1465898301"-->
+                <div class="widget-content nopadding">
+                    <form class="form-horizontal" method="post" action="{:U('Withdraw/update')}">
+                        <input type="hidden" name="model" value="Withdraw">
+                        <input type="hidden" name="id" value="{$row['id']}">
+
+                        <div class="control-group">
+                            <label class="control-label">订单号</label>
+                            <div class="controls">
+                                <input type="text" value="{$row['order_sn']}" disabled>
+                            </div>
+                        </div>
+                        <div class="control-group">
+                            <label class="control-label">评价用户</label>
+                            <div class="controls">
+                                <input type="text" value="{$row['m_id']}" disabled>
+                            </div>
+                        </div>
+
+
+                        <div class="control-group">
+                            <label class="control-label">被评价商品</label>
+                            <div class="controls">
+                                <input type="text" value="{$row['g_id']}" disabled>
+                            </div>
+                        </div>
+                        <div class="control-group">
+                            <label class="control-label">被评价商品属性</label>
+                            <div class="controls">
+                                <input type="text" value="{$row['goods_attr']}" disabled>
+                            </div>
+                        </div>
+                        <div class="control-group">
+                            <label class="control-label">评价内容</label>
+                            <div class="controls">
+                                <textarea name="" id="" cols="30" rows="10" disabled>{$row['review']}</textarea>
+                            </div>
+                        </div>
+                        <div class="control-group">
+                            <label class="control-label">评价图片</label>
+                            <div class="controls">
+                                <volist name="row['evaluate_pic']" id="ep">
+                                    <img src="{$ep['path']}" alt="" style="width: 100px;height: 100px;">
+                                </volist>
+                            </div>
+                        </div>
+                        <div class="control-group">
+                            <label class="control-label">评价时间</label>
+                            <div class="controls">
+                                <input type="text" value="{$row['evaluate_time']|date='Y-m-d H:i:s',###}" disabled>
+                            </div>
+                        </div>
+                        <div class="control-group">
+                            <label class="control-label">评分</label>
+                            <div class="controls">
+                                <input type="text" value="{$row['rank']|get_evaluate_status_no}" disabled>
+                            </div>
+                        </div>
+                        <div class="form-actions">
+                            <button class="btn" onclick="javascript:history.back(-1);return false;">返 回</button>
+
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</block>
+<block name="script">
+    <script src="__JS__/layer.js"></script>  {// 放大插件}
+    <script type="text/javascript">
+        $('img').on('click', function(){
+            var a = $(this).attr('src');
+            layer.open({
+                closeBtn: 0,
+                area: 'auto',
+                skin: 'layui-layer-nobg', //没有背景色
+                type: 1,
+                title: false,
+                shadeClose: true, //点击遮罩关闭
+                maxWidth : 800,
+                content: '<div style="padding:20px;"><img src='+a+'></div>'
+            });
+        });
+    </script>
+
+</block>

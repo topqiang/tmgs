@@ -1,0 +1,45 @@
+<extend name="Public/base" />
+
+<block name="main">
+
+    <div class="row-fluid">
+
+        <div class="span12">
+            <div class="widget-box">
+                <div class="widget-title">
+                    <ul class="nav nav-tabs">
+                    </ul>
+                </div>
+                <div class="widget-content nopadding">
+                    <form class="form-horizontal" method="post" action="{:U('Merchant/update')}">
+                     <input type="hidden" name="model" value="Merchant">
+                        <input type="hidden" name="id" value="{$row['id']}">
+                        <!--// 商家账号-->
+                        <div class="control-group">
+                            <label class="control-label">审核状态</label>
+                            <div class="controls">
+                                <select name="status" id="" style="width:315px;">
+                                    <option value="1">成功</option>
+                                    <option value="3">失败</option>
+                                </select>
+                            </div>
+                        </div>
+                         <div class="control-group">
+                            <label class="control-label">审核反馈</label>
+                            <div class="controls">
+                                <input type="text" name="audit_back" placeholder="请输入审核的反馈">
+                            </div>
+                        </div>
+                        <div class="form-actions">
+                            <button class="btn" onclick="javascript:history.back(-1);return false;">返 回</button>　
+                            <button class="btn btn-info ajax-post" target-form="form-horizontal" type="submit">保 存</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script type="text/javascript">
+     
+    </script>
+</block>

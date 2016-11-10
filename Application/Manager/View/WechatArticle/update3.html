@@ -1,0 +1,100 @@
+<extend name="Public/base" />
+
+<block name="main">
+
+    <div class="row-fluid">
+
+        <div class="span12">
+            <div class="widget-box">
+                <div class="widget-title">
+                    <span class="icon">
+                        <i class="icon-plus"></i>
+                    </span>
+                    <h5></h5>
+                </div>
+                <div class="widget-content nopadding">
+                    <form class="form-horizontal" method="post" action="{:U('WechatArticle/update')}">
+                        <input type="hidden" name="model" value="WechatArticle">
+                        <input type="hidden" name="id" value="{$row['id']}">
+                        <div class="control-group">
+                            <label class="control-label">消息类型</label>
+                            <div class="controls">
+                               <label class="radio inline">
+                                    <input type="radio" name="wxa_type" value="3" checked>
+                                    图文回复
+                                </label>
+                                <span class="help-block"></span>
+                            </div>
+                        </div>
+                       <div class="control-group">
+                            <label class="control-label">关键词类型</label>
+                            <div class="controls">
+                                <label class="radio inline">
+                                    <input type="radio" name="wxa_keywords_type" value="1" <eq name="row['wxa_keywords_type']" value="1">checked</eq>>
+                                    全词匹配
+                                </label>
+                                <label class="radio inline">
+                                    <input type="radio" name="wxa_keywords_type" value="0" <eq name="row['wxa_keywords_type']" value="0">checked</eq>>
+                                    包含匹配
+                                </label>
+                                <span class="help-block"></span>
+                            </div>
+                        </div>
+
+                        <div class="control-group">
+                            <label class="control-label">关键词</label>
+                            <div class="controls">
+                                <input type="text" name="wxa_keywords" value="{$row['wxa_keywords']}" style="width: 80%;">
+                                <span class="help-block">请输入关键词,多个关键词用','隔开</span>
+                            </div>
+                        </div>
+                        <div class="control-group">
+                            <label class="control-label">标题</label>
+                            <div class="controls">
+                                <input type="text" name="wxa_title" value="{$row['wxa_title']}" style="width: 80%;">
+                                <span class="help-block">请输入关键词,多个关键词用','隔开</span>
+                            </div>
+                        </div>
+                        <div class="control-group">
+                            <label class="control-label">图片</label>
+                            <div class="controls">
+                                {:hook('upload',array('is_first'=>1,'unique_sign'=>'wxa_picurl','field_name'=>'wxa_picurl','field_value'=>$row['wxa_picurl'],'save_path'=>'Wechat'))}
+
+                                <span class="help-block">请上传320*128尺寸的大小不超过200KB的广告图</span>
+                            </div>
+                        </div>
+
+                        <div class="control-group">
+                            <label class="control-label">图片外链</label>
+                            <div class="controls">
+                                <input type="text" name="wxa_url" value="{$row['wxa_url']}" style="width: 80%;">
+                                <span class="help-block">如需跳转到其他网址，请在这里填写网址(例如：http://baidu.com，记住必须有http://)</span>
+                            </div>
+                        </div>
+
+                        <div class="control-group">
+                            <label class="control-label">排序</label>
+                            <div class="controls">
+                                <input type="text" name="wxa_sort" value="{$row['wxa_sort']}" style="width: 80%;">
+                                <span class="help-block">数值越大越靠前</span>
+                            </div>
+                        </div>
+
+                        <div class="control-group">
+                            <label class="control-label">简介</label>
+                            <div class="controls">
+                                <textarea name="wxa_description" id="" cols="30" rows="10">{$row['wxa_description']}</textarea>
+                                <span class="help-block"></span>
+                            </div>
+                        </div>
+                        
+                        <div class="form-actions">
+                            <button class="btn" onclick="javascript:history.back(-1);return false;">返 回</button>　
+                            <button class="btn btn-info ajax-post" target-form="form-horizontal" type="submit">保 存</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</block>

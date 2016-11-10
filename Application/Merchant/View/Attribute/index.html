@@ -1,0 +1,59 @@
+<extend name="Public/base" />
+
+<block name="main">
+
+    <div class="row-fluid">
+
+        <div class="span12">
+            <div class="widget-box">
+
+                <div class="widget-title widget-title-search">
+                    <!--<button class="btn btn-success href" url="{:U('Attribute/add',array('thr_g_t_id'=>$thr_g_t_id))}" target-form="ids">新增</button>&nbsp;-->
+                </div>
+
+                <div class="widget-content nopadding">
+                    <table class="table table-bordered table-striped with-check">
+                        <thead>
+                        <tr>
+                            <th><input type="checkbox" id="title-checkbox" name="title-checkbox" class="check-all"/><!--<i class="icon-resize-vertical"></i>--></th>
+                            <th>ID</th>
+                            <th>分类名称</th>
+                            <th>属性名称</th>
+                            <th>属性归属</th>
+                            <th style="width:75px;">属性值数量</th>
+                            <th>操作</th>
+                        </tr>
+                        </thead>
+                        <tbody class="tbody">
+                        <volist name="list" id="row">
+                            <tr>
+                                <td><input type="checkbox" name="ids[]" value="{$row['id']}" class="ids"/></td>
+                                <td>{$row['id']}</td>
+                                <td <empty name="row['cn_type_name']">style="color:#C0C0C0;"</empty>>{$row['cn_type_name']|default="该分类已删除"}</td>
+                                <td>{$row['cn_attr_name']}</td>
+                                <td>{$row['is_merchant']|get_is_merchant}</td>
+                                <td style="text-align:center;color:#f30292;">{$row['value_num']}</td>
+                                <td>
+                                    <a href="{:U('AttributeContent/index',array('id'=>$row['id']))}" title="属性值列表" class="tip-bottom">
+                                        <span class="label label-success">属性值</span></a>&nbsp;
+                                    <neq name="row['is_merchant']" value="0">
+                                        <a href="{:U('Attribute/update',array('id'=>$row['id']))}" title="编辑" class="tip-bottom">
+                                            <span class="label label-success">编辑</span></a>&nbsp;
+                                        <a href="{:U('Attribute/remove',array('model'=>'Attribute','ids'=>$row['id']))}" title="删除" class="tip-bottom confirm ajax-get">
+                                            <span class="label label-important">删除</span></a>
+                                    </neq>
+                                </td>
+                            </tr>
+                        </volist>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="pagination alternate">
+                    {$page}
+                </div>
+
+            </div>
+        </div>
+    </div>
+</block>

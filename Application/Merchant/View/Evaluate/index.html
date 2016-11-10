@@ -1,0 +1,79 @@
+<extend name="Public/base" />
+
+<block name="main">
+
+    <div class="row-fluid">
+
+        <div class="span12">
+            <div class="widget-box">
+
+                <div class="widget-title widget-title-search">
+                    <!--<button class="btn btn-success href" url="{:U('Withdraw/add')}" target-form="ids">新增</button>&nbsp;-->
+                    <button class="btn btn-success href" url="{:U('Evaluate/index',array('rank'=>1))}" >只看好评</button>&nbsp;
+                    <button class="btn btn-warning href" url="{:U('Evaluate/index',array('rank'=>2))}" >只看中评</button>&nbsp;
+                    <button class="btn btn-danger href" url="{:U('Evaluate/index',array('rank'=>3))}" >只看差评</button>&nbsp;
+
+                    <!--<button class="btn btn-danger confirm ajax-post" url="{:U('Unit/delete',array('model'=>'Unit','status'=>9))}" target-form="ids">删除</button>&nbsp;-->
+                    <form action="{:U('Evaluate/index')}" method="post" class="form">
+                        <input type="text" name="evaluate_time" value="{$_REQUEST['evaluate_time']}" class="laydate-icon" id="create_time" placeholder="请输入提现时间" style="width:136px;">
+                        <input type="text" name="order_sn" value="{$_REQUEST['order_sn']}" placeholder="请输入订单号">
+                        <input type="text" name="m_id" value="{$_REQUEST['m_id']}" placeholder="请输入评价用户">
+                        <input type="text" name="g_id" value="{$_REQUEST['g_id']}" placeholder="请输入商品名称">
+                        <button class="btn btn-inverse">查询</button>
+                    </form>
+                </div>
+
+                <div class="widget-content nopadding">
+                    <table class="table table-bordered table-striped with-check">
+                        <thead>
+                        <tr>
+                            <th><input type="checkbox" id="title-checkbox" name="title-checkbox" class="check-all"/></th>
+                            <th>订单号</th>
+                            <th>评价用户</th>
+                            <th>被评价商品</th>
+                            <th>被评价商家</th>
+                            <th>评价时间</th>
+                            <th class="ent-grade">评分</th>
+                            <th>状态</th>
+                        </tr>
+                        </thead>
+                        <tbody class="tbody">
+                        <volist name="list" id="row">
+                            <tr>
+                                <td><input type="checkbox" name="ids[]" value="{$row['id']}" class="ids"/></td>
+                                <td>{$row['order_sn']}</td>
+                                <td>{$row['m_id']}</td>
+                                <td>{$row['g_id']}</td>
+                                <td>{$row['merchant_id']}</td>
+                                <td>{$row['evaluate_time']|date="Y-m-d H:i:s",###}</td>
+                                <td>{$row['rank']|get_evaluate_status}</td>
+                                <td>
+                                    <a href="{:U('Evaluate/update',array('id'=>$row['id']))}" title="详情" class="tip-bottom">
+                                        <span class="label label-info">详情</span></a>&nbsp;
+                                    <!--<a href="{:U('SendLog/remove',array('model'=>'SendLog','ids'=>$row['id']))}" title="禁用" class="tip-bottom confirm ajax-get">-->
+                                        <!--<span class="label label-important">移除</span></a>-->
+                                </td>
+                            </tr>
+                        </volist>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="pagination alternate">
+                    {$page}
+                </div>
+
+            </div>
+        </div>
+    </div>
+</block>
+<block name="script">
+    <script src="__JS__/laydate/laydate.js"></script>
+    <script>
+        laydate({
+            elem: '#create_time', //目标元素。由于laydate.js封装了一个轻量级的选择器引擎，因此elem还允许你传入class、tag但必须按照这种方式 '#id .class'
+            istime: true, //是否开启时间选择
+            format: 'YYYY-MM-DD hh:mm:ss', //日期格式
+        });
+    </script>
+</block>

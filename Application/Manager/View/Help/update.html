@@ -1,0 +1,60 @@
+<extend name="Public/base" />
+
+<block name="main">
+
+    <div class="row-fluid">
+
+        <div class="span12">
+            <div class="widget-box">
+                <div class="widget-title">
+                    <span class="icon">
+                        <i class="icon-plus"></i>
+                    </span>
+                    <h5></h5>
+                </div>
+                <div class="widget-content nopadding">
+                    <form class="form-horizontal" method="post" action="{:U('Help/update')}">
+                        <input type="hidden" name="model" value="Help">
+                        <input type="hidden" name="id" value="{$row['id']}">
+
+                        <div class="control-group">
+                            <label class="control-label" >问题</label>
+                            <div class="controls">
+                                <input type="text" name="cn_question" value="{$row['cn_question']}"  style="width: 50%;">
+                                <span class="help-block"></span>
+                            </div>
+                        </div>
+
+                        <div class="control-group">
+                            <label class="control-label">答案</label>
+                            <div class="controls">
+                                <textarea name="cn_answer">{$row['cn_answer']}</textarea>
+                                {:hook('adminArticleEdit', array('is_first'=>1,'name'=>'cn_answer','value'=>$row['cn_answer']))}
+                                <span class="help-block"></span>
+                            </div>
+                        </div>
+
+                        <div class="control-group">
+                            <label class="control-label">帮助类型</label>
+                            <div class="controls">
+                                    <label>
+                                        <input type="radio" name="type"  value="1"  <eq name="row['type']" value="1">checked</eq>/>
+                                        关于买家
+                                    </label>
+                                    <label>
+                                        <input type="radio" name="type"  value="2" <eq name="row['type']" value="2">checked</eq>/>
+                                        关于卖家
+                                    </label>
+                            </div>
+                        </div>
+
+                        <div class="form-actions">
+                            <button class="btn" onclick="javascript:history.back(-1);return false;">返 回</button>　
+                            <button class="btn btn-info ajax-post" target-form="form-horizontal" type="submit">保 存</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</block>

@@ -1,0 +1,121 @@
+<extend name="Public/base" />
+
+<block name="main">
+
+    <div class="row-fluid">
+        <div class="span2"></div>
+        <div class="span8" style="padding: 30px;">
+            <div class="span3"></div>
+            <div class="span6 hero-unit" style="border:1px solid #3A3A3A;height: 600px;width: 522px;">
+                <div class="span12" style="text-align: center;">
+                    <h2 style="">立即报名</h2>
+                </div>
+                <div class="span12" style="margin-left: -1px;">
+                    <div  style="border-top:1px solid #CCCCCC;margin-bottom:15px;padding:5px 5px;height: 63px;">
+                        <div style="float: left;width: 96px;">云推广佣金<small class="" style="color:#cccccc;font-size: 10px;">￥{$adver[0]['money']}起</small></div>
+                        <div style="float: right;margin-top: 10px;">
+                            <div style="float: left; ">
+                                <a href="javascript:;" class="minus"><i class="icon-minus" style="font-size: 25px;"></i></a>
+                            </div>
+                            <div  style="float: left;margin-left:15px;font-size: 25px;">￥
+                                <span style="color: red;" class="money-show">{$adver[0]['money']}</span>
+                                <input type="hidden" class="money" value="{$adver[0]['money']}">
+                            </div>
+                            <div style="float: left;margin-left:15px;font-size: 25px;">
+                                <a href="javascript:;" class="plus"><i class="icon-plus"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                    <div  style="border-top:1px solid #CCCCCC;margin-bottom:15px;padding:5px 5px;height: 63px;">
+                        <div style="float: left;width: 131px;margin-top:10px;">获得点击次数</div>
+                        <div style="float: right;"><h3 style="color: red;" class="degree"><span>1000</span><span>次</span></h3></div>
+                        <input type="hidden" class="degree-number" value="1000">
+                    </div>
+                </div>
+                <!--// 商品搜索-->
+                <div style="text-align: center;">
+                    <input type="text" style="width: 97%;border:0 none;" class="goods-name" placeholder="请输入商品名称">
+                    <select class="goods" size="5" style="width: 100%;border:0 none;"></select>
+                </div>
+                <div class="span12" style="">
+                    <hr>
+                    <div style="float: right;margin-bottom: 10px;">
+                        <input type="checkbox" class="click-title" checked>阅读并同意<a href="javascript:;" class="read-content">《{$article['title']}》</a>
+                    </div>
+                    <button class="btn btn-large btn-block btn-primary" id="affirm" >确认办理</button>
+                </div>
+            </div>
+        </div>
+        <div class="span2"></div>
+
+        <!-- 条款  -->
+        <div id="myModal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                <h3 id="myModalLabel">{$article['title']}</h3>
+            </div>
+            <div class="modal-body">
+                {$article['cn_content']}
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+    <script type="text/javascript">
+        // 增加
+        var a = "{$adver[0]['money']}"*1;
+        $('.plus').click(function(){
+            var money = $('.money-show').text();
+            var degree = $('.degree').children('span').eq(0).text();
+            $('.money-show').text((money*1 + a).toFixed(2));
+            $('.money').val((money*1 + a).toFixed(2));
+            $('.degree').children('span').eq(0).text(degree*1 + 1000);
+            $('.degree-number').val(degree*1 + 1000);
+        });
+        // 减少
+        $('.minus').click(function(){
+            var money = $('.money-show').text();
+            var degree = $('.degree').children().eq(0).text();
+            if(money <= a)return false;
+            $('.money-show').text((money*1 - a).toFixed(2));
+            $('.money').val((money*1 - a).toFixed(2));
+            $('.degree').children('span').eq(0).text(degree*1 - 1000);
+            $('.degree-number').val(degree*1 - 1000);
+        })
+
+        // 提交
+        $('#affirm').click(function(){
+            var clickTick  = $('.click-title').is(':checked');
+            if(clickTick == false){alert('请输入勾选同意协议');return false;}
+            var money = $('.money').val(); // 价格
+            var degree = $('.degree-number').val(); // 数量
+            var goodsId = $('.goods').val();
+            if(goodsId == 0 || goodsId == null){alert('请选择商品');return false;}
+            window.location.href = "/Merchant/CloudSpread/toSelectPayType/money/"+money+"/degree/"+degree+"/goodsId/"+goodsId;
+        });
+        // 查看内容详情
+        $('.read-content').click(function(){
+            $('#myModal').modal('show');
+        });
+
+        // 商品名称
+        $('.goods-name').keyup(function(){
+            var key = $(this).val();
+            if(key != ''){
+                $.post('{:U("CloudSpread/getGoods")}',{key:key},function(d){
+                    $('.goods').html('');
+                    $.map(d,function(n){
+                        $('.goods').append('<option value="'+ n.id +'">' + n.cn_goods_name+'</option>');
+                    })
+                })
+            }else{
+                $('.goods').html('');
+            }
+        })
+        // 选择 变换
+        $('.goods').change(function(){
+            var goodsName = $('.goods option:selected').text();
+            $('.goods-name').val(goodsName);
+        });
+    </script>
+</block>

@@ -1,0 +1,117 @@
+<extend name="Public/base" />
+
+<block name="main">
+
+    <div class="row-fluid">
+
+        <div class="span12">
+            <div class="widget-box">
+                <div class="widget-title">
+                    <span class="icon">
+                        <i class="icon-plus"></i>
+                    </span>
+                    <h5></h5>
+                </div>
+                <div class="widget-content nopadding">
+                    <form class="form-horizontal" method="post" action="{:U('MerchantAdver/update')}">
+                        <input type="hidden" name="model" value="MerchantAdvertising">
+                        <input type="hidden" name="id" value="{$row['id']}">
+                        <div class="control-group logo-pic"  <neq name="row['type']" value="7"> style="display: none;"</neq>>
+                            <label class="control-label">标题</label>
+                            <div class="controls">
+                                <input type="text" name="title" value="{$row['title']}">
+                                <span class="help-block">请输入标题</span>
+                            </div>
+                        </div>
+
+                        <div class="control-group logo-pic" <neq name="row['type']" value="7"> style="display: none;"</neq>>
+                            <label class="control-label">描述内容</label>
+                            <div class="controls">
+                                <input type="text" name="content" value="{$row['content']}">
+                                <span class="help-block">请不要超过20字</span>
+                            </div>
+                        </div>
+                        <eq name="row['type']" value="7">
+                            <div class="control-group logo-pic"  >
+                                <label class="control-label">LOGO</label>
+                                <div class="controls">
+                                    {:hook('upload',array('is_first'=>1,'unique_sign'=>'pic','field_name'=>'pic','field_value'=>$row['pic'],'save_path'=>'MerchantAdver'))}
+                                    <span class="help-block">请上传描述图</span>
+                                </div>
+                            </div>
+                            <div class="control-group logo-pic"  >
+                                <label class="control-label">办理展示图</label>
+                                <div class="controls">
+                                    {:hook('upload',array('unique_sign'=>'show_pic','field_name'=>'show_pic','field_value'=>$row['show_pic'],'save_path'=>'MerchantAdver'))}
+                                    <span class="help-block"></span>
+                                </div>
+                            </div>
+                        </eq>
+
+
+                        <div class="control-group">
+                            <label class="control-label">价格</label>
+                            <div class="controls">
+                                <input type="text" name="money" value="{$row['money']}">
+                                <span class="help-block" style="color:#F00056">请输入价格(云推广为千次的价格)</span>
+                            </div>
+                        </div>
+                        <notempty name="row['id']">
+                            <div class="control-group">
+                                <label class="control-label">选择类别</label>
+                                <div class="controls">
+                                    <input type="text" value="{$row['type']|merAdverType}" disabled>
+
+                                </div>
+                            </div>
+                            <else/>
+                            <div class="control-group">
+                                <label class="control-label">选择类别</label>
+                                <div class="controls">
+
+                                    <select name="type">
+                                        <option value="">请选择推广类别</option>
+                                        <option value="1" <eq name="row['type']" value="1">selected</eq>>首页广告位</option>
+                                        <option value="2" <eq name="row['type']" value="2">selected</eq>>签到页广告位</option>
+                                        <option value="3" <eq name="row['type']" value="3">selected</eq>>发现好商品</option>
+                                        <option value="4" <eq name="row['type']" value="4">selected</eq>>发现好店</option>
+                                        <option value="5" <eq name="row['type']" value="5">selected</eq>>发现好服务</option>
+                                        <option value="6" <eq name="row['type']" value="6">selected</eq>>云推广</option>
+                                        <option value="7" <eq name="row['type']" value="7">selected</eq>>诚信商家</option>
+                                    </select>
+                                    <span class="help-block">请选择广告类别</span>
+                                </div>
+                            </div>
+                        </notempty>
+
+
+                        <div class="control-group lacation">
+                            <label class="control-label">排序</label>
+                            <div class="controls">
+                                <input type="text" name="location" value="{$row['location']}">
+                                <span class="help-block" style="color:#F00056">排序(价格越高排序数值越小,手动排序)</span>
+                            </div>
+                        </div>
+
+                        <div class="form-actions">
+                            <button class="btn" onclick="javascript:history.back(-1);return false;">返 回</button>　
+                            <button class="btn btn-info ajax-post" target-form="form-horizontal" type="submit">保 存</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</block>
+<block name="script">
+    <script>
+        $('#adver_type').change(function(){
+            var type = $(this).val();
+            if(type == 7 ){
+                $('.logo-pic').show();
+            }else{
+                $('.logo-pic').hide();
+            }
+        });
+    </script>
+</block>

@@ -1,0 +1,95 @@
+<extend name="Public/base" />
+
+<block name="main">
+
+    <div class="row-fluid">
+
+        <div class="span12">
+            <div class="widget-box">
+                <div class="widget-title">
+                    <ul class="nav nav-tabs">
+                        <li class="">
+                            <a href="{:U('Merchant/updateIndex',array('id'=>$row['id']))}" data-toggle="">基本资料</a>
+                        </li>
+                        <li class="active">
+                            <a href="javascript:void(0);" data-toggle="">验证资料</a>
+                        </li>
+                        <li class="">
+                            <a href="{:U('Merchant/updateBalance',array('id'=>$row['id']))}" data-toggle="">商家余额</a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="widget-content nopadding">
+                    <form class="form-horizontal" method="post" action="{:U('Merchant/updateVarify')}">
+                        <input type="hidden" name="model" value="Merchant">
+                        <input type="hidden" name="id" value="{$row['id']}">
+                        <!--// 商家账号-->
+                        <div class="control-group">
+                            <label class="control-label">身份证号</label>
+                            <div class="controls">
+                                <input type="text" name="id_card" value="{$row['id_card']}">
+                                <span class="help-block">请输入真实的身份证号</span>
+                            </div>
+                        </div>
+
+                        <div class="control-group">
+                            <label class="control-label">身份证正面照</label>
+                            <div class="controls">
+                                {:hook('upload',array('is_first'=>1,'unique_sign'=>'hold_card_pic','field_name'=>'hold_card_pic','field_value'=>$row['hold_card_pic'],'save_path'=>'Merchant'))}
+
+                            </div>
+                        </div>
+
+                        <div class="control-group">
+                            <label class="control-label">身份证背面照</label>
+                            <div class="controls">
+                                {:hook('upload',array('unique_sign'=>'back_card_pic','field_name'=>'back_card_pic','field_value'=>$row['back_card_pic'],'save_path'=>'Merchant'))}
+
+                            </div>
+                        </div>
+
+                        <div class="control-group">
+                            <label class="control-label">商家手持身份证照片</label>
+                            <div class="controls">
+                                {:hook('upload',array('unique_sign'=>'hand_idcard_pic','field_name'=>'hand_idcard_pic','field_value'=>$row['hand_idcard_pic'],'save_path'=>'Merchant'))}
+
+                            </div>
+                        </div>
+
+                        <div class="control-group">
+                            <label class="control-label">身份证过期时间</label>
+                            <div class="controls">
+                                <input type="text" name="card_end_time" value="{$row['card_end_time']}">
+
+                            </div>
+                        </div>
+
+                        <div class="form-actions">
+                            <button class="btn" onclick="javascript:history.back(-1);return false;">返 回</button>　
+                            <button class="btn btn-info ajax-post" target-form="form-horizontal" type="submit">保 存</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</block>
+<block name="script">
+    <script src="__JS__/layer.js"></script>  {// 放大插件}
+    <script type="text/javascript">
+        $('.upload-pre-item').on('click', function(){
+            var a = $(this).children('img').attr('src');
+            layer.open({
+                closeBtn: 0,
+                area: 'auto',
+                skin: 'layui-layer-nobg', //没有背景色
+                type: 1,
+                title: false,
+                shadeClose: true, //点击遮罩关闭
+                maxWidth : 800,
+                content: '<div style="padding:20px;"><img src='+a+'></div>'
+            });
+        });
+    </script>
+
+</block>

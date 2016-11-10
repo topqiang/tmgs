@@ -1,0 +1,75 @@
+<extend name="Public/base" />
+
+<block name="main">
+
+    <div class="row-fluid">
+        <if condition="empty($backups)">
+        <div class="span12">
+            <div class="widget-box">
+                <div class="widget-content nopadding">
+                    <table class="table table-bordered table-striped with-check">
+                        <thead>
+                        <tr>
+                            <td>暂无数据</td>
+                        </tr>
+                        </thead>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <else />
+        <div class="span12">
+            <div class="widget-box">
+                <div class="widget-content nopadding">
+                    <form action="{:U('Backup/import')}" method="post">
+                    <table class="table table-bordered table-striped with-check">
+                        <thead>
+                        <tr>
+                            <th>备份名称</th>
+                            <th>文件大小</th>
+                            <th>备份时间</th>
+                            <th>管理操作</th>
+                        </tr>
+                        </thead>
+                        <tbody class="tbody">
+                        <volist name="backups" id="val">
+                            <tr class="collapsed">
+                                <td>
+                                    <span style="padding-left: 20px" name="{$val.name}" class="expander"></span>
+                                    {$val.name}
+                                </td>
+                                <td>{$val.total_size}kb</td>
+                                <td>{$val.date_str}</td>
+                                <td>
+                                    <a href="{:u('Backup/del_backup', array('backup'=>$val['name']))}"  class="J_ajax_del">删除</a> |
+                                    <a href="{:u('Backup/import', array('backup'=>$val['name']))}" class="J_ajax_dialog_btn" data-msg="确定恢复吗？">恢复</a>
+                                </td>
+                            </tr>
+                        </volist>
+                        </tbody>
+                    </table>
+                    </form>
+                </div>
+
+                <div class="pagination alternate">
+                    {$page}
+                </div>
+
+            </div>
+        </div>
+        </if>
+    </div>
+</block>
+<block name="script">
+    <script>
+        $(function(){
+            $('button.move').click(function(){
+                if($(this).next('span').css('display') == 'none') {
+                    $(this).next('span').show();
+                } else {
+                    $(this).next('span').hide();
+                }
+            })
+        })
+    </script>
+</block>

@@ -1,0 +1,58 @@
+<extend name="Public/base" />
+
+<block name="main">
+
+    <div class="row-fluid">
+
+        <div class="span12">
+            <div class="widget-box">
+
+                <div class="widget-title widget-title-search">
+                 <!-- 0空回复  1关注回复 2 文本回复 3 图文回复  -->
+                    <button class="btn btn-success href" url="{:U('WechatArticle/add',array('type'=>0))}" target-form="ids" <eq name="count[0]" value="1">disabled</eq> >新增空回复</button>&nbsp;
+                    <button class="btn btn-success href" url="{:U('WechatArticle/add',array('type'=>1))}" target-form="ids" <eq name="count[1]" value="1">disabled</eq> >新增关注回复</button>&nbsp;
+                    <button class="btn btn-success href" url="{:U('WechatArticle/add',array('type'=>2))}" target-form="ids">新增文本回复</button>&nbsp;
+                    <button class="btn btn-success href" url="{:U('WechatArticle/add',array('type'=>3))}" target-form="ids">新增图文回复</button>&nbsp;
+                    <button class="btn btn-danger confirm ajax-post" url="{:U('WechatArticle/delete',array('model'=>'WechatArticle','status'=>9))}" target-form="ids">删除</button>&nbsp;
+                </div>
+
+                <div class="widget-content nopadding">
+                    <table class="table table-bordered table-striped with-check">
+                        <thead>
+                        <tr>
+                            <th><input type="checkbox" id="title-checkbox" name="title-checkbox" class="check-all"/><!--<i class="icon-resize-vertical"></i>--></th>
+                            <th>回复类型</th>
+                            <th>关键词</th>
+                            <th>标题</th>
+                            <th>内容</th>
+                            <th>操作</th>
+                        </tr>
+                        </thead>
+                        <tbody class="tbody">
+                        <volist name="list" id="row">
+                            <tr>
+                                <td><input type="checkbox" name="ids[]" value="{$row['id']}" class="ids"/></td>
+                                <td>{$row['wxa_type']|getWcMsgtype}</td>
+                                <td>{$row['wxa_keywords']|default="无"}</td>
+                                <td>{$row['wxa_title']|default="无"}</td>
+                                <td>{$row['wxa_description']|mb_substr=0,30,'UTF-8'}</td>
+                                <td>
+                                    <a href="{:U('WechatArticle/update',array('id'=>$row['id'],'type'=>$row['wxa_type']))}" title="编辑" class="tip-bottom">
+                                        <span class="label label-success">编辑</span></a>&nbsp;
+                                    <a href="{:U('WechatArticle/remove',array('model'=>'WechatArticle','ids'=>$row['id'],'status'=>9))}" title="删除" class="tip-bottom confirm ajax-get">
+                                        <span class="label label-important">删除</span></a>
+                                </td>
+                            </tr>
+                        </volist>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="pagination alternate">
+                    {$page}
+                </div>
+
+            </div>
+        </div>
+    </div>
+</block>

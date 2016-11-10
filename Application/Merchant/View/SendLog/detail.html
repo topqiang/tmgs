@@ -1,0 +1,67 @@
+<extend name="Public/base" />
+
+<block name="main">
+
+    <div class="row-fluid">
+
+        <div class="span12">
+            <div class="widget-box">
+                <div class="widget-title">
+                    <span class="icon">
+                        <i class="icon-file"></i>
+                    </span>
+                    <h5>查看记录详情</h5>
+                </div>
+                <div class="widget-content">
+
+                    <div class="invoice-content">
+                        <div class="invoice-head">
+                            <div class="invoice-meta">
+                                模板标识<span class="invoice-number"></span>
+                            </div>
+                            <h5>{$row['unique_code']|default='未使用模板'}</h5>
+                            <div class="invoice-meta">
+                                模板描述<span class="invoice-number"></span>
+                            </div>
+                            <h5>{$row['description']|default='未使用模板'}</h5>
+                            <div class="invoice-meta">
+                                发信类型<span class="invoice-number"></span>
+                            </div>
+                            <h5>{$row['type'],SEND_TEMPLATE_TYPES|get_config_title}</h5>
+                            <div class="invoice-meta">
+                                会员ID<span class="invoice-number"></span>
+                            </div>
+                            <h5>{$row['m_id']}</h5>
+                            <div class="invoice-meta">
+                                会员昵称<span class="invoice-number"></span>
+                            </div>
+                            <h5>{$row['nickname']|default='无'}</h5>
+                            <div class="invoice-meta">
+                                接收账号<span class="invoice-number"></span>
+                            </div>
+                            <h5>{$row['receiver']}</h5>
+                            <div class="invoice-meta">
+                                发送内容<span class="invoice-number"></span>
+                            </div>
+                            <h5>{$row['content']}</h5>
+                            <div class="invoice-meta">
+                                发送时间<span class="invoice-number"></span>
+                            </div>
+                            <h5>{$row['create_time']|date='Y-m-d H:i',###}</h5>
+                            <div class="invoice-meta">
+                                发送状态<span class="invoice-number"></span>
+                            </div>
+                            <h5>{$row['status']|get_send_status}</h5>
+                            <div class="invoice-meta">
+                                发送者<span class="invoice-number"></span>
+                            </div>
+                            <h5>{$row['account']|default='系统'}</h5>
+                            <br>
+                            <button class="btn" onclick="javascript:history.back(-1);return false;">返 回</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</block>

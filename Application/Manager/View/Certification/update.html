@@ -1,0 +1,87 @@
+<extend name="Public/base" />
+<block name="style">
+    <style type="text/css">
+        .div-button {
+            border-bottom:1px solid #333333;
+            margin: 2px;
+        }
+    </style>
+</block>
+<block name="main">
+    <div class="row-fluid">
+        <div class="span12">
+            <div class="widget-box">
+                <div class="widget-title">
+                    <span class="icon">
+                        <i class="icon-plus"></i>
+                    </span>
+                    <h5></h5>
+                </div>
+                <div class="widget-content nopadding">
+                    <form class="form-horizontal" method="post" action="{:U('Certification/update')}">
+                        <input type="hidden" name="model" value="Certification">
+                        <input type="hidden" name="id" value="{$row['id']}">
+                        <input type="hidden" name="m_id" value="{$row['m_id']}">
+
+                        <div class="control-group">
+                            <label class="control-label" ><h3>用户申请信息:</h3></label>
+                            <div class=" controls ">
+                                <div class="row well " style="font-size: large;width:80%;margin-top:20px">
+                                    <div class="span6">
+                                        <div class="div-button">用户账号: {$row['account']}</div>
+                                        <div class="div-button">真实姓名: {$row['really_name']}</div>
+                                        <div class="div-button">身份证号: {$row['id_card']}</div>
+                                        <div class="div-button">联系手机号: {$row['contact_mobile']}</div>
+
+                                    </div>
+                                    <div class="span6">
+                                        <div class="div-button">联系邮箱: {$row['contact_email']}</div>
+                                        <div class="div-button">联系地址: {$row['address']}</div>
+                                        <div class="div-button">性别: {$row['sex']|get_sex}</div>
+                                        <div class="div-button">职业: {$row['profession']}</div>
+                                        <div class="div-button">提交时间: {$row['create_time']|date='Y-m-d H:i',###}</div>
+                                    </div>
+
+                                </div>
+                                <div class="row well " style="font-size: large;width:80%;margin-top:20px">
+                                    <div class="span12">
+                                        <div class="div-button ">身份证正反面:(身份证过期时间:{$row['card_end_time']})</div>
+                                        <volist name="row['hold_card_pic']" id="it">
+                                            {$it}
+                                        </volist>
+                                        <volist name="row['back_card_pic']" id="lt">
+                                            {$lt}
+                                        </volist>
+                                    </div>
+                                </div>
+                                <div class="row well " style="font-size: large;width:80%;margin-top:20px">
+                                    <div class="span12">
+                                        <div class="div-button ">审核反馈:</div>
+                                        <textarea name="fail_reason" cols="30" rows="10" style="width: 99%;margin-top:10px" placeholder="请输入反馈信息"></textarea>
+                                    </div>
+                                </div>
+                                <div class="row well " style="font-size: large;width:80%;margin-top:20px">
+                                    <div class="span12">
+                                        <div class="div-button ">审核:</div>
+                                        <select name="status" style="margin-top:10px">
+                                            <option value="1">同意</option>
+                                            <option value="2">否决</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-actions">
+                            <button class="btn" onclick="javascript:history.back(-1);return false;">返 回</button>　
+                            <button class="btn btn-info ajax-post" target-form="form-horizontal" type="submit">保 存</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</block>
+<block name="script">
+
+</block>

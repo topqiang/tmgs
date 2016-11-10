@@ -1,0 +1,72 @@
+<extend name="Public/base" />
+
+<block name="main">
+
+    <div class="row-fluid">
+
+        <div class="span12">
+            <div class="widget-box">
+
+                <div class="widget-title widget-title-search">
+                    <button class="btn btn-success href" url="{:U('DonateLove/add')}" target-form="ids">新增</button>&nbsp;
+                    <button class="btn btn-inverse ajax-post" url="{:U('DonateLove/forbid',array('model'=>'DonateLove','status'=>0))}" target-form="ids">禁用</button>&nbsp;
+                    <button class="btn btn-info ajax-post" url="{:U('DonateLove/resume',array('model'=>'DonateLove','status'=>1))}" target-form="ids">启用</button>&nbsp;
+                    <button class="btn btn-danger confirm ajax-post" url="{:U('DonateLove/delete',array('model'=>'DonateLove','status'=>9))}" target-form="ids">删除</button>&nbsp;
+                </div>
+
+                <div class="widget-content nopadding">
+                    <table class="table table-bordered table-striped with-check">
+                        <thead>
+                        <tr>
+                            <th><input type="checkbox" id="title-checkbox" name="title-checkbox" class="check-all"/><!--<i class="icon-resize-vertical"></i>--></th>
+                            <th>ID</th>
+                            <th>项目标题</th>
+                            <th>目标金额</th>
+                            <th>已筹金额</th>
+                            <th>联系方式</th>
+                            <th>创建时间</th>
+                            <th>状态</th>
+                            <th>操作</th>
+                        </tr>
+                        </thead>
+                        <tbody class="tbody">
+                        <volist name="list" id="row">
+                            <tr>
+                                <td><input type="checkbox" name="ids[]" value="{$row['id']}" class="ids"/></td>
+                                <td>{$row['id']}</td>
+                                <td>{$row['project_name']}</td>
+                                <td>{$row['project_aims_money']}</td>
+                                <td>{$row['project_current_money']}</td>
+                                <td>{$row['contacts']}</td>
+                                <td>{$row['create_time']|date="Y-m-d H:i",###}</td>
+                                <td>
+                                <eq name="row['status']" value="1">
+                                    <span style="color:green;">进行中</span>
+                                    <else/>
+                                    <span style="color:red;">结束</span>
+                                </eq>
+                                </td>
+                                <td>
+                                    <a href="{:U('DonateLove/update',array('id'=>$row['id']))}" title="编辑" class="tip-bottom">
+                                        <span class="label label-success">编辑</span></a>&nbsp;
+                                    <eq name="row['status']" value="1">
+                                        <a href="{:U('DonateLove/resume',array('model'=>'DonateLove','ids'=>$row['id'],'status'=>2))}" title="结束" class="tip-bottom ajax-get">
+                                            <span class="label label-info">结束</span></a>&nbsp;
+                                    </eq>
+                                    <a href="{:U('DonateLove/delete',array('model'=>'DonateLove','ids'=>$row['id'],'status'=>9))}" title="删除" class="tip-bottom confirm ajax-get">
+                                        <span class="label label-important">删除</span></a>
+                                </td>
+                            </tr>
+                        </volist>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="pagination alternate">
+                    {$page}
+                </div>
+
+            </div>
+        </div>
+    </div>
+</block>

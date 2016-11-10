@@ -1,0 +1,80 @@
+<extend name="Public/base" />
+
+<block name="main">
+    <div class="row-fluid">
+        <div class="span12">
+            <div class="widget-box">
+                <div class="widget-title">
+                    <span class="icon">
+                        <i class="icon-plus"></i>
+                    </span>
+                    <h5></h5>
+                </div>
+                <div class="widget-content nopadding">
+                    <form class="form-horizontal" method="post" action="{:U('IntegralMall/update')}">
+                        <input type="hidden" name="model" value="IntegralMall">
+                        <input type="hidden" name="id" value="{$row['id']}">
+                        <div class="control-group">
+                            <label class="control-label" >图片上传</label>
+                            <div class="controls">
+                                {:hook('upload',array('is_first'=>1,'unique_sign'=>'pic','field_name'=>'pic','field_value'=>$row['pic'],'save_path'=>'IntegralMall'))}
+                                <span class="help-block">显示图 1:1 大小</span>
+                            </div>
+                        </div>
+
+                        <div class="control-group">
+                            <label class="control-label" >商品名</label>
+                            <div class="controls">
+                                <input type="text" name="goods_name" value="{$row['goods_name']}"  >
+                                <span class="help-block">请不要超过40个字</span>
+                            </div>
+                        </div>
+
+                        <div class="control-group">
+                            <label class="control-label" >兑换需求</label>
+                            <div class="controls">
+                                <input type="text" name="integral" value="{$row['integral']}" style="width:276px;" >分/个
+                                <span class="help-block">兑换需求只能输入整数 (例300)</span>
+                            </div>
+                        </div>
+
+                        <div class="form-actions">
+                            <button class="btn" onclick="javascript:history.back(-1);return false;">返 回</button>　
+                            <button class="btn btn-info ajax-post" target-form="form-horizontal" type="submit">保 存</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</block>
+<block name="script">
+    <script type="text/javascript">
+        $("#letter_ue").click(function(){
+            $('.letter-out-eu').show();
+            return false;
+        });
+        $(document).on('click', function(e) {
+            e = e || window.event;
+            if ( e.target.className == 'letter-out-eu' ) return;
+            $('.letter-out-eu').hide();
+        });
+        $(".select_ue_letter").click(function(){
+            $(".fir_ue_letter").val($(this).html());
+        });
+
+
+        $("#letter_cn").click(function(){
+            $('.letter-out-cn').show();
+            return false;
+        });
+        $(document).on('click', function(e) {
+            e = e || window.event;
+            if ( e.target.className == 'letter-out-cn' ) return;
+            $('.letter-out-cn').hide();
+        });
+        $(".select_cn_letter").click(function(){
+            $(".fir_cn_letter").val($(this).html());
+        });
+    </script>
+</block>

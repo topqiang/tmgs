@@ -1,0 +1,81 @@
+<extend name="Public/base" />
+<block name="main">
+    <body>
+    <header class="bgz colb">
+        <span class="left" linkto="javascript:history.go(-1)"></span>
+        申请售后
+    </header>
+    <div class="content" style="margin-top: 50px;">
+        <div class="lh40 cole pad0-20">
+            售后类型<span class="colr">*</span>
+        </div>
+        <div class="lh40 cole pad0-20 bgb pore">
+            <span class="fr right mat10"></span>
+            <select class="poab selpstime" forele="shlei">
+                <option value="1">我要退款（不需退货）</option>
+                <option value="2">我要退货</option>
+            </select>
+            <span class="" ele="shlei">请选择</span>
+        </div>
+
+        <div class="lh40 cole pad0-20">
+            货物状态<span class="colr">*</span>
+        </div>
+        <div class="lh40 cole pad0-20 bgb pore">
+            <span class="fr right mat10"></span>
+            <select class="poab selpstime" forele="shlei">
+                <option value="1">已收到</option>
+                <option value="2">未收到</option>
+            </select>
+            <span class="" ele="shlei">请选择</span>
+        </div>
+
+        <div class="lh40 cole pad0-20">
+            原因<span class="colr">*</span>
+        </div>
+        <div class="lh40 cole pad0-20 bgb pore">
+            <span class="fr right mat10"></span>
+            <select class="poab selpstime" forele="shlei">
+                <option value="1">不喜欢</option>
+                <option value="2">退运费</option>
+                <option value="3">质量问题</option>
+                <option value="4">商品与描述不符</option>
+                <option value="5">质量破损</option>
+                <option value="6">未按约定时间发货</option>
+                <option value="7">假冒品牌</option>
+            </select>
+            <span class="" ele="shlei">请选择</span>
+        </div>
+
+        <div class="lh40 cole pad0-20">
+            退款金额<span class="colr">*</span><span class="fs12">最多108.00</span>
+        </div>
+        <div class="lh40 cole pad0-20 bgb">
+            <input placeholder="请输入" class="width"/>
+        </div>
+
+        <div class="lh40 cole pad0-20">
+            退款说明
+        </div>
+        <div class="cole pad0-20 bgb">
+            <textarea class="lh40 width" placeholder="请输入"></textarea>
+        </div>
+        <div class="lh40 cole pad0-20">
+            上传凭证
+        </div>
+        <div class="cole pad20 bgb upimg ovhid">
+            <div class="pore">
+                <img src="__IMG__/uploadfile.png" />
+                <input type="file" class="poab selpstime"/>
+            </div>
+        </div>
+
+        <div class="botarea">
+            <div class="big-btn bgz lh50">提交申请</div>
+        </div>
+    </div>
+    </body>
+</block>
+<block name="script">
+
+</block>

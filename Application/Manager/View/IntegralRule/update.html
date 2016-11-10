@@ -1,0 +1,83 @@
+<extend name="Public/base" />
+
+<block name="main">
+
+    <div class="row-fluid">
+
+        <div class="span12">
+            <div class="widget-box">
+                <div class="widget-title">
+                    <span class="icon">
+                        <i class="icon-plus"></i>
+                    </span>
+                    <h5>积分设置</h5>
+                </div>
+                <div class="widget-content nopadding">
+                    <form class="form-horizontal" method="post" action="{:U('IntegralRule/update')}">
+                        <input type="hidden" name="model" value="IntegralRule">
+                        <div class="control-group">
+                            <label class="control-label">第一天</label>
+                            <div class="controls">
+                                <input type="number" name="one" value="{$row['one']}">
+                                <span class="help-block"></span>
+                            </div>
+                        </div>
+                        <div class="control-group">
+                            <label class="control-label">第二天</label>
+                            <div class="controls">
+                                <input type="number" name="two" value="{$row['two']}">
+                                <span class="help-block"></span>
+                            </div>
+                        </div>
+                        <div class="control-group">
+                            <label class="control-label">第三天</label>
+                            <div class="controls">
+                                <input type="number" name="three" value="{$row['three']}">
+                                <span class="help-block"></span>
+                            </div>
+                        </div>
+                        <div class="control-group">
+                            <label class="control-label">第四天</label>
+                            <div class="controls">
+                                <input type="number" name="four" value="{$row['four']}">
+                                <span class="help-block"></span>
+                            </div>
+                        </div>
+                        <div class="control-group">
+                            <label class="control-label">第五天</label>
+                            <div class="controls">
+                                <input type="number" name="five" value="{$row['five']}">
+                                <span class="help-block"></span>
+                            </div>
+                        </div>
+                        <div class="control-group">
+                            <label class="control-label">第六天</label>
+                            <div class="controls">
+                                <input type="number" name="six" value="{$row['six']}">
+                                <span class="help-block"></span>
+                            </div>
+                        </div>
+                        <div class="control-group">
+                            <label class="control-label">第七天</label>
+                            <div class="controls">
+                                <input type="number" name="seven" value="{$row['seven']}">
+                                <span class="help-block"></span>
+                            </div>
+                        </div>
+                        <div class="control-group">
+                            <label class="control-label">底部广告图</label>
+                            <div class="controls">
+                                {:hook('upload',array('is_first'=>1,'unique_sign'=>'pic','field_name'=>'pic','field_value'=>$row['pic'],'save_path'=>'IntrgralRule'))}
+                                <span class="help-block">上传请不要超过512k,比例最优5:2</span>
+                            </div>
+                        </div>
+
+                        <div class="form-actions">
+                            <button class="btn btn-info ajax-post" target-form="form-horizontal" type="submit">保 存</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</block>

@@ -1,0 +1,147 @@
+<!-避免重复加载-->
+<if condition="$plugins_param['is_first'] eq 1">
+    <script type="text/javascript" src="__STATIC__/uploadify/jquery.uploadify.min.js"></script>
+    <if condition="$plugins_param['pictype'] eq 1">
+        <link rel="stylesheet" type="text/css" href="__STATIC__/uploadify/uploadifypic.css" media="all">
+        <else/>
+        <link rel="stylesheet" type="text/css" href="__STATIC__/uploadify/uploadify.css" media="all">
+    </if>
+
+</if>
+<input type="file" name="upload_file_{$plugins_param['unique_sign']}" id="upload_file_{$plugins_param['unique_sign']}">
+<input type="hidden" name="{$plugins_param['field_name']}" id="upload_file_input_{$plugins_param['unique_sign']}" value=""/>
+<div class="upload-file-box">
+    <php>$files = $plugins_param['field_value'];</php>
+    <!--判断是传文件还是图片-->
+    <notempty name="files">
+        <if condition="empty($plugins_param['type']) or ($plugins_param['type'] eq 'picture')">
+            <foreach name="files" item="file">
+                <if condition="$plugins_param['pictype'] eq 1">
+                    <div class="upload-pre-item" val="{$file['id']}">
+                        <img src="__ROOT__{$file['path']}" />
+                        <i class="icon-remove" onclick="removeFile{$plugins_param['unique_sign']}(this)"></i>
+                    </div>
+                    <else/>
+                    <div class="upload-pre-item" val="{$file['id']}">
+                        <img src="__ROOT__{$file['path']}" />
+                        <i class="icon-remove" onclick="removeFile{$plugins_param['unique_sign']}(this)"></i>
+                    </div>
+                </if>
+            </foreach>
+            <else/>
+            <foreach name="files" item="file">
+                <div class="upload-pre-item" val="{$file['id']}">
+                    <a href="{:U('UpDownLoad/download',array('id'=>$file['id']))}">{$file['name']}</a>
+                    <i class="icon-remove" onclick="removeFile{$plugins_param['unique_sign']}(this)"></i>
+                </div>
+            </foreach>
+        </if>
+    </notempty>
+</div>
+<div class="clear"></div>
+<script type="text/javascript">
+    var queue_limit_{$plugins_param['unique_sign']} = '{$plugins_param["queue_limit"]}',
+            type_{$plugins_param['unique_sign']} = '{$plugins_param["type"]}';
+    queue_limit_{$plugins_param['unique_sign']} == '' ? queue_limit_{$plugins_param['unique_sign']} = 1 : '';
+    /* 初始化上传插件 */
+    $("#upload_file_{$plugins_param['unique_sign']}").uploadify({
+        //"auto" : true, //默认值true
+        //"buttonClass" : "", //string 默认值 ""
+        //"buttonCursor" : "hand", //string 默认值 hand
+        //"buttonImage" : "",//string 默认值 null
+        //"checkExisting" : "",//string 默认值 false
+        //"debug" : false,//boolean  默认值false
+        //"fileSizeLimit" : "", //number
+        //"fileTypeDesc" : "",//string  默认值All Files
+        //"fileTypeExts" : "",//string 默认值*.*
+        //"formData" : {},  //json //默认值
+        //"method" : "",//默认值post
+        //"multi" : false, //一次能选几个文件 false只能选一个//默认值true
+        //"removeCompleted" : true,  //成功后是否移除//默认值true
+        //"successTimeout" : 30, //等待服务器响应时间成功后//默认值30
+        //"uploadLimit" : 999,//默认值999 一次允许上传数量
+        "height"          : {$plugins_config['height']},
+        "swf"             : "__STATIC__/uploadify/uploadify.swf",
+        "fileObjName"     : "fileData",  //string 默认值fileData
+        "buttonText"      : "上传文件",
+        "uploader"        : "{:U('UpDownLoad/upload',array('session_id'=>session_id(),'type'=>$plugins_param['type'],'save_path'=>$plugins_param['save_path'],'exts'=>$plugins_param['exts'],'max_size'=>$plugins_param['max_size']))}",
+        "width"           : {$plugins_config['width']},
+        'removeTimeout'	  : 0.5, //默认值3
+        'queueSizeLimit'  : queue_limit_{$plugins_param['unique_sign']}, //默认值999
+        //"onUploadStart"   : function(file) {alert(0); return false;},
+        "onUploadSuccess" : uploadPicture{$plugins_param['unique_sign']}, //file,data,response
+
+        //"onCancel" : function(file) {},
+        //"onClearQueue" : function(queueItemCount) {},
+        //"onDestroy" : function() {},
+        //"onDialogClose" : function(queueData) {},
+        //"onDialogOpen" : function() {},
+        //"onDisable" : function() {},
+        //"onEnable" : function() {},
+        //"onSWFReady" : function() {},
+        //"onUploadComplete" : function(file) {},
+        //"onUploadError" : function(file,errorCode,errorMsg,errorString) {},
+        //"onUploadProgress" : function(file,bytesUploaded,bytesTotal) {},
+        //"onInit" : function(instance) {},
+        //"onQueueComplete" : function(queueData) {},
+        //"onSelect" : function(file) {alert(0); return false;}
+        //"onSelectError" : function() {},
+        "onFallback" : function() {
+            alert('未检测到兼容版本的Flash.');
+        }
+    });
+//    function uploadStart{$plugins_param['unique_sign']}(file){
+//        alert(0);
+//        if(1==1) {
+//            return false;
+//        }
+//    }
+    function uploadPicture{$plugins_param['unique_sign']}(file, data){
+        var data = $.parseJSON(data);
+        //alert(data);
+        var src = '';
+        if(data.status){
+            //判断是图片还是文件 显示方式不同
+            var html = '<div class="upload-pre-item" val="' + data.id + '">';
+            if (type_{$plugins_param['unique_sign']} == '' || type_{$plugins_param['unique_sign']} == 'picture') {
+                src = data.url || '__ROOT__' + data.path;
+                html += '<img src="' + src + '"/>';
+            } else {
+                html += '<a href="'+data.download_url+'">'+data.name+'</a>';
+            }
+            html += '<i class="icon-remove" onclick="removeFile{$plugins_param['unique_sign']}(this)"></i></div>';
+
+            if(queue_limit_{$plugins_param['unique_sign']} == 1) {
+                //单个文件
+                $("#upload_file_{$plugins_param['unique_sign']}").parent().find('.upload-file-box').html(html);
+            } else {
+                //多个文件
+                $("#upload_file_{$plugins_param['unique_sign']}").parent().find('.upload-file-box').append(html);
+            }
+            setFileIds{$plugins_param['unique_sign']}();
+        } else {
+            updateAlert(data.info,'alert-error');
+            setTimeout(function(){
+                $('.alert').hide();
+            },2500);
+        }
+    }
+    //删除文件
+    function removeFile{$plugins_param['unique_sign']}(o){
+        var p = $(o).parent().parent();
+        $(o).parent().remove();
+        setFileIds{$plugins_param['unique_sign']}();
+    }
+    //重置ids
+    function setFileIds{$plugins_param['unique_sign']}(){
+        var ids = [];
+        $("#upload_file_{$plugins_param['unique_sign']}").parent().find('.upload-file-box').find('.upload-pre-item').each(function(){
+            ids.push($(this).attr('val'));
+        });
+        if(ids.length > 0)
+            $("#upload_file_input_{$plugins_param['unique_sign']}").val(ids.join(','));
+        else
+            $("#upload_file_input_{$plugins_param['unique_sign']}").val('');
+    }
+    setFileIds{$plugins_param['unique_sign']}();
+</script>

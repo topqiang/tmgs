@@ -1,0 +1,1476 @@
+@charset "utf-8";
+body {
+  background: #f5f8fa;
+}
+.content {
+  -webkit-overflow-scrolling: touch;
+  margin: 0px auto;
+  max-width: 450px;
+  background: #f5f8fa;
+  overflow: hidden;
+}
+.textcen {
+  text-align: center;
+}
+.bgc {
+  background: #f5f8fa;
+}
+.pore {
+  position: relative;
+}
+.poab {
+  position: absolute;
+}
+.bgz {
+  background: #1b1b1b;
+}
+.colbl {
+  color: #436cfd;
+}
+.bor1b {
+  border: 1px solid #436cfd;
+}
+.bgbtn {
+  background: #3d87ff !important;
+}
+.colz {
+  color: #1b1b1b;
+}
+.colp {
+  color: #ef6353;
+}
+.fr {
+  float: right;
+}
+.fl {
+  float: left;
+}
+.bol5 {
+  border-left: 5px solid #1b1b1b;
+}
+.bgza {
+  background: rgba(27, 27, 27, 0.8);
+}
+.bgb {
+  background: #fff !important;
+}
+.bgr {
+  background: #F5092C;
+}
+.bgf {
+  background: #f1f1f1;
+}
+.colb {
+  color: #FFFFFF !important;
+}
+.cole {
+  color: #767676;
+}
+.mat10 {
+  margin-top: 10px !important;
+}
+.texovh {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.disf {
+  display: flex;
+  justify-content: space-around;
+  flex-flow: wrap;
+}
+.colg {
+  color: #42bdcc;
+}
+.bgg {
+  background: #42bdcc;
+}
+.col2 {
+  color: #ffc60e;
+}
+.bge {
+  background: #E3E3E3;
+}
+.bgyel {
+  background: #ff902d;
+}
+.colr {
+  color: #F5092C !important;
+}
+.bgr {
+  background: #F5092C !important;
+}
+.disn {
+  display: none !important;
+}
+.ovhid {
+  overflow: hidden;
+}
+.textrig {
+  text-align: right;
+}
+.mar60 {
+  margin-right: 60px;
+}
+.borbtn {
+  color: #ef6353;
+  padding: 5px 20px;
+  border-radius: 4px;
+  border: 1px solid #ef6353;
+}
+.borbtnb {
+  color: #fff;
+  padding: 2px 10px;
+  border-radius: 10px;
+  border: 1px solid #fff;
+}
+.bobtn {
+  line-height: 25px;
+}
+.borbtnh {
+  color: #333;
+  padding: 5px 20px;
+  border-radius: 4px;
+  border: 1px solid #333;
+}
+.bor1px {
+  border-right: 1px solid #eee;
+}
+.botarea {
+  height: 50px;
+  position: fixed;
+  bottom: 0px;
+  width: 100%;
+}
+.check {
+  background: url('../img/check.png') 0px center no-repeat transparent;
+  background-size: 20px 20px;
+}
+.check.on {
+  background: url('../img/checkon.png') 0px center no-repeat transparent;
+  background-size: 20px 20px;
+}
+.bora50 {
+  border-radius: 50%;
+}
+header {
+  height: 50px;
+  line-height: 50px;
+  position: fixed;
+  top: 0px;
+  z-index: 8;
+  width: 100%;
+  text-align: center;
+  background: #1b1b1b;
+  padding: 0px 50px;
+}
+header span.local {
+  padding: 25px 25px;
+  height: 50px;
+  line-height: 50px;
+  background: url('../img/msg.png') 10px center no-repeat;
+  background-size: 24px 24px;
+}
+header span.rigshe {
+  padding: 25px 25px;
+  background: url('../img/rigshe.png') center center no-repeat transparent;
+  background-size: 6px 25px;
+}
+header .cenimg {
+  padding-top: 12px;
+}
+header .cenimg img {
+  height: 26px;
+}
+.jiaob {
+  top: 7px;
+  right: 8px;
+  display: inline-block;
+  width: 15px;
+  height: 15px;
+  border-radius: 50%;
+}
+.searchdiv {
+  height: 30px;
+  border-radius: 8px;
+  overflow: hidden;
+  background: #8d8d8d;
+}
+.searchdiv input {
+  color: #fff;
+  padding-left: 10px;
+  width: 100%;
+  padding-right: 50px;
+  top: 0px;
+  left: 0px;
+  bottom: 0px;
+  background: #8d8d8d;
+}
+.search {
+  padding: 15px 20px;
+  background: url('../img/iconsou.png') center center no-repeat transparent;
+  background-size: 18px 18px;
+}
+.pfr {
+  position: absolute;
+  right: 0px;
+  top: 0px;
+}
+.pfl {
+  position: absolute;
+  left: 0px;
+  top: 0px;
+}
+span.left {
+  position: absolute;
+  left: 0px;
+  top: 0px;
+  height: 50px;
+  padding-left: 36px;
+  background: url('../img/left.png') 13px center no-repeat transparent;
+  background-size: 10px 20px;
+}
+span.left.hei {
+  color: #000000;
+  text-align: center;
+  background: url('../img/lefth.png') 13px center no-repeat transparent;
+  background-size: 15px 20px;
+}
+.label {
+  height: 40px;
+  line-height: 40px;
+  padding-left: 10px;
+  margin-top: 10px;
+}
+footer {
+  height: 60px;
+  position: fixed;
+  bottom: 0px;
+  width: 100%;
+  display: flex;
+  justify-content: space-around;
+  flex-flow: wrap;
+  border-top: 1px solid #D8D8D8;
+}
+footer > div {
+  color: #767676;
+  width: 20%;
+  padding-top: 40px;
+}
+footer > div.on {
+  color: #FFFFFF !important;
+}
+footer > div:nth-child(1) {
+  background: url('../img/fter1.png') center 10px no-repeat transparent;
+  background-size: auto 30px;
+}
+footer > div:nth-child(1).on {
+  background: url('../img/fter1on.png') center 10px no-repeat transparent;
+  background-size: auto 30px;
+}
+footer > div:nth-child(2) {
+  background: url('../img/fter2.png') center 10px no-repeat transparent;
+  background-size: auto 30px;
+}
+footer > div:nth-child(2).on {
+  background: url('../img/fter2on.png') center 10px no-repeat transparent;
+  background-size: auto 30px;
+}
+footer > div:nth-child(3) {
+  background: url('../img/fter3.png') center 10px no-repeat transparent;
+  background-size: auto 30px;
+}
+footer > div:nth-child(3).on {
+  background: url('../img/fter3on.png') center 10px no-repeat transparent;
+  background-size: auto 30px;
+}
+footer > div:nth-child(4) {
+  background: url('../img/fter4.png') center 10px no-repeat transparent;
+  background-size: auto 30px;
+}
+footer > div:nth-child(4).on {
+  background: url('../img/fter4on.png') center 10px no-repeat transparent;
+  background-size: auto 30px;
+}
+footer > div:nth-child(5) {
+  background: url('../img/fter5.png') center 10px no-repeat transparent;
+  background-size: auto 30px;
+}
+footer > div:nth-child(5).on {
+  background: url('../img/fter5on.png') center 10px no-repeat transparent;
+  background-size: auto 30px;
+}
+footer > div span {
+  font-size: 10px;
+  display: block;
+  text-align: center;
+}
+.line {
+  padding: 0px 5px;
+  margin-top: 20px;
+  background: #fff !important;
+}
+.line input {
+  width: auto;
+}
+.line > div {
+  height: 50px;
+  line-height: 50px;
+  border-bottom: 1px solid #d8d8d8;
+  padding-left: 40px;
+}
+.line > div:last-child {
+  border-bottom: 0px;
+}
+.lines {
+  padding: 0px 5px;
+  margin-top: 0px;
+  background: #fff !important;
+}
+.lines > div {
+  height: 50px;
+  line-height: 50px;
+  border-bottom: 1px solid #d8d8d8;
+  padding-left: 40px;
+}
+.lines > div:last-child {
+  border-bottom: 0px;
+}
+.orderline {
+  margin-top: 10px;
+  background: #fff !important;
+}
+.orderline > div {
+  height: 50px;
+  line-height: 50px;
+  border-bottom: 1px solid #d8d8d8;
+  padding-left: 20px;
+}
+.orderline > div:last-child {
+  border-bottom: 0px;
+}
+.formline {
+  margin-top: 0px;
+  background: #fff !important;
+}
+.formline > div {
+  height: 50px;
+  line-height: 50px;
+  border-bottom: 1px solid #d8d8d8;
+  padding-left: 10px;
+}
+.formline > div:last-child {
+  border-bottom: 0px;
+}
+.getcode {
+  margin-top: 10px;
+  height: 30px;
+  line-height: 30px;
+  padding: 0px 10px;
+  float: right;
+  color: #FFFFFF !important;
+  text-align: center;
+  background: #1b1b1b;
+  border-radius: 4px;
+}
+.big-btn {
+  font-size: 18px;
+  width: 90%;
+  height: 40px;
+  line-height: 40px;
+  text-align: center;
+  color: #FFFFFF !important;
+  margin-left: 5%;
+  border-radius: 4px;
+}
+.unlock {
+  background: url('../img/ys.png') 10px center no-repeat transparent;
+  background-size: 25px 30px;
+}
+.phone {
+  background: url('../img/email.png') 10px center no-repeat transparent;
+  background-size: 25px 30px;
+}
+.code {
+  background: url('../img/codeh.png') 10px center no-repeat transparent;
+  background-size: 25px 30px;
+}
+.icontshh {
+  padding-left: 30px;
+  background: url('../img/tshh.png') 0px center no-repeat transparent;
+  background-size: 20px 20px;
+}
+.iconhb {
+  padding-left: 40px;
+  background: url('../images/iconhb.png') 0px center no-repeat transparent;
+  background-size: auto 30px;
+}
+.iconlx {
+  padding-left: 25px;
+  background: url('../img/iconlx.png') 0px center no-repeat transparent;
+  background-size: 16px 16px;
+}
+.iconline {
+  padding-left: 10px;
+  background: url('../img/bline.png') 0px center no-repeat transparent;
+  background-size: 5px 14px;
+}
+.iconhh {
+  padding-top: 40px;
+  background: url('../img/iconhh.png') 10px 0px no-repeat #ffffff;
+  background-size: auto 40px;
+}
+.iconhd {
+  padding-top: 40px;
+  background: url('../img/iconhd.png') 10px 0px no-repeat #ffffff;
+  background-size: auto 40px;
+}
+.iconhfw {
+  padding-top: 40px;
+  background: url('../img/iconhfw.png') 10px 0px no-repeat #ffffff;
+  background-size: auto 40px;
+}
+.iconrmsc {
+  padding-left: 30px;
+  background: url('../img/rmsc.png') 0px center no-repeat transparent;
+  background-size: 20px 20px;
+}
+.iconsys {
+  padding: 20px 10px 20px 80px;
+  background: url('../img/iconsys.png') 20px center no-repeat transparent;
+  background-size: 50px 50px;
+}
+.iconord {
+  padding: 20px 10px 20px 80px;
+  background: url('../img/iconord.png') 20px center no-repeat transparent;
+  background-size: 50px 50px;
+}
+.iconsafe {
+  padding-left: 55px;
+  background: url('../img/safe.png') 20px center no-repeat #f6f6f6;
+  background-size: 30px 30px;
+}
+.iconedi {
+  background: url('../img/iconedit.png') 10px center no-repeat transparent;
+  background-size: 20px 20px;
+}
+.icondel {
+  background: url('../img/icondel.png') 10px center no-repeat transparent;
+  background-size: 20px 20px;
+}
+.icongdel {
+  background: url('../img/icondel.png') center 15px no-repeat transparent;
+  background-size: 20px 20px;
+}
+.iconggley {
+  background: url('../img/ggley.png') center 15px no-repeat transparent;
+  background-size: 20px 20px;
+}
+.iconv {
+  padding: 20px 25px;
+  border-left: 1px solid #E3E3E3;
+  background: url('../img/v.png') 10px center no-repeat transparent;
+  background-size: 20px 20px;
+}
+.iconv.on {
+  background: url('../img/h.png') 10px center no-repeat transparent;
+  background-size: 20px 20px;
+}
+.iconjian {
+  background: url('../img/del.png') center center no-repeat transparent;
+  background-size: 20px 20px;
+}
+.iconadd {
+  background: url('../img/add.png') center center no-repeat transparent;
+  background-size: 20px 20px;
+}
+.iconsanj {
+  padding-right: 15px;
+  background: url('../img/sanj.png') right center no-repeat transparent;
+  background-size: 10px 10px;
+}
+.iconsanj.on {
+  color: #436cfd;
+  background: url('../img/sanjon.png') right center no-repeat transparent;
+  background-size: 10px 10px;
+}
+.iconstore {
+  padding: 5px 20px 5px 40px;
+  background: url('../img/store.png') 10px center no-repeat transparent;
+  background-size: 20px 20px;
+}
+.icongley {
+  right: 40px;
+  display: inline-block;
+  padding: 25px 25px;
+  background: url('../img/botgley.png') center center no-repeat transparent;
+  background-size: 25px 25px;
+}
+.iconset {
+  right: 40px;
+  display: inline-block;
+  padding: 25px 25px;
+  background: url('../img/iconset.png') center center no-repeat transparent;
+  background-size: 25px 25px;
+}
+.iconclose {
+  top: 10px;
+  right: 10px;
+  padding: 10px;
+  background: url('../img/close.png') center center no-repeat transparent;
+  background-size: 20px 20px;
+}
+.icondell {
+  top: -5px;
+  right: -5px;
+  padding: 10px;
+  background: url('../img/icondell.png') center center no-repeat transparent;
+  background-size: 20px 20px;
+}
+.icondd {
+  background: url('../img/selfdd.png') 10px center no-repeat transparent;
+  background-size: 20px auto;
+}
+.iconqb {
+  background: url('../img/selfqb.png') 10px center no-repeat transparent;
+  background-size: 20px auto;
+}
+.icondz {
+  background: url('../img/selfdz.png') 10px center no-repeat transparent;
+  background-size: 20px auto;
+}
+.iconpj {
+  background: url('../img/selfpj.png') 10px center no-repeat transparent;
+  background-size: 20px auto;
+}
+.icondpj {
+  padding-left: 40px;
+  background: url('../img/dpj.png') 10px center no-repeat transparent;
+  background-size: 20px auto;
+}
+.iconolx {
+  padding-left: 40px;
+  background: url('../img/olx.png') 10px center no-repeat transparent;
+  background-size: 20px auto;
+}
+.iconots {
+  padding-left: 40px;
+  background: url('../img/ots.png') 10px center no-repeat transparent;
+  background-size: 20px auto;
+}
+.iconzuan {
+  padding-left: 40px;
+  background: url('../img/iconzuan.png') 10px center no-repeat transparent;
+  background-size: 20px auto;
+}
+.icondsh {
+  padding-left: 40px;
+  background: url('../img/dsh.png') 10px center no-repeat transparent;
+  background-size: 20px auto;
+}
+.icondzf {
+  padding-left: 40px;
+  background: url('../img/icondzf.png') 10px center no-repeat transparent;
+  background-size: 20px auto;
+}
+.iconyjs {
+  padding-left: 40px;
+  background: url('../img/iconyjs.png') 10px center no-repeat transparent;
+  background-size: 20px auto;
+}
+.icondfh {
+  padding-left: 40px;
+  background: url('../img/dfh.png') 10px center no-repeat transparent;
+  background-size: 20px auto;
+}
+.iconocg {
+  padding-left: 40px;
+  background: url('../img/ocg.png') 10px center no-repeat transparent;
+  background-size: 20px auto;
+}
+.iconzj {
+  background: url('../img/selfzj.png') 10px center no-repeat transparent;
+  background-size: 20px auto;
+}
+.iconyq {
+  background: url('../img/selfyq.png') 10px center no-repeat transparent;
+  background-size: 20px auto;
+}
+.iconfx {
+  background: url('../img/selffx.png') 10px center no-repeat transparent;
+  background-size: 20px auto;
+}
+.iconjf {
+  background: url('../img/selfjf.png') 10px center no-repeat transparent;
+  background-size: 20px auto;
+}
+.iconax {
+  background: url('../img/selfax.png') 10px center no-repeat transparent;
+  background-size: 20px auto;
+}
+.icontl {
+  background: url('../img/selftl.png') 10px center no-repeat transparent;
+  background-size: 20px auto;
+}
+.iconbz {
+  background: url('../img/selfbz.png') 10px center no-repeat transparent;
+  background-size: 20px auto;
+}
+.iconabme {
+  background: url('../img/iconabme.png') 10px center no-repeat transparent;
+  background-size: 20px auto;
+}
+.iconwx {
+  background: url('../img/iconwx.png') 0px center no-repeat transparent;
+  background-size: 30px auto;
+}
+.iconzfb {
+  background: url('../img/iconzfb.png') 0px center no-repeat transparent;
+  background-size: 30px auto;
+}
+.iconchz {
+  background: url('../img/iconchz.png') 0px center no-repeat transparent;
+  background-size: 30px auto;
+}
+.iconmx {
+  background: url('../img/iconmx.png') 0px center no-repeat transparent;
+  background-size: 30px auto;
+}
+.icontx {
+  background: url('../img/icontx.png') 0px center no-repeat transparent;
+  background-size: 30px auto;
+}
+.iconyueh {
+  padding-left: 40px;
+  background: url('../img/iconyueh.png') 0px center no-repeat transparent;
+  background-size: 30px auto;
+}
+.iconjs {
+  padding-left: 40px;
+  background: url('../img/iconjs.png') 0px center no-repeat transparent;
+  background-size: 30px auto;
+}
+.iconyl {
+  background: url('../img/iconyl.png') 0px center no-repeat transparent;
+  background-size: 30px auto;
+}
+.iconyue {
+  background: url('../img/iconyue.png') 0px center no-repeat transparent;
+  background-size: 30px auto;
+}
+.iconcancel {
+  height: 40px;
+  line-height: 40px;
+  top: 10px;
+  right: 10px;
+  padding: 0px 10px 0px 40px;
+  background: url('../img/cancel.png') 10px center no-repeat #436cfd;
+  background-size: 20px auto;
+}
+.iconbtel {
+  background: url('../img/iconbtel.png') 10px center no-repeat #436cfd;
+  background-size: 20px auto;
+}
+.iconupdpwd {
+  background: url('../img/updpwd.png') 10px center no-repeat transparent;
+  background-size: 20px auto;
+}
+.iconage {
+  background: url('../img/iconage.png') 10px center no-repeat transparent;
+  background-size: 20px auto;
+}
+.iconname {
+  background: url('../img/iconname.png') 10px center no-repeat transparent;
+  background-size: 20px auto;
+}
+.iconcheck {
+  padding: 25px 15px;
+  background: url('../img/gley.png') right center no-repeat transparent;
+  background-size: 20px 20px;
+}
+.iconcheck.on {
+  background: url('../img/gleyon.png') right center no-repeat transparent;
+  background-size: 20px 20px;
+}
+.unum {
+  display: inline-block;
+  top: 10px;
+  left: 65px;
+  background: #FF4444;
+  border-radius: 50%;
+  width: 10px;
+  height: 10px;
+}
+.right {
+  padding: 10px 10px;
+  background: url('../img/right.png') 5px center no-repeat transparent;
+  background-size: 8px 15px;
+}
+.xqnav {
+  padding-bottom: 10px;
+  color: #666666;
+  font-size: 10px;
+  display: flex;
+  justify-content: space-around;
+  flex-flow: wrap;
+  background: #fff !important;
+}
+.xqnav > div {
+  width: 25%;
+  margin-top: 10px;
+}
+.xqnav > div img {
+  width: 50%;
+  margin-left: 25%;
+}
+.xqnav > div span {
+  margin-top: 5px;
+  display: block;
+  text-align: center;
+}
+.ad {
+  overflow: hidden;
+}
+.ad > div {
+  height: 180px;
+}
+.ad .tshhlef {
+  float: left;
+  margin-left: -2px;
+  width: 60%;
+}
+.ad .tshhlef .top {
+  height: 80px;
+}
+.ad .bot {
+  margin-top: 2px;
+}
+.ad .bot div {
+  height: 98px;
+  width: 50%;
+  overflow: hidden;
+}
+.ad .bot .botl {
+  float: left;
+  margin-left: -2px;
+}
+.ad .bot .botr {
+  float: right;
+}
+.ad .tshhrig {
+  float: right;
+  width: 40%;
+}
+.ad img {
+  width: 100%;
+  height: 100%;
+}
+.ad2 div {
+  float: left;
+  width: 20%;
+  height: 125px;
+  margin-left: 2px;
+}
+.ad2 div:nth-child(4n+1) {
+  margin-left: -3px;
+  width: 40%;
+}
+.ad2 div:nth-child(4n) {
+  float: right;
+  margin-right: -3px;
+}
+.ad2 img {
+  height: 100%;
+  width: 100%;
+}
+.selpstime {
+  opacity: 0;
+  left: 0px;
+  top: 0px;
+  bottom: 0px;
+  width: 100%;
+}
+.ad3 div {
+  float: left;
+  width: 25%;
+  height: 100px;
+  margin-left: 2px;
+}
+.ad3 div:nth-child(4n+1) {
+  margin-left: -3px;
+}
+.ad3 div:nth-child(4n) {
+  float: right;
+  margin-right: -3px;
+}
+.ad3 img {
+  height: 100%;
+  width: 100%;
+}
+.goodlist {
+  margin-bottom: 20px;
+}
+.topbar {
+  padding-right: 50px;
+}
+.playgley {
+  display: flex;
+  justify-content: space-around;
+  flex-flow: wrap;
+  height: 20px;
+  line-height: 20px;
+  text-align: center;
+  color: #000000;
+  width: 90px;
+  margin-top: 15px;
+}
+.playgley span {
+  width: 20px;
+}
+.goodh {
+  width: 50%;
+  padding: 20px 0px 10px;
+  margin-bottom: 6px;
+}
+.goodh:nth-child(2n+1) {
+  float: left;
+  margin-left: -3px;
+}
+.goodh:nth-child(2n) {
+  float: right;
+  margin-right: -3px;
+}
+.goodh .imgbag {
+  width: 100%;
+  max-height: 250px;
+  overflow: hidden;
+}
+.goodh .imgbag img {
+  width: 100%;
+  max-height: 250px;
+}
+.goodh .goodname {
+  height: 40px;
+  overflow: hidden;
+}
+.good {
+  height: 120px;
+  padding: 10px 0px;
+}
+.good .imgbag {
+  float: left;
+  width: 100px;
+  height: 100px;
+  overflow: hidden;
+}
+.good .imgbag img {
+  height: 100px;
+}
+.good .pad0-10 {
+  height: 110px;
+  border-bottom: 1px solid #E3E3E3;
+  padding-top: 15px;
+}
+.good > div {
+  overflow: hidden;
+}
+.good .goodname {
+  height: 40px;
+  overflow: hidden;
+}
+.tab {
+  overflow: hidden;
+}
+.classify {
+  float: left;
+  width: 25%;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+}
+.classify div {
+  text-align: center;
+  height: 50px;
+  line-height: 50px;
+  border-bottom: 1px solid #e5e5e5;
+}
+.classify div.on {
+  background: #fff !important;
+}
+.conmain {
+  float: right;
+  width: 75%;
+}
+.conmain > div {
+  padding: 0px 10px;
+}
+.conmain .contitle {
+  height: 30px;
+  line-height: 30px;
+}
+.conmain .warelist {
+  background: #fff !important;
+  -webkit-overflow-scrolling: touch;
+  overflow-y: auto;
+}
+.wh20 {
+  line-height: 20px;
+  text-align: center;
+  width: 20px;
+  height: 20px;
+}
+.gohead {
+  position: fixed;
+  right: 10px;
+  bottom: 130px;
+  width: 50px;
+  height: auto;
+  border-radius: 50%;
+  overflow: hidden;
+}
+.gohead img {
+  width: 100%;
+}
+.sanjia {
+  display: inline-block;
+  padding: 0px 20px;
+}
+.sanjia:after {
+  content: "";
+  display: block;
+  position: absolute;
+  border-left: 5px solid transparent;
+  border-right: 5px solid transparent;
+  border-top: 10px solid #fff;
+  right: 5px;
+  top: 20px;
+}
+.ware {
+  width: 33.33%;
+}
+.ware img {
+  width: 100%;
+}
+.ware span {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  left: 50%;
+  transform: translateX(-50%);
+  top: 65%;
+}
+.shopobj {
+  margin-bottom: 10px;
+}
+.shop {
+  height: 90px;
+}
+.shop img {
+  height: 50px;
+  width: 50px;
+}
+.shop .shopdec {
+  margin-left: 10px;
+  display: inline-block;
+  height: 50px;
+}
+.slgoods .slgood {
+  padding-bottom: 20px;
+  width: 25%;
+}
+.slgoods .slgood img {
+  width: 90%;
+}
+.slgoods .slgood .slgprice {
+  right: 5px;
+  bottom: 20px;
+  padding: 0px 5px;
+}
+.sifting {
+  width: 100%;
+  position: fixed;
+  bottom: 0px;
+  z-index: 10;
+}
+.sifting input {
+  width: 70px;
+  height: 20px;
+  padding: 2px 4px;
+  border-radius: 4px;
+}
+.rate {
+  padding-bottom: 20px;
+}
+.rate .usinfo img {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+}
+.rate .ratedesc {
+  height: 45px;
+  overflow: hidden;
+}
+.gishop img {
+  width: 50px;
+  height: 50px;
+}
+.gishop .gishopinfo > div {
+  width: 33.33%;
+  border-right: 1px solid #E3E3E3;
+}
+.gishop .gishopinfo > div:last-child {
+  border-right: 0px;
+}
+.botbtn div {
+  padding: 30px 10px 0px 10px;
+}
+.botbtn div:nth-child(1) {
+  background: url('../img/dianpu.png') center 5px no-repeat transparent;
+  background-size: auto 25px;
+}
+.botbtn div:nth-child(2) {
+  background: url('../img/conlection.png') center 5px no-repeat transparent;
+  background-size: auto 25px;
+}
+.botbtn div:nth-child(2).on {
+  background: url('../img/conlectionon.png') center 5px no-repeat transparent;
+  background-size: auto 25px;
+}
+.botbtn div:nth-child(3) {
+  background: url('../img/icongley.png') center 5px no-repeat transparent;
+  background-size: auto 25px;
+}
+.gooddesc img {
+  width: 100% !important;
+}
+.zhao {
+  position: fixed;
+  z-index: 9;
+  bottom: 0px;
+  left: 0px;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+}
+.zhcon {
+  bottom: 50px;
+  padding-bottom: 20px;
+  width: 100%;
+}
+.checkgood {
+  width: 100%;
+  padding: 20px 5px;
+}
+.checkgood .bagimg {
+  width: 100px;
+  height: 100px;
+  margin-right: 10px;
+  margin-top: -50px;
+  padding: 5px;
+  border: 1px solid #EEEEEE;
+}
+.checkgood .bagimg img {
+  width: 100%;
+  height: 100%;
+}
+.chimlist {
+  display: flex;
+  justify-content: flex-start;
+}
+.chimlist span {
+  margin-right: 10px;
+  padding: 5px 20px;
+  border: 1px solid #eee;
+  border-radius: 4px;
+  margin-bottom: 10px;
+}
+.chimlist span.on {
+  border: 1px solid #436cfd;
+  color: #436cfd;
+  background: url('../img/rigbot.png') right bottom no-repeat transparent;
+  background-size: 15px 15px;
+}
+.rateimg {
+  margin: 10px 0px;
+  width: 100%;
+  overflow-y: auto;
+  white-space: nowrap;
+}
+.rateimg img {
+  margin-right: 10px;
+  height: 80px;
+}
+.ratelevel span {
+  display: inline-block;
+  padding: 5px 10px;
+}
+.ratelevel span.on {
+  color: #436cfd;
+}
+.setlevel span.borbtnh {
+  border-radius: 13px;
+  margin-right: 30px;
+  position: relative;
+}
+.setlevel span.borbtnh.on:after {
+  position: absolute;
+  content: '';
+  width: 15px;
+  height: 15px;
+  top: -4px;
+  right: -4px;
+  background: url('../img/gleyon.png') 0px 0px no-repeat transparent;
+  background-size: 15px 15px;
+}
+.ordaddress {
+  background: #fff !important;
+  height: 100px;
+  border-image: url('../img/borimg.png') 15 repeat;
+}
+.newadd {
+  padding-left: 90px;
+  height: 100px;
+  line-height: 100px;
+  background: url('../img/newadd.png') 25px center no-repeat transparent;
+  background-size: 50px auto;
+}
+.ediadd {
+  padding: 20px 40px 20px 60px;
+  height: 100px;
+  line-height: 30px;
+  background: url('../img/addre.png') 25px center no-repeat transparent;
+  background-size: 20px auto;
+}
+.ediadd > div {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.busto {
+  padding: 20px 40px 20px 60px;
+  height: 100px;
+  line-height: 30px;
+  background: url('../img/busto.png') 25px center no-repeat transparent;
+  background-size: 20px auto;
+}
+.busto > div {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.address {
+  background: #fff !important;
+  margin-bottom: 10px;
+}
+.address > div {
+  padding: 0px 20px;
+  height: 40px;
+  line-height: 40px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.address .playadd {
+  border-top: 1px solid #E1E1E1;
+}
+.address .playadd span {
+  padding-left: 40px;
+}
+.topnav {
+  background: #4558ff;
+  height: 60px;
+}
+.topnav > div {
+  width: 33.33%;
+  padding-top: 40px;
+}
+.topnav > div:nth-child(1) {
+  background: url('../img/topnav1.png') center 5px no-repeat rgba(255, 255, 255, 0.5);
+  background-size: 30px 30px;
+}
+.topnav > div:nth-child(1).on {
+  background: url('../img/topnav1.png') center 5px no-repeat rgba(255, 255, 255, 0);
+  background-size: 30px 30px;
+}
+.topnav > div:nth-child(2) {
+  background: url('../img/topnav2.png') center 5px no-repeat rgba(255, 255, 255, 0.5);
+  background-size: 30px 30px;
+}
+.topnav > div:nth-child(2).on {
+  background: url('../img/topnav2.png') center 5px no-repeat rgba(255, 255, 255, 0);
+  background-size: 30px 30px;
+}
+.topnav > div:nth-child(3) {
+  background: url('../img/topnav3.png') center 5px no-repeat rgba(255, 255, 255, 0.5);
+  background-size: 30px 30px;
+}
+.topnav > div:nth-child(3).on {
+  background: url('../img/topnav3.png') center 5px no-repeat rgba(255, 255, 255, 0);
+  background-size: 30px 30px;
+}
+.shopinfo {
+  height: 180px;
+  background: url('../img/topbgdp.png') 0px 0px no-repeat transparent;
+  background-size: 100% 100%;
+}
+.shopinfo .shoplogo img {
+  height: 50px;
+  width: 50px;
+}
+.hdgood {
+  display: flex;
+  justify-content: space-between;
+}
+.hdgood > div {
+  width: 33%;
+}
+.hdgood > div img {
+  width: 100px;
+}
+.shoptop {
+  height: 120px;
+  padding-top: 50px;
+  background: url('../img/shopbg.png') 0px 0px no-repeat transparent;
+  background-size: 100% 120px;
+}
+.shoptop .borad4 {
+  width: 68px;
+  padding-top: 30px;
+  background: url('../img/iconcoll.png') center 2px no-repeat rgba(255, 255, 255, 0.2);
+  background-size: 20px 20px;
+}
+.shoptop .borad4.on {
+  color: #ffc60e;
+  background: url('../img/iconcollon.png') center 2px no-repeat rgba(255, 255, 255, 0.2);
+  background-size: 20px 20px;
+}
+.gleygood {
+  padding-left: 40px;
+  background: url('../img/gley.png') 10px center no-repeat #ffffff;
+  background-size: 20px 20px;
+}
+.gleygood.on {
+  background: url('../img/gleyon.png') 10px center no-repeat #ffffff;
+  background-size: 20px 20px;
+}
+.fl100 {
+  float: left;
+  width: 40px;
+  height: 100px;
+}
+.playgood {
+  padding-right: 33.33px;
+  height: 100px;
+}
+.playgood .playbtn {
+  height: 100px;
+  padding-top: 10px;
+}
+.playgood .playbtn div {
+  padding-top: 50px;
+}
+.playgood .localmana {
+  top: 0px;
+  right: 0px;
+}
+.playgood .localmana span {
+  display: block;
+  width: 33.33px;
+  height: 33.33px;
+}
+.playgood .localmana span:nth-child(2) {
+  text-align: center;
+  line-height: 20px;
+  margin: 6.5px;
+  width: 20px;
+  height: 20px;
+}
+.selftop .fl img.hearder {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  border: 2px solid #e3e3e3;
+}
+.selftop .fl img.ulevel {
+  width: 20px;
+  height: 20px;
+}
+.setphoto {
+  height: 100px;
+  width: 100px;
+  margin: 0px auto;
+}
+.setphoto img {
+  width: 100%;
+  height: 100%;
+}
+.ogoodlist .good {
+  margin-top: 5px;
+}
+.ogoodlist .good:first-child {
+  margin-top: 0px;
+}
+.shopbar {
+  height: 40px;
+  line-height: 40px;
+  background: #fff !important;
+  display: flex;
+  justify-content: space-around;
+  flex-flow: wrap;
+  text-align: center;
+}
+.shopbar div.on {
+  color: #436cfd;
+  border-bottom: 2px solid #436cfd;
+}
+.wltop {
+  height: 100px;
+}
+.wltop .poab {
+  border-radius: 50%;
+  overflow: hidden;
+}
+.wltop .poab img {
+  width: 100px;
+  height: 100px;
+}
+.wltop .wlinfo {
+  padding-left: 60px;
+  margin-left: 50px;
+  height: 80px;
+  margin-top: 10px;
+  border-radius: 20px;
+  background: #3d87ff !important;
+  line-height: 27px;
+}
+.wllist {
+  border-left: 2px solid #e3e3e3;
+}
+.wllist > div {
+  position: relative;
+  padding: 10px 0px;
+  color: #767676;
+}
+.wllist > div:before {
+  border: 2px solid #e3e3e3;
+  position: absolute;
+  content: '';
+  display: inline-block;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: #E3E3E3;
+  left: -58px;
+  top: 20px;
+}
+.wllist > div.on {
+  color: #42bdcc;
+}
+.wllist > div.on:before {
+  background: #42bdcc;
+}
+.upimg div {
+  float: left;
+  width: 30%;
+  border: 1px solid #E1E1E1;
+  margin-right: 5%;
+  margin-bottom: 10px;
+}
+.upimg div img {
+  width: 100%;
+  height: 120px;
+}
+.upimg div:last-child {
+  margin-right: 0px;
+}
+.paytype {
+  padding-left: 20px;
+}
+.paytype > div .iconcheck {
+  padding: 25px 15px;
+  background: url('../img/gley.png') right center no-repeat transparent;
+  background-size: 20px 20px;
+}
+.paytype > div.on .iconcheck {
+  background: url('../img/gleyon.png') right center no-repeat transparent;
+  background-size: 20px 20px;
+}
+.invitetop {
+  background-size: 100% 200px;
+}
+.bor1san > div {
+  width: 33.33%;
+  border-left: 1px solid #E5E5E5;
+}
+.bor1san > div:first-child {
+  border-left: 0px;
+}
+.bor1four > div {
+  width: 28%;
+  border-left: 1px solid #E5E5E5;
+}
+.bor1four > div:first-child {
+  width: 16%;
+  border-left: 0px;
+}
+.rangepar {
+  height: 220px;
+  padding: 0px 30px;
+}
+.rangepar > div {
+  height: 40px;
+  padding: 14px 35px 14px 50px;
+}
+.range {
+  overflow: hidden;
+  height: 12px;
+  border-radius: 6px;
+  width: 100%;
+  background: rgba(61, 135, 255, 0.4);
+}
+.range span {
+  transition: width 1s ease-in;
+  border-radius: 6px;
+  display: inline-block;
+  width: 0px;
+  background: #3d87ff !important;
+  height: 100%;
+  position: absolute;
+  left: 0px;
+  top: 0px;
+}
+.getjifen {
+  width: 100%;
+  height: 60px;
+}
+.getjifen .linecon {
+  width: 100%;
+  top: -10px;
+  display: flex;
+  justify-content: space-between;
+}
+.getjifen .jifenday .arc {
+  display: inline-block;
+  border-radius: 0px 0px 4px #666;
+  width: 30px;
+  border-radius: 50%;
+  background: #E3E3E3;
+  color: #767676;
+  height: 30px;
+  line-height: 30px;
+}
+.getjifen .jifenday .msg {
+  margin-top: 10px;
+}
+.getjifen .jifenday.on .arc {
+  color: #FFFFFF !important;
+  background: #3d87ff;
+}
+.getjifen .jifenday.on .msg {
+  color: #436cfd;
+}
+.lineh {
+  width: 90%;
+  height: 10px;
+  margin: 0px auto;
+  background: #E3E3E3;
+}

@@ -1,0 +1,36 @@
+<extend name="Public/base" />
+<block name="main">
+    <body>
+    <header class="bgz colb">
+        <span class="left"></span>
+        运单信息
+    </header>
+    <div class="content" style="padding-top: 50px;">
+        <div class="formline">
+            <div class="pore">
+                <span class="right fr mat15"></span>
+                <span class="disib" style="width: 100px;">承运公司：</span>
+                <span class="cole fs14" ele="bank">中通快递</span>
+                <select class="poab selpstime" forele="bank">
+                    <option>中通快递</option>
+                    <option>申通快递</option>
+                    <option>圆通快递</option>
+                    <option>宅急送</option>
+                    <option>韵达快递</option>
+                    <option>EMS</option>
+                    <option>汇通快递</option>
+                    <option>天天快递</option>
+                </select>
+            </div>
+            <div>
+                <span class="disib" style="width: 100px;">运单号：</span>
+                <input type="text" placeholder="请输入运单号"/>
+            </div>
+        </div>
+        <div class="big-btn bgz mat30">确定</div>
+    </div>
+    </body>
+</block>
+<block name="script">
+    <script type="text/javascript" src="__JS__/touch.min.js"></script>
+</block>

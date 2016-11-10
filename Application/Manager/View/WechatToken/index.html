@@ -1,0 +1,49 @@
+<extend name="Public/base" />
+
+<block name="main">
+
+    <div class="row-fluid">
+
+        <div class="span12">
+            <div class="widget-box">
+                <div class="widget-title">
+                    <span class="icon">
+                        <i class="icon-plus"></i>
+                    </span>
+                    <h5></h5>
+                </div>
+                <div class="widget-content nopadding">
+                    <form class="form-horizontal" method="post" action="{:U('WeChat/apiInterface')}">
+                        <input type="hidden" name="model" value="WeChat">
+                        <input type="hidden" name="id" value="{$row['id']}">
+                        <div class="control-group">
+                            <label class="control-label">TOKEN</label>
+                            <div class="controls">
+                                <div style="margin:3px 0 3px 0;">{$row['token']}</div>
+                                <!-- <input type="text" name="token" value="{$row['token']}"> -->
+                                <span class="help-block">微信验证TOKEN码</span>
+                            </div>
+                        </div>
+                        <div class="control-group">
+                            <label class="control-label">API地址</label>
+                            <div class="controls">
+                                <div style="margin:3px 0 3px 0;">{$row['api_url']}</div>
+                                <span class="help-block">微信验证地址</span>
+                            </div>
+                        </div>
+
+                        <div class="control-group">
+                            <label class="control-label">API地址</label>
+                            <div class="controls">
+                                <div style="margin:3px 0 3px 0;color:rgba(64,32,168,0.81);">登陆微信公众号，进入开发模式，点击‘注册成为开发者’，填入url和token，将url中‘您的域名’字样换成您的英文域名。提交成功后，开启开发模式，即可在后台进行配置。</div>
+                            </div>
+                        </div>
+                        <div class="form-actions">
+                           
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</block>

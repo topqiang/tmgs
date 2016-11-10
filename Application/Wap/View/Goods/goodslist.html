@@ -1,0 +1,163 @@
+<extend name="Public/base" />
+<block name="main">
+    <body>
+    <header class="bgz colb">
+        <span class="icongley poab"></span>
+    		<span class="pfr rigshe">
+    			<span class="jiaob poab bgr colb fs12 textcen lh14">3</span>
+    		</span>
+        <span class="left" linkto="javascript:history.go(-1)"></span>
+        <div class="pore mat10 searchdiv">
+            <input class="poab fs12" placeholder="男士正装时尚西服"/>
+            <span class="search pfr"></span>
+        </div>
+    </header>
+    <div class="pofi bgb borb31" style="top: 50px;width: 100%;">
+        <div class="disf topbar lh40">
+            <span class="colbl dosifting">综合排序</span>
+            <span class="iconsanj on">销量</span>
+            <span class="iconsanj">价格</span>
+            <span class="iconsanj">刷选</span>
+        </div>
+        <div class="poab iconv pfr on"></div>
+    </div>
+    <div class="content" style="padding-top: 90px;">
+
+        <div class="goodlist ovhid mat10">
+            <!--// 商品列表-->
+        </div>
+        <div class="sifting bgb" style="display: none;">
+            <div class="pad20 borb31 lh40">
+                价格区间(￥)
+                <input class="bgf" />——<input class="bgf" />
+            </div>
+            <ul class="lh50 pad0-20">
+                <li class="borb31 pore">
+                    <span class="right fr mat15"></span>
+                    <span class="fr colbl mar5" ele="city">天津市</span>
+                    <span>配送城市:</span>
+                    <select class="poab selpstime" forele="city">
+                        <option>天津市</option>
+                        <option>芜湖市</option>
+                        <option>天坛市</option>
+                        <option>北京市</option>
+                    </select>
+                </li>
+                <li class="borb31 pore">
+                    <span class="right fr mat15"></span>
+                    <span class="fr colbl mar5" ele="classify">所有分类</span>
+                    <span>商品分类:</span>
+                    <select class="poab selpstime" forele="classify">
+                        <option>所有分类</option>
+                        <option>商品风</option>
+                        <option>耐克</option>
+                        <option>杰克琼斯</option>
+                    </select>
+                </li>
+            </ul>
+            <div class="textcen mat20">
+                <span class="bor1b colbl textcen pad0-10 borad4">重置</span>
+            </div>
+
+            <div class="botarea bgz textcen colb lh50">确认</div>
+        </div>
+    </div>
+    <div class="disib gohead top_gohead">
+        <img src="__IMG__/gohead.png" />
+    </div>
+    </body>
+</block>
+<block name="script">
+    <script type="text/javascript" src="__JS__/touch.min.js"></script>
+    <script type="text/javascript">
+        var h = document.documentElement ? document.documentElement.clientHeight : document.body.clientHeight;
+        $(".sifting").height(h-91);
+    </script>
+
+
+    <script type="text/javascript">
+        var dataargs = {p:1};
+        var g_t_id ="{$g_t_id}";
+        var keywords = "{$keywords}";
+        if(g_t_id)dataargs['g_t_id'] = g_t_id;
+        if(keywords)dataargs['keywords'] = keywords;
+        var link = '/index.php?m=Wap&c=Goods&a=goodsinfo&goods_id=';
+        //添加商品到列表
+        function putGoods(data,args) {
+            if(data.flag == 'success'){
+                var goods = data.data.goods;
+                if((!goods || goods.length == 0 ) && args == "fenye"){
+                    $(".content").append('<div class="textcen">没有更多了！</div>');
+                }else{
+                    var str ="";
+                    for(g in goods){
+                       str += '<div class="good bgb" linkto="'+link+goods[g]['goods_id']+'"> <div class="imgbag"> <img src="'+goods[g]['goods_pic']+'" /> </div> <div class="pad0-10"> <div class="goodname"> '+goods[g]['goods_name']+'</div> <div class="lh30 price fs14 colr">￥<span class="fs16"> '+goods[g]['price']+'</span></div> <div class="cole fs12"> <span class="mar20">销量：'+goods[g]['sales']+'</span> <span>评论数：'+goods[g]['comment_num']+'</span> </div> </div> </div>';
+                    }
+                    if (args == "fenye") {
+                        $('.goodlist').append(str);
+                    }else{
+                        $('.goodlist').html(str);
+                    }
+                    top_linkto();
+                }
+            }else{
+                alert(data.message);
+            }
+
+            if (args == "shouci") {
+                fenye();
+            }
+        }
+
+        function getJson(args) {
+            console.log(dataargs);
+            $.ajax({
+                url: 'http://2.taomim.com/index.php/Api/Index/newGoodsList',
+                type: 'POST',
+                dataType: 'JSON',
+                data: dataargs,
+                success : function(data){
+                    putGoods(data,args);
+                }
+            });
+        }
+
+        function selectAfter(self) {
+            if (self.hasClass("merchant_type_id")){
+                dataargs.merchant_type_id=self.val();
+                getJson();
+            }
+            if (self.hasClass("sort")) {
+                dataargs.sort= self.val();
+                getJson();
+            }
+        };
+
+        $(function(){
+            getJson("shouci");
+        });
+        function fenye(){
+            var flag= true;//防止ajax请求期间，对此触发请求数据
+            var $_zd = $(".good").height();//获取每个单项的高度
+            var length = 3;//定义预加载的数量，提前三个加载数据
+            var $_par = $(".goodlist");//获取包裹容器
+            var winheight = $(window).height();//获取窗口高度
+            var curpage = 1;//存储当前的页数v
+            $(function(){
+                $(window).on("scroll",function(e){
+                    if(flag){
+                        var self = $(this);
+                        var scrtop = self.scrollTop() + winheight;
+                        var docheight = $_par.height();
+                        console.log(scrtop + "=" + docheight + "=" + $_zd);
+                        if(scrtop > docheight - ( length * $_zd ) ){
+                            flag = false;
+                            dataargs.p = dataargs.p +1;
+                            getJson("fenye");
+                        }
+                    }
+                });
+            });
+        }
+    </script>
+</block>

@@ -1,0 +1,59 @@
+<extend name="Public/base" />
+
+<block name="main">
+
+    <div class="row-fluid">
+
+        <div class="span12">
+            <div class="widget-box">
+
+                <div class="widget-title widget-title-search">
+                    <form action="{:U('Region/index')}" method="post" class="form">
+                        <input type="text" name="region_name" value="{$_REQUEST['region_name']}" placeholder="城市名称">
+                        <button class="btn btn-inverse">查询</button>
+                    </form>
+                </div>
+
+                <div class="widget-content nopadding">
+                    <table class="table table-bordered table-striped with-check">
+                        <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>城市名称</th>
+                            <th>是否热门</th>
+                            <th>是否显示</th>
+                            <th>排序</th>
+                        </tr>
+                        </thead>
+                        <tbody class="tbody">
+                        <volist name="list" id="row">
+                            <tr>
+                                <td>{$row['id']}</td>
+                                <td>{$row['region_name']}</td>
+                                <td>
+                                    <span class="icon icon-ok on-off" <if condition="$row['is_hot'] eq 0">style="display:none;"</if>></span>
+                                    <input type="hidden" value="Region||is_hot||{$row['id']}||1">
+                                    <span class="icon icon-remove on-off" <if condition="$row['is_hot'] eq 1">style="display:none;"</if>></span>
+                                    <input type="hidden" value="Region||is_hot||{$row['id']}||0">
+                                </td>
+                                <td>
+                                    <span class="icon icon-ok on-off" <if condition="$row['is_show'] eq 0">style="display:none;"</if>></span>
+                                    <input type="hidden" value="Region||is_show||{$row['id']}||1">
+                                    <span class="icon icon-remove on-off" <if condition="$row['is_show'] eq 1">style="display:none;"</if>></span>
+                                    <input type="hidden" value="Region||is_show||{$row['id']}||0">
+                                </td>
+                                <td class="single-edit" data-model="Region"  data-id="{$row['id']}" data-field="sort">{$row['sort']}</td>
+                            </tr>
+                        </volist>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="pagination alternate">
+                    {$page}
+                </div>
+
+            </div>
+        </div>
+    </div>
+</block>

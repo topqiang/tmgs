@@ -1,0 +1,76 @@
+<extend name="Public/base" />
+
+<block name="main">
+
+    <div class="row-fluid">
+
+        <div class="span12">
+            <div class="widget-box">
+                <div class="widget-title">
+                    <span class="icon">
+                        <i class="icon-plus"></i>
+                    </span>
+                    <h5></h5>
+                </div>
+                <div class="widget-content nopadding">
+                    <form class="form-horizontal" method="post" action="{:U('Lottery/update')}">
+                        <input type="hidden" name="model" value="Lottery">
+                        <input type="hidden" name="id" value="{$row['id']}">
+                        <div class="control-group">
+                            <label class="control-label">奖项名称</label>
+                            <div class="controls">
+                                <input type="text" name="lo_name" value="{$row['lo_name']}" maxlength="10">
+                                <span class="help-block"></span>
+                            </div>
+                        </div>
+                        <div class="control-group">
+                            <label class="control-label">奖项类型</label>
+                            <div class="controls">
+                                <label class="radio inline">
+                                    <input type="radio" name="lo_type" value="1"<empty name="row['id']">checked <else/> <eq name="row['lo_type']" value="1">checked</eq></empty> > 大转盘
+                                </label>
+                                <label class="radio inline">
+                                    <input type="radio" name="lo_type" value="2"  <eq name="row['lo_type']" value="2">checked</eq>> 红包
+                                </label>
+                                <span class="help-block"></span>
+                            </div>
+                        </div>
+                        <div class="control-group">
+                            <label class="control-label">奖项图片</label>
+                            <div class="controls">
+                                {:hook('upload',array('is_first'=>1,'unique_sign'=>'lo_pic','field_name'=>'lo_pic','field_value'=>$row['lo_pic'],'save_path'=>'Lottery'))}
+                                <span class="help-block"></span>
+                            </div>
+                        </div>
+                        <div class="control-group">
+                            <label class="control-label">需求积分</label>
+                            <div class="controls">
+                                <input type="text" name="lo_intergral" value="{$row['lo_intergral']}">
+                                <span class="help-block">每次添加/修改将修改该类型下所有奖项 </span>
+                            </div>
+                        </div>
+                        <div class="control-group">
+                            <label class="control-label">奖项总数</label>
+                            <div class="controls">
+                                <input type="text" name="lo_num" value="{$row['lo_num']|default='0'}" class="number-only">
+                                <span class="help-block"> 该奖项总量 0 代表不限制</span>
+                            </div>
+                        </div>
+                        <div class="control-group">
+                            <label class="control-label">获奖概率</label>
+                            <div class="controls">
+                                <input type="text" name="lo_percent" value="{$row['lo_percent']}" maxlength="6" class="number-only">
+                                <span class="help-block">数值越大概率越低不能超过100000</span>
+                            </div>
+                        </div>
+
+                        <div class="form-actions">
+                            <button class="btn" onclick="javascript:history.back(-1);return false;">返 回</button>　
+                            <button class="btn btn-info ajax-post" target-form="form-horizontal" type="submit">保 存</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</block>

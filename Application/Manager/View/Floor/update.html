@@ -1,0 +1,78 @@
+<extend name="Public/base" />
+
+<block name="main">
+
+    <div class="row-fluid">
+
+        <div class="span12">
+            <div class="widget-box">
+                <div class="widget-title">
+                    <span class="icon">
+                        <i class="icon-plus"></i>
+                    </span>
+                    <h5></h5>
+                </div>
+                <div class="widget-content nopadding">
+                    <form class="form-horizontal" method="post" action="{:U('Floor/update')}">
+                        <input type="hidden" name="model" value="Floor">
+                        <input type="hidden" name="id" value="{$row['id']}">
+                        <input type="hidden" name="type" value="2">
+                        <div class="control-group">
+                            <label class="control-label">楼层名称</label>
+                            <div class="controls">
+                                <input type="text" name="name" value="{$row['name']}">
+                                <span class="help-block">输入楼层名称</span>
+                            </div>
+                        </div>
+                        <div class="control-group">
+                            <label class="control-label">选择模板</label>
+                            <div class="controls">
+                                <select name="mold" id="mold" style="width:315px;">
+                                    <option value="1" <eq name="row['mold']" value="1">selected</eq>>模板一</option>
+                                    <option value="2" <eq name="row['mold']" value="2">selected</eq>>模板二</option>
+                                </select>
+                                <span class="help-block" style="color:#368817;">模板一,模板二 每个上限只能有一个</span>
+                            </div>
+                        </div>
+                        <div class="control-group">
+                            <label class="control-label">模板图</label>
+                            <div class="controls" id="floor-template">
+
+                            </div>
+                        </div>
+                        <div class="form-actions">
+                            <button class="btn" onclick="javascript:history.back(-1);return false;">返 回</button>　
+                            <button class="btn btn-info ajax-post" target-form="form-horizontal" type="submit">保 存</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</block>
+<block name="script" >
+    <script type="text/javascript">
+        // 导出模板图
+        $(document).ready(function(){
+            var a =$('#mold').select().val();
+            if(a == 1){
+                var p = '{:C("__APPONE__")}';
+                $('#floor-template').html('<img style="width:40%;" src="'+p+'"/>');
+            }else if(a == 2){
+                var p = '{:C("__APPTWO__")}';
+                $('#floor-template').html('<img style="width:30%;" src="'+p+'"/>');
+            }
+        });
+        // 选择模板返回模板图
+        $("#mold").change(function(){
+            var a = $(this).val();
+            if(a == 1){
+                var p = '{:C("__APPONE__")}';
+                $('#floor-template').html('<img style="width:40%;" src="'+p+'"/>');
+            }else if(a == 2){
+                var p = '{:C("__APPTWO__")}';
+                $('#floor-template').html('<img style="width:30%;" src="'+p+'"/>');
+            }
+        });
+    </script>
+</block>
