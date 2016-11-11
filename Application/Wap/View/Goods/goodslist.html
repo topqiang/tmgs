@@ -78,7 +78,7 @@
             console.log(res);
             if (res.flag == "success") {
                 var data = res.data.type;
-                var str = "";
+                var str = '<option value="all">所有分类</option>';
                 for(var curtype of data){
                     str += '<option value="'+curtype.g_t_id+'">'+curtype.type_name+'</option>';
                 }
@@ -132,6 +132,7 @@
             if (price_lower)dataargs.price_lower = price_lower;
             if (price_upper)dataargs.price_upper = price_upper;
             if (g_t_id)dataargs.g_t_id = g_t_id;
+            if (g_t_id == "all") delete dataargs.g_t_id;
             getJson("shouci");
             $(".dosifting").removeClass("on");
             $(".sifting").slideUp();
