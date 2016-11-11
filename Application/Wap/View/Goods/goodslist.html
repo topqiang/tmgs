@@ -106,7 +106,7 @@
                 }else{
                     var str ="";
                     for(g in goods){
-                       str += '<div class="'+viewType+' bgb" linkto="'+link+goods[g]['goods_id']+'"> <div class="imgbag"> <img src="'+goods[g]['goods_pic']+'" /> </div> <div class="pad0-10"> <div class="goodname"> '+goods[g]['goods_name']+'</div> <div class="lh30 price fs14 colr">￥<span class="fs16"> '+goods[g]['price']+'</span></div> <div class="cole fs12"> <span class="mar20">销量：'+goods[g]['sales']+'</span> <span>评论数：'+goods[g]['comment_num']+'</span> </div> </div> </div>';
+                       str += '<div class="'+viewType+' bgb" linkto="'+link+goods[g]['goods_id']+'"> <div class="imgbag"> <img src="'+goods[g]['goods_pic']+'" /> </div> <div class="pad0-10"> <div class="goodname lh20 ovhid"> '+goods[g]['goods_name']+'</div> <div class="lh30 price fs14 colr">￥<span class="fs16"> '+goods[g]['price']+'</span></div> <div class="cole fs12"> <span class="mar20">销量：'+goods[g]['sales']+'</span> <span>评论数：'+goods[g]['comment_num']+'</span> </div> </div> </div>';
                     }
                     if (args == "fenye") {
                         $('.goodlist').append(str);
