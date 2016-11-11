@@ -49,6 +49,10 @@ function top_check(){
 		var self = $(this);
 		self.addClass("on");
 		self.siblings().removeClass("on");
+
+		if (typeof radioAfter === 'function') {
+			radioAfter(self);
+		}
 	});
 	$(".top_check").on('click',function(){
 		var self = $(this);
@@ -56,6 +60,10 @@ function top_check(){
 			self.removeClass("on");
 		}else{
 			self.addClass("on");
+		}
+
+		if (typeof checkAfter === 'function') {
+			checkAfter(self);
 		}
 	});
 }
@@ -164,6 +172,26 @@ function top_range(){
 	});
 }
 
+/**
+*ajax 请求封装
+*@author topqiang
+*@name requestUrl
+**/ 
+function requestUrl(URL,DATA,CALLBACK,TYPE,DATATYPE){
+	if (!TYPE) TYPE ="post";
+	if (!DATATYPE) DATATYPE ="json";
+	$.ajax({
+		"url":URL,
+		"data" : DATA,
+		"dataType" : DATATYPE,
+		"type" : TYPE,
+		"success" : function(res){
+			if (typeof CALLBACK == 'function') {
+				CALLBACK(res);
+			}
+		}
+	});
+}
 
 
 $(function(){

@@ -48,11 +48,7 @@
                     <span class="right fr mat15"></span>
                     <span class="fr colbl mar5" ele="classify">所有分类</span>
                     <span>商品分类:</span>
-                    <select class="poab selpstime" forele="classify">
-                        <option>所有分类</option>
-                        <option>商品风</option>
-                        <option>耐克</option>
-                        <option>杰克琼斯</option>
+                    <select class="poab selpstime goodsType" forele="classify">
                     </select>
                 </li>
             </ul>
@@ -75,6 +71,20 @@
         $(".sifting").height(h-91);
     </script>
 
+    <script type="text.javascript">
+        function goodsType(res){
+            console.log(res);
+            if (res.flag == "success") {
+                var data = res.data.type;
+                var str = "";
+                for(var curtype of data){
+                    str += '<option value="'+curtype.g_t_id+'">'+curtype.type_name+'</option>';
+                }
+                $(".goodsType").html(str);
+            }
+        }
+        requestUrl("{:U('Api/Index/goodsType')}",{},goodsType);
+    </script>
 
     <script type="text/javascript">
         var dataargs = {p:1};
