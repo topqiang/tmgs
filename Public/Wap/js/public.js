@@ -98,7 +98,14 @@ function top_select(){
 		var elename = self.attr("forele");
 		if($.trim(elename) != ""){
 			var ele = self.parent().find("[ele="+elename+"]");
-			ele.text(self.val());
+			var value = self.val();
+			var inValue = self.find('option[value='+value+']').text();
+			// ele.text(self.val());
+			ele.text(inValue);
+		}
+
+		if (typeof selectAfter === 'function') {
+			selectAfter(self);
 		}
 	});
 }
