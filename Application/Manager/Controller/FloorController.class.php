@@ -114,9 +114,9 @@ class FloorController extends BaseController {
                     $mold = M('Floor') -> where(array('type'=>2,'mold'=>I('post.mold'))) -> count();
                     if($mold >= C('MAXTEMPLATE'))$this->error('您所选择该模板达到上限请选择其他模板上传');
             }
-            if(I('post.grade'))if(M('floor_picture')->where(array('floor_id'=>$_POST['floor_id'],'grade'=>$_POST['grade']))->count() >= 1){
-                $this->error('当前选择的图片位置已存在!');
-            }
+            // if(I('post.grade'))if(M('floor_picture')->where(array('floor_id'=>$_POST['floor_id'],'grade'=>$_POST['grade']))->count() >= 1){
+            //     $this->error('当前选择的图片位置已存在!');
+            // }
             $Object = D(CONTROLLER_NAME,'Logic');
             $result = $Object->update(I('post.'));
             if($result) {
