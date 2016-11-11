@@ -108,7 +108,7 @@
                 <span>收藏</span>
             </div>
             <div class="fl">
-                <span>加入购物车</span>
+                <if condition="empty($goods_info['is_collect'])"><span>加入购物车</span></if>
             </div>
         </div>
     </div>
@@ -135,24 +135,12 @@
                         <div class="lh40"><b>{$attr['attr_name']}</b></div>
                         <div class="disf chimlist">
                             <volist name="attr['attr_con']" id="con" key="key">
-                                <span class="top_radio <if condition="$key eq '0'"> on</if>" conid="{$con['attr_con_id']}">{$con['attr_con_name']}</span>
+                                <span class="top_radio" conid="{$con['attr_con_id']}">{$con['attr_con_name']}</span>
                             </volist>                            
                         </div>
                     </div>
                 </volist>
             </if>
-
-            <!--<div class="borb31">
-                <div class="lh40"><b>颜色分类</b></div>
-                <div class="disf chimlist">
-                    <span class="top_radio on">蓝色</span>
-                    <span class="top_radio">绿色</span>
-                    <span class="top_radio">黄色</span>
-                    <span class="top_radio">墨绿</span>
-                    <span class="top_radio">草青涩</span>
-                    <span class="top_radio">黑色</span>
-                </div>
-            </div>-->
 
             <div class="borb31 lh50">
                 <div class="playgley fr mat15">
@@ -169,7 +157,9 @@
         <!--点击  颜色 尺码  进入-->
         <div class="botarea bgz lh50 textcen colb">
             <div class="fr bgbtn" style="width:50%;">提交订单</div>
-            <div class="fl bgyel" style="width:50%;">加入购物车</div>
+            <div class="fl bgyel" style="width:50%;">
+                加入购物车
+            </div>
         </div>
         <!--点击提交订单进入-->
         <div class="botarea bgz textcen colb lh50 disn">
@@ -198,6 +188,8 @@
             $(".zhao").fadeOut();
         });
 
+        function radioAfter(self){
 
+        }
     </script>
 </block>
