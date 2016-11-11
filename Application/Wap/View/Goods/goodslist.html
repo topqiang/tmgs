@@ -199,7 +199,7 @@
             getJson("shouci");
         });
         function fenye(){
-            var $_zd = $(".good").height();//获取每个单项的高度
+            var $_zd = $("."+viewType).height();//获取每个单项的高度
             var length = 3;//定义预加载的数量，提前三个加载数据
             var $_par = $(".goodlist");//获取包裹容器
             var winheight = $(window).height();//获取窗口高度
