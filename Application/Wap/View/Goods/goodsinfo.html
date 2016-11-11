@@ -130,7 +130,7 @@
             </div>
 
             <if condition="!empty($goods_info['attr_flag'])">
-                <volist name="{$goods_info['goods_attr_group']}" id="attr">
+                <volist name="goods_info['goods_attr_group']" id="attr">
                     <div class="borb31" attrid="{$attr['attr_id']}" attrname="{$attr['attr_name']}">
                         <div class="lh40"><b>{$attr['attr_name']}</b></div>
                         <div class="disf chimlist">
