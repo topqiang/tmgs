@@ -135,9 +135,7 @@
                         <div class="lh40"><b>{$attr['attr_name']}</b></div>
                         <div class="disf chimlist">
                             <volist name="attr['attr_con']" id="con" key="key">
-                                {$key}
-                                <span class="top_radio <if condition='empty($key)'> on</if>" conid="{$con['attr_con_id']}">{$con['attr_con_name']}</span>
-                                
+                                <span class="top_radio <if condition='$key eq 1'> on</if> " conid="{$con['attr_con_id']}">{$con['attr_con_name']}</span>
                             </volist>                            
                         </div>
                     </div>
@@ -189,6 +187,10 @@
         $(".iconclose").on('tap',function(){
             $(".zhao").fadeOut();
         });
+
+        var product_list = "{$goods_info['product_list']}";
+
+        console.log(product_list);
 
         function radioAfter(self){
 
