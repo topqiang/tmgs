@@ -142,6 +142,7 @@
                     dataargs.price_order = 2;
                 }
             }
+            dataargs.p = 1;
             getJson("shouci");
         }
 
@@ -160,14 +161,7 @@
         }
 
         function selectAfter(self) {
-            if (self.hasClass("merchant_type_id")){
-                dataargs.merchant_type_id=self.val();
-                getJson();
-            }
-            if (self.hasClass("sort")) {
-                dataargs.sort= self.val();
-                getJson();
-            }
+            
         };
 
         $(function(){
@@ -178,7 +172,6 @@
             var length = 3;//定义预加载的数量，提前三个加载数据
             var $_par = $(".goodlist");//获取包裹容器
             var winheight = $(window).height();//获取窗口高度
-            var curpage = 1;//存储当前的页数v
             $(function(){
                 $(window).on("scroll",function(e){
                     if(flag){
