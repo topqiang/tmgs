@@ -29,7 +29,7 @@
         <div class="sifting bgb" style="display: none;">
             <div class="pad20 borb31 lh40">
                 价格区间(￥)
-                <input class="bgf" />——<input class="bgf" />
+                <input class="bgf price_lower" />——<input class="bgf price_upper" />
             </div>
             <ul class="lh50 pad0-20">
                 <!--
@@ -56,7 +56,7 @@
                 <span class="bor1b colbl textcen pad0-10 borad4">重置</span>
             </div>
 
-            <div class="botarea bgz textcen colb lh50">确认</div>
+            <div class="botarea bgz textcen colb lh50 changeType">确认</div>
         </div>
     </div>
     <div class="disib gohead top_gohead">
@@ -124,26 +124,39 @@
             }
         }
 
+        //
+        $(".changeType").on('click',function(){
+            var price_upper = $(".price_upper").val();
+            var price_lower = $(".price_lower").val();
+            var g_t_id = $(".goodsType").val();
+            if (price_lower)dataargs.price_lower = price_lower;
+            if (price_upper)dataargs.price_upper = price_upper;
+            if (g_t_id)dataargs.g_t_id = g_t_id;
+            getJson("shouci");
+        });
 
+        //头部排序选择回调
         function checkAfter(self){
             if (self.hasClass("complex_order")) {
                 if (self.hasClass("on")) {
                     delete dataargs.sales_order;
                     delete dataargs.price_order;
+                    self.siblings().removeClass("on");
                 }
-                self.siblings().removeClass("on");
             }else if(self.hasClass("sales_order")){
                 if (self.hasClass("on")) {
                     dataargs.sales_order = 1;
                 }else{
                     dataargs.sales_order = 2;
                 }
+                self.siblings(".complex_order").removeClass("on");
             }else if(self.hasClass("price_order")){
                 if (self.hasClass("on")) {
                     dataargs.price_order = 1;
                 }else{
                     dataargs.price_order = 2;
                 }
+                self.siblings(".complex_order").removeClass("on");
             }else{
                 return;
             }
