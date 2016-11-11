@@ -14,9 +14,9 @@
     </header>
     <div class="pofi bgb borb31" style="top: 50px;width: 100%;">
         <div class="disf topbar lh40">
-            <span class="top_radio iconsanj complex_order on">综合排序</span>
-            <span class="top_radio iconsanj sales_order">销量</span>
-            <span class="top_radio iconsanj price_order">价格</span>
+            <span class="top_check iconsanj complex_order on">综合排序</span>
+            <span class="top_check iconsanj sales_order">销量</span>
+            <span class="top_check iconsanj price_order">价格</span>
             <span class="top_check iconsanj dosifting">刷选</span>
         </div>
         <div class="poab iconv pfr on"></div>
@@ -125,10 +125,12 @@
         }
 
 
-        function radioAfter(self){
+        function checkAfter(self){
             if (self.hasClass("complex_order")) {
-                delete dataargs.sales_order;
-                delete dataargs.price_order;
+                if (self.hasClass("on")) {
+                    delete dataargs.sales_order;
+                    delete dataargs.price_order;
+                }
             }else if(self.hasClass("sales_order")){
                 if (self.hasClass("on")) {
                     dataargs.sales_order = 1;
@@ -141,6 +143,8 @@
                 }else{
                     dataargs.price_order = 2;
                 }
+            }else{
+                return;
             }
             dataargs.p = 1;
             getJson("shouci");
@@ -161,7 +165,7 @@
         }
 
         function selectAfter(self) {
-            
+
         };
 
         $(function(){
