@@ -133,6 +133,8 @@
             if (price_upper)dataargs.price_upper = price_upper;
             if (g_t_id)dataargs.g_t_id = g_t_id;
             getJson("shouci");
+            $(".dosifting").removeClass("on");
+            $(".sifting").slideUp();
         });
 
         //头部排序选择回调
