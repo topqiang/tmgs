@@ -14,9 +14,9 @@
     </header>
     <div class="pofi bgb borb31" style="top: 50px;width: 100%;">
         <div class="disf topbar lh40">
-            <span class="top_radio iconsanj">综合排序</span>
-            <span class="top_radio iconsanj on">销量</span>
-            <span class="top_radio iconsanj">价格</span>
+            <span class="top_radio iconsanj complex_order on">综合排序</span>
+            <span class="top_radio iconsanj sales_order">销量</span>
+            <span class="top_radio iconsanj price_order">价格</span>
             <span class="top_check iconsanj dosifting">刷选</span>
         </div>
         <div class="poab iconv pfr on"></div>
@@ -72,6 +72,8 @@
     </script>
 
     <script type="text/javascript">
+
+        //获取商品分类列表
         function goodsType(res){
             console.log(res);
             if (res.flag == "success") {
@@ -87,6 +89,7 @@
     </script>
 
     <script type="text/javascript">
+        var flag= true;//防止ajax请求期间，对此触发请求数据
         var dataargs = {p:1};
         var g_t_id ="{$g_t_id}";
         var keywords = "{$keywords}";
@@ -109,6 +112,7 @@
                     }else{
                         $('.goodlist').html(str);
                     }
+                    flag = true;
                     top_linkto();
                 }
             }else{
@@ -119,6 +123,28 @@
                 fenye();
             }
         }
+
+
+        function radioAfter(self){
+            if (self.hasClass("complex_order")) {
+                delete dataargs.sales_order;
+                delete dataargs.price_order;
+            }else if(self.hasClass("sales_order")){
+                if (self.hasClass("on")) {
+                    dataargs.sales_order = 1;
+                }else{
+                    dataargs.sales_order = 2;
+                }
+            }else if(self.hasClass("price_order")){
+                if (self.hasClass("on")) {
+                    dataargs.price_order = 1;
+                }else{
+                    dataargs.price_order = 2;
+                }
+            }
+            getJson("shouci");
+        }
+
 
         function getJson(args) {
             console.log(dataargs);
@@ -148,7 +174,6 @@
             getJson("shouci");
         });
         function fenye(){
-            var flag= true;//防止ajax请求期间，对此触发请求数据
             var $_zd = $(".good").height();//获取每个单项的高度
             var length = 3;//定义预加载的数量，提前三个加载数据
             var $_par = $(".goodlist");//获取包裹容器
