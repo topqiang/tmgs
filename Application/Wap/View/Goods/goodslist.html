@@ -131,6 +131,7 @@
                     delete dataargs.sales_order;
                     delete dataargs.price_order;
                 }
+                self.siblings().removeClass("on");
             }else if(self.hasClass("sales_order")){
                 if (self.hasClass("on")) {
                     dataargs.sales_order = 1;
