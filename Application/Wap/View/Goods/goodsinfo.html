@@ -135,7 +135,7 @@
                         <div class="lh40"><b>{$attr['attr_name']}</b></div>
                         <div class="disf chimlist">
                             <volist name="attr['attr_con']" id="con">
-                                <span class="top_radio <if condition="$key eq '0'"></if>" conid="{$con['attr_con_id']}">{$con['attr_con_name']}</span>
+                                <span class="top_radio <if condition="$key eq '0'"> on</if>" conid="{$con['attr_con_id']}">{$con['attr_con_name']}</span>
                             </volist>                            
                         </div>
                     </div>
