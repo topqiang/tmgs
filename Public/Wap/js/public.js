@@ -144,6 +144,10 @@ function top_jeep(){
 			$(".goodh").removeClass('goodh').addClass('good');
 		}
 		self.toggleClass('on');
+
+		if (typeof jeepAfter == 'function') {
+			jeepAfter(self);
+		}
 	});
 }
 

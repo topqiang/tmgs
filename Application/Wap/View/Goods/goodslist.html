@@ -90,6 +90,7 @@
 
     <script type="text/javascript">
         var flag= true;//防止ajax请求期间，对此触发请求数据
+        var viewType = "good";
         var dataargs = {p:1};
         var g_t_id ="{$g_t_id}";
         var keywords = "{$keywords}";
@@ -105,7 +106,7 @@
                 }else{
                     var str ="";
                     for(g in goods){
-                       str += '<div class="good bgb" linkto="'+link+goods[g]['goods_id']+'"> <div class="imgbag"> <img src="'+goods[g]['goods_pic']+'" /> </div> <div class="pad0-10"> <div class="goodname"> '+goods[g]['goods_name']+'</div> <div class="lh30 price fs14 colr">￥<span class="fs16"> '+goods[g]['price']+'</span></div> <div class="cole fs12"> <span class="mar20">销量：'+goods[g]['sales']+'</span> <span>评论数：'+goods[g]['comment_num']+'</span> </div> </div> </div>';
+                       str += '<div class="'+viewType+' bgb" linkto="'+link+goods[g]['goods_id']+'"> <div class="imgbag"> <img src="'+goods[g]['goods_pic']+'" /> </div> <div class="pad0-10"> <div class="goodname"> '+goods[g]['goods_name']+'</div> <div class="lh30 price fs14 colr">￥<span class="fs16"> '+goods[g]['price']+'</span></div> <div class="cole fs12"> <span class="mar20">销量：'+goods[g]['sales']+'</span> <span>评论数：'+goods[g]['comment_num']+'</span> </div> </div> </div>';
                     }
                     if (args == "fenye") {
                         $('.goodlist').append(str);
@@ -137,6 +138,15 @@
             $(".dosifting").removeClass("on");
             $(".sifting").slideUp();
         });
+        //切换视图回调函数
+        function jeepAfter(self){
+            if (self.hasClass("on")) {
+                viewType = "good";
+            }else{
+                viewType = "goodh";
+            }
+        }
+
 
         //头部排序选择回调
         function checkAfter(self){
