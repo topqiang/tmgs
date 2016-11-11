@@ -158,7 +158,7 @@
                     // 精品推荐
                     var second_floor = arr['data']['second_floor'];
                     for(var sf in second_floor){
-                        var floor2 =  '<div linkto="'+goods_info+'&goods_id='+second_floor[sf]["goods_id"]+'" class="goodh bgb"><div class="imgbag"><img src="'+second_floor[sf]["goods_pic"]+'" /></div><div class="pad0-10"><div class="goodname fs14">'+second_floor[sf]["cn_goods_name"]+'</div><div class="lh30 price fs14 colr">￥<span class="fs16">'+second_floor[sf]["cn_price"]+'</span></div><div class="cole fs12"><span class="mar20">销量：'+second_floor[sf]["sales"]+'</span><span>评论数：'+second_floor[sf]["comment"]+'</span></div></div></div>';
+                        var floor2 =  '<div linkto="'+goods_info+'&goods_id='+second_floor[sf]["goods_id"]+'" class="goodh bgb"><div class="imgbag"><img src="'+second_floor[sf]["goods_pic"]+'" /></div><div class="pad0-10"><div class="goodname fs14 lh40">'+second_floor[sf]["cn_goods_name"]+'</div><div class="lh30 price fs14 colr">￥<span class="fs16">'+second_floor[sf]["cn_price"]+'</span></div><div class="cole fs12"><span class="mar20">销量：'+second_floor[sf]["sales"]+'</span><span>评论数：'+second_floor[sf]["comment"]+'</span></div></div></div>';
                         $('.floor2').append(floor2);
                     }
                     top_linkto();
