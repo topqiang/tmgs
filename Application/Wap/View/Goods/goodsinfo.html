@@ -4,7 +4,7 @@
     <header class="bgz colb">
         <span class="poab icongley" linkto="gley.html"></span>
     		<span class="pfr rigshe pfr">
-    			<span class="jiaob poab bgr colb fs12 textcen lh14">3</span>
+    			<span class="jiaob poab bgr colb fs12 textcen lh14">{$goods_info['un_read_num']}</span>
     		</span>
         <span class="left" linkto="javascript:history.go(-1)"></span>
         商品详情
@@ -15,7 +15,6 @@
                 <volist name="goods_info['goods_info'][goods_pic]" id="g_pic">
                     <li><a href="#" target="_blank"><img src="{$g_pic['goods_pic']}" alt="" class="width"></a></li>
                 </volist>
-
             </ul>
         </div>
         <div class="pad10-20 lh25 bgb">
@@ -119,30 +118,31 @@
         <div class="poab zhcon bgb pad0-10">
             <div class="checkgood borb31">
                 <div class="fl bagimg bgb borad4">
-                    <img src="__IMG__/2.png" />
+                    <img src="{$goods_info['goods_info'][goods_pic][0]['goods_pic']}" />
                 </div>
                 <div>
                     <div class="colr">
-                        ￥500.00
+                        ￥{$goods_info['goods_info']['price']}
                     </div>
                     <div class="fs14">选择尺码  颜色</div>
                 </div>
                 <span class="iconclose poab"></span>
             </div>
 
-            <div class="borb31">
-                <div class="lh40"><b>尺码</b></div>
-                <div class="disf chimlist">
-                    <span class="top_radio on">165</span>
-                    <span class="top_radio">165</span>
-                    <span class="top_radio">165</span>
-                    <span class="top_radio">165</span>
-                    <span class="top_radio">165</span>
-                    <span class="top_radio">165</span>
-                </div>
-            </div>
+            <if condition="!empty($goods_info['attr_flag'])">
+                <volist name="{$goods_info['goods_attr_group']}" id="attr">
+                    <div class="borb31" attrid="{$attr['attr_id']}" attrname="{$attr['attr_name']}">
+                        <div class="lh40"><b>{$attr['attr_name']}</b></div>
+                        <div class="disf chimlist">
+                            <volist name="attr['attr_con']" id="con">
+                                <span class="top_radio on" conid="{$con['attr_con_id']}">{$con['attr_con_name']}</span>
+                            </volist>                            
+                        </div>
+                    </div>
+                </volist>
+            </if>
 
-            <div class="borb31">
+            <!--<div class="borb31">
                 <div class="lh40"><b>颜色分类</b></div>
                 <div class="disf chimlist">
                     <span class="top_radio on">蓝色</span>
@@ -152,7 +152,7 @@
                     <span class="top_radio">草青涩</span>
                     <span class="top_radio">黑色</span>
                 </div>
-            </div>
+            </div>-->
 
             <div class="borb31 lh50">
                 <div class="playgley fr mat15">
