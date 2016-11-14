@@ -96,7 +96,7 @@
         var keywords = "{$keywords}";
         if(g_t_id)dataargs['g_t_id'] = g_t_id;
         if(keywords)dataargs['keywords'] = keywords;
-        var link = '/index.php?m=Wap&c=Goods&a=goodsinfo&goods_id=';
+        var link = '{:U("Goods/goodsinfo")}'+(top_user ? '&m_id='+top_user.m_id : '')+'&goods_id=';
         //添加商品到列表
         function putGoods(data,args) {
             if(data.flag == 'success'){
