@@ -197,6 +197,23 @@ function requestUrl(URL,DATA,CALLBACK,TYPE,DATATYPE){
 	});
 }
 
+/**
+*获取用户信息
+*@author  topqiang
+***/
+function getUserInfo(URL){
+	var jsonstr = sessionStorage.getItem("top_user");
+	if (jsonstr) {
+		return JSON.parse(jsonstr);
+	}else{
+		if(!URL){
+			console.error("请在获取用户信息时，填写登录页面URL");
+		}else{
+			window.location.href = URL;
+		}
+	}
+}
+
 
 $(function(){
 	//吊起linkto增强页面跳转
