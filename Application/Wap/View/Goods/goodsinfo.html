@@ -303,5 +303,16 @@
                 });
             }
         });
+
+        //提交订单
+        $(".putarea").on('click',function(){
+            var data = {};
+            if (top_user.m_id) {
+                data.m_id = top_user.m_id;
+            }else{
+                getUserInfo("{:U('Member/login')}");
+            }
+            requestUrl("{:U('Api/Order/addOneOrder')}",data)
+        });
     </script>
 </block>

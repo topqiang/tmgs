@@ -53,118 +53,6 @@
                     </div>
                 </div>
             </div>
-
-            <div class="goodh bgb">
-                <div class="imgbag">
-                    <img src="__IMG__/good.png" />
-                </div>
-                <div class="pad0-10">
-                    <div class="goodname fs14">
-                        法国AOC领衔红酒  意大利干红葡萄酒2支组合
-                    </div>
-                    <div class="lh30 price fs14 colr">￥<span class="fs16">550.00</span></div>
-                    <div class="cole fs12">
-                        <span class="mar20">销量：300</span>
-                        <span>评论数：500</span>
-                    </div>
-                </div>
-            </div>
-
-            <div class="goodh bgb">
-                <div class="imgbag">
-                    <img src="__IMG__/good.png" />
-                </div>
-                <div class="pad0-10">
-                    <div class="goodname fs14">
-                        法国AOC领衔红酒  意大利干红葡萄酒2支组合
-                    </div>
-                    <div class="lh30 price fs14 colr">￥<span class="fs16">550.00</span></div>
-                    <div class="cole fs12">
-                        <span class="mar20">销量：300</span>
-                        <span>评论数：500</span>
-                    </div>
-                </div>
-            </div>
-
-            <div class="goodh bgb">
-                <div class="imgbag">
-                    <img src="__IMG__/good.png" />
-                </div>
-                <div class="pad0-10">
-                    <div class="goodname fs14">
-                        法国AOC领衔红酒  意大利干红葡萄酒2支组合
-                    </div>
-                    <div class="lh30 price fs14 colr">￥<span class="fs16">550.00</span></div>
-                    <div class="cole fs12">
-                        <span class="mar20">销量：300</span>
-                        <span>评论数：500</span>
-                    </div>
-                </div>
-            </div>
-
-            <div class="goodh bgb">
-                <div class="imgbag">
-                    <img src="__IMG__/good.png" />
-                </div>
-                <div class="pad0-10">
-                    <div class="goodname fs14">
-                        法国AOC领衔红酒  意大利干红葡萄酒2支组合
-                    </div>
-                    <div class="lh30 price fs14 colr">￥<span class="fs16">550.00</span></div>
-                    <div class="cole fs12">
-                        <span class="mar20">销量：300</span>
-                        <span>评论数：500</span>
-                    </div>
-                </div>
-            </div>
-
-            <div class="goodh bgb">
-                <div class="imgbag">
-                    <img src="__IMG__/good.png" />
-                </div>
-                <div class="pad0-10">
-                    <div class="goodname fs14">
-                        法国AOC领衔红酒  意大利干红葡萄酒2支组合
-                    </div>
-                    <div class="lh30 price fs14 colr">￥<span class="fs16">550.00</span></div>
-                    <div class="cole fs12">
-                        <span class="mar20">销量：300</span>
-                        <span>评论数：500</span>
-                    </div>
-                </div>
-            </div>
-
-            <div class="goodh bgb">
-                <div class="imgbag">
-                    <img src="__IMG__/good.png" />
-                </div>
-                <div class="pad0-10">
-                    <div class="goodname fs14">
-                        法国AOC领衔红酒  意大利干红葡萄酒2支组合
-                    </div>
-                    <div class="lh30 price fs14 colr">￥<span class="fs16">550.00</span></div>
-                    <div class="cole fs12">
-                        <span class="mar20">销量：300</span>
-                        <span>评论数：500</span>
-                    </div>
-                </div>
-            </div>
-
-            <div class="goodh bgb">
-                <div class="imgbag">
-                    <img src="__IMG__/good.png" />
-                </div>
-                <div class="pad0-10">
-                    <div class="goodname fs14">
-                        法国AOC领衔红酒  意大利干红葡萄酒2支组合
-                    </div>
-                    <div class="lh30 price fs14 colr">￥<span class="fs16">550.00</span></div>
-                    <div class="cole fs12">
-                        <span class="mar20">销量：300</span>
-                        <span>评论数：500</span>
-                    </div>
-                </div>
-            </div>
         </div>
     </div>
     <div class="disib gohead top_gohead">
@@ -173,6 +61,77 @@
     </body>
 </block>
 <block name="script">
-    <script type="text/javascript" src="__JS__/yxMobileSlider.js" ></script>
-    <script type="text/javascript" src="__JS__/touch.min.js"></script>
+    <script type="text/javascript">
+        var flag= true;//防止ajax请求期间，对此触发请求数据
+        var dataargs = {p:1,merchant_id: {$_REQUEST['merchant_id']}};
+        if(top_user) dataargs['m_id'] = top_user.m_id;
+        var link = '{:U("Goods/goodsinfo")}&goods_id=';
+        //添加商品到列表
+        function putGoods(data,args) {
+            if(data.flag == 'success'){
+                var goods = data.data.merchant.goods;
+                if((!goods || goods.length == 0 ) && args == "fenye"){
+                    $(".content").append('<div class="textcen">没有更多了！</div>');
+                }else{
+                    var str ="";
+                    for(g in goods){
+                       str += '<div class="goodh bgb" linkto="'+link+goods[g]['goods_id']+'"> <div class="imgbag"> <img src="'+goods[g]['goods_pic']+'" /> </div> <div class="pad0-10"> <div class="goodname lh20 ovhid"> '+goods[g]['goods_name']+'</div> <div class="lh30 price fs14 colr">￥<span class="fs16"> '+goods[g]['price']+'</span></div> <div class="cole fs12"> <span class="mar20">销量：'+goods[g]['sales']+'</span> <span>评论数：'+goods[g]['comment_num']+'</span> </div> </div> </div>';
+                    }
+                    if (args == "fenye") {
+                        $('.goodlist').append(str);
+                    }else{
+                        $('.goodlist').html(str);
+                    }
+                    flag = true;
+                    top_linkto();
+                }
+            }else{
+                alert(data.message);
+            }
+
+            if (args == "shouci") {
+                fenye();
+            }
+        }
+
+
+        function getJson(args) {
+            console.log(dataargs);
+            $.ajax({
+                url: '{:U("Api/Merchant/merchantHome")}',
+                type: 'POST',
+                dataType: 'JSON',
+                data: dataargs,
+                success : function(data){
+                    putGoods(data,args);
+                }
+            });
+        }
+
+        $(function(){
+            getJson("shouci");
+        });
+        function fenye(){
+            var $_zd = $("."+viewType).height();//获取每个单项的高度
+            var length = 3;//定义预加载的数量，提前三个加载数据
+            var $_par = $(".goodlist");//获取包裹容器
+            var winheight = $(window).height();//获取窗口高度
+            $(function(){
+                $(window).on("scroll",function(e){
+                    if(flag){
+                        var self = $(this);
+                        var scrtop = self.scrollTop() + winheight;
+                        var docheight = $_par.height();
+                        console.log(scrtop + "=" + docheight + "=" + $_zd);
+                        if(scrtop > docheight - ( length * $_zd ) ){
+                            flag = false;
+                            dataargs.p = dataargs.p +1;
+                            getJson("fenye");
+                        }
+                    }
+                });
+            });
+        }
+    </script>
+    </script>
 </block>
