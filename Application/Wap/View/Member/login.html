@@ -106,6 +106,8 @@
                     }else{
                         localStorage.setItem("userinfo",""); 
                     }
+                    sessionStorage.setItem("top_user",JSON.stringify(data.data));
+                    history.go(-1);
                 }
             },'json')
         });
