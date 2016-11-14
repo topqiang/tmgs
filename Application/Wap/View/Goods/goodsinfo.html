@@ -107,7 +107,7 @@
             <div class="fl <if condition="!empty($goods_info['is_collect'])">on</if> ">
                 <span>收藏</span>
             </div>
-            <div class="fl">
+            <div class="fl putgley">
                 <span>加入购物车</span>
             </div>
         </div>
@@ -158,7 +158,7 @@
         <!--点击  颜色 尺码  进入-->
         <div class="botarea bgz lh50 textcen colb argsarea">
             <div class="fr bgbtn" style="width:50%;">提交订单</div>
-            <div class="fl bgyel" style="width:50%;">
+            <div class="fl bgyel putgley" style="width:50%;">
                 加入购物车
             </div>
         </div>
@@ -214,6 +214,11 @@
         console.log(product_list);
 
         var attrobj = {};
+
+        $(function() {
+            //页面初始化时，重组参数
+            radioAfter();
+        })
         //重组参数
         function radioAfter(self){
             $("[attrid]").each(function(){
@@ -245,5 +250,12 @@
             $(".total_price").text("0.00");
             $(".return_price").text("0.00");
         }
+        //加入购物车
+        $(".putgley").on('click',function(){
+            var user = getUserInfo("{:U('Member/login')}");
+            console.log(user);
+            if (user) {
+            }
+        });
     </script>
 </block>
