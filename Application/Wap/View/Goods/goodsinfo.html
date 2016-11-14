@@ -99,7 +99,7 @@
         </div>
     </div>
     <div class="botarea bgz textcen fs12 colb">
-        <div class="fr bgbtn lh50 pad0-20 fs16">提交订单</div>
+        <div class="fr bgbtn lh50 pad0-20 fs16 putOrderBtn">提交订单</div>
         <div class="botbtn">
             <div class="fl">
                 <span>店铺</span>
@@ -156,14 +156,14 @@
 
 
         <!--点击  颜色 尺码  进入-->
-        <div class="botarea bgz lh50 textcen colb">
+        <div class="botarea bgz lh50 textcen colb argsarea">
             <div class="fr bgbtn" style="width:50%;">提交订单</div>
             <div class="fl bgyel" style="width:50%;">
                 加入购物车
             </div>
         </div>
         <!--点击提交订单进入-->
-        <div class="botarea bgz textcen colb lh50 disn">
+        <div class="botarea bgz textcen colb lh50 putarea">
             确定
         </div>
     </div>
@@ -182,8 +182,16 @@
         $(".slider").yxMobileSlider({width:w,height:300,during:3000});
 
         $(".checkargs").on('tap',function(){
+            $(".putarea").hide();
+            $(".argsarea").show();
             $(".zhao").fadeIn();
         });
+        $(".putOrderBtn").on('tap',function(){
+            $(".putarea").show();
+            $(".argsarea").hide();
+            $(".zhao").fadeIn();
+        });
+
 
         $(".iconclose").on('tap',function(){
             $(".zhao").fadeOut();
@@ -196,7 +204,6 @@
             }else if ($(this).hasClass('iconadd')){
                 num += 1;
             }
-            console.log(num);
             $(this).siblings('.bge').text(num);
         });
 
