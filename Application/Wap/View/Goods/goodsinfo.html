@@ -101,11 +101,11 @@
     <div class="botarea bgz textcen fs12 colb">
         <div class="fr bgbtn lh50 pad0-20 fs16 putOrderBtn">提交订单</div>
         <div class="botbtn">
-            <div class="fl">
+            <div class="fl" linkto="{:U('Merchant/shopinfo',array('merchant_id'=>$goods_info['goods_info']['merchant_id']))}">
                 <span>店铺</span>
             </div>
             <div class="fl on">
-                <span>收藏</span>
+                <span>收藏{$goods_info['is_collect']}</span>
             </div>
             <div class="fl">
                 <if condition="empty($goods_info['is_collect'])"><span>加入购物车</span></if>
