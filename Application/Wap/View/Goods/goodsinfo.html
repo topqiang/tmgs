@@ -104,11 +104,11 @@
             <div class="fl" linkto="{:U('Merchant/shopinfo',array('merchant_id'=>$goods_info['goods_info']['merchant_id']))}">
                 <span>店铺</span>
             </div>
-            <div class="fl on">
+            <div class="fl <if condition="!empty($goods_info['is_collect'])">on</if> ">
                 <span>收藏{$goods_info['is_collect']}</span>
             </div>
             <div class="fl">
-                <if condition="empty($goods_info['is_collect'])"><span>加入购物车</span></if>
+                <span>加入购物车</span>
             </div>
         </div>
     </div>
