@@ -189,6 +189,19 @@
             $(".zhao").fadeOut();
         });
 
+
+        $(".iconjian,.iconadd").on('click',function(){
+            var num = $(this).siblings('.bge').text();
+            if ($(this).hasClass('iconjian') && num > 1) {
+                num -= 1;
+            }else if ($(this).hasClass('iconadd')){
+                num += 1;
+            }
+            $(this).siblings('bge').text(num);
+        });
+
+
+
         var product_list = <?php echo json_encode($goods_info['product_list'])?>;
 
         console.log(product_list);
