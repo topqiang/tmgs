@@ -215,7 +215,6 @@ function getUserInfo(URL){
 	}
 }
 
-
 $(function(){
 	//吊起linkto增强页面跳转
 	top_linkto();
