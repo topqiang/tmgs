@@ -198,7 +198,7 @@
             $("[attrid]").each(function(){
                 var attrid = $(this).attr("attrid");
                 var conid = $(this).find(".top_radio.on").attr("conid");
-                attrobj.attrid = conid;
+                attrobj[attrid] = conid;
             });
             console.log(attrobj);
         }
