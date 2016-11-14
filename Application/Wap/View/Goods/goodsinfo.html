@@ -189,9 +189,8 @@
             $(".zhao").fadeOut();
         });
 
-
+        var num = 1;
         $(".iconjian,.iconadd").on('click',function(){
-            var num = parseInt($(this).siblings('.bge').text());
             if ($(this).hasClass('iconjian') && num > 1) {
                 num -= 1;
             }else if ($(this).hasClass('iconadd')){
