@@ -215,12 +215,14 @@ function getUserInfo(URL){
 		}
 	}
 }
-
-	//将用户信息挂在到
-	var jsonstr = sessionStorage.getItem("top_user");
+//将用户信息挂在到
+var jsonstr = sessionStorage.getItem("top_user");
 	if (jsonstr) {
 		window.top_user = JSON.parse(jsonstr);
 	}
+
+
+$(function(){
 	//吊起linkto增强页面跳转
 	top_linkto();
 	//吊起check响应
@@ -239,3 +241,4 @@ function getUserInfo(URL){
 	top_sifting();
 	//显示进度条
 	top_range();
+});
