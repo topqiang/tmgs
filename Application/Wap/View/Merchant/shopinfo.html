@@ -131,7 +131,7 @@
             var self = $(this);
             var user = getUserInfo("{:U('Member/login')}");
             var data = {};
-            if (user && goodsid){
+            if (user){
                 data.m_id = user.m_id;
                 data.merchant_id = {$_REQUEST['merchant_id']};
                 var url = "";
