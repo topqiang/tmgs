@@ -104,7 +104,7 @@
             <div class="fl" linkto="{:U('Merchant/shopinfo',array('merchant_id'=>$goods_info['goods_info']['merchant_id']))}">
                 <span>店铺</span>
             </div>
-            <div class="fl <if condition="!empty($goods_info['is_collect'])">on</if> ">
+            <div class="fl putCollect<if condition="!empty($goods_info['is_collect'])">on</if> ">
                 <span>收藏</span>
             </div>
             <div class="fl putgley">
@@ -268,11 +268,29 @@
                         attr_con_id : attrobj[key]
                     });
                 }
-                console.log(attr_con_json);
                 data.attr_con_json = JSON.stringify(attr_con_json);
                 requestUrl("{:U('Api/Cart/shoppingCart')}",data,function(res) {
                     if (res.flag == "success") {
                         self.addClass('on');
+                        alert(res.message);
+                    }else{
+                        alert(res.message);
+                    }
+                });
+            }
+        });
+        //添加到收藏
+        $(".putCollect").on('click',function(){
+            var self = $(this);
+            var user = getUserInfo("{:U('Member/login')}");
+            var data = {};
+            if (user && goodsid){
+                data.m_id = user.m_id;
+                data.goods_id = goodsid;
+                requestUrl("{:U('Api/Collect/collectGoods')}",data,function(res) {
+                    if (res.flag == "success") {
+                        self.addClass('on');
+                        alert(res.message);
                     }else{
                         alert(res.message);
                     }
