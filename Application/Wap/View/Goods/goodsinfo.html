@@ -287,9 +287,15 @@
             if (user && goodsid){
                 data.m_id = user.m_id;
                 data.goods_id = goodsid;
-                requestUrl("{:U('Api/Collect/collectGoods')}",data,function(res) {
+                var url = "";
+                if (self.hasClass("on")) {
+                    url = "{:U('Api/Collect/exitCollectGoods')}";
+                }else{
+                    url = "{:U('Api/Collect/collectGoods')}";
+                }
+                requestUrl(url,data,function(res) {
                     if (res.flag == "success") {
-                        self.addClass('on');
+                        self.toggleClass('on');
                         alert(res.message);
                     }else{
                         alert(res.message);
