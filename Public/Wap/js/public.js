@@ -182,6 +182,7 @@ function top_range(){
 *@name requestUrl
 **/ 
 function requestUrl(URL,DATA,CALLBACK,TYPE,DATATYPE){
+	if (!URL) return;
 	if (!TYPE) TYPE ="post";
 	if (!DATATYPE) DATATYPE ="json";
 	$.ajax({

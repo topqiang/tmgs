@@ -269,7 +269,7 @@
                 }
                 console.log(attr_con_json);
                 data.attr_con_json = JSON.stringify(attr_con_json);
-                requestUrl("",data,function(res) {
+                requestUrl("{:U('Api/Cart/shoppingCart')}",data,function(res) {
                     console.log("res"+res);
                 });
             }
