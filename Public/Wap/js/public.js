@@ -207,7 +207,8 @@ function getUserInfo(URL){
 		return JSON.parse(jsonstr);
 	}else{
 		if(!URL){
-			console.error("请在获取用户信息时，填写登录页面URL");
+			console.warn("请在获取用户信息时，填写登录页面URL");
+			return "";
 		}else{
 			window.location.href = URL;
 		}
