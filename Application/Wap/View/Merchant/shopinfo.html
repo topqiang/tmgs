@@ -136,9 +136,9 @@
                 data.merchant_id = {$_REQUEST['merchant_id']};
                 var url = "";
                 if (self.hasClass("on")) {
-                    url = "{:U('Api/Collect/exitCollectMerchant')}";
-                }else{
                     url = "{:U('Api/Collect/collectMerchant')}";
+                }else{
+                    url = "{:U('Api/Collect/exitCollectMerchant')}";
                 }
                 requestUrl(url,data,function(res) {
                     if (res.flag == "success") {
