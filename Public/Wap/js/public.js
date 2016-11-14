@@ -218,6 +218,11 @@ function getUserInfo(URL){
 }
 
 $(function(){
+	//将用户信息挂在到
+	var jsonstr = sessionStorage.getItem("top_user");
+	if (jsonstr) {
+		window.top_user = JSON.parse(jsonstr);
+	}
 	//吊起linkto增强页面跳转
 	top_linkto();
 	//吊起check响应
