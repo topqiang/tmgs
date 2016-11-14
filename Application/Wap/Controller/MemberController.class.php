@@ -24,29 +24,9 @@ class MemberController extends BaseController
 
     public function login()
     {
-        $this->assign('account',cookie('account'));
-        $this->assign('password',cookie('password'));
         $this->display();
     }
 
-    /**
-     * 执行登录后的存入操作
-     */
-    public function logining()
-    {
-        if($_POST){
-            if($_POST['pitchon'] == 1){
-                $account = $_POST['account'];
-                $password = $_POST['password'];
-                cookie('account',$account,array('expire'=>3600));
-                cookie('password',$password,array('expire'=>3600));
-            }
-            session('member_info',$_POST['result']['data']);
-            echo 1;
-        }else{
-            echo 0;
-        }
-    }
     /**
      * 注册
      */

@@ -61,11 +61,11 @@
         </div>
         <div class="login">
             <ul class="form">
-                <li><div class="username"><input type="text" name="username" placeholder="请输入用户名" value="{$account}"/></div></li>
-                <li><div class="password"><input type="password" name="password" placeholder="请输入密码"  value="{$password}"/></div></li>
+                <li><div class="username"><input type="text" name="username" placeholder="请输入用户名"/></div></li>
+                <li><div class="password"><input type="password" name="password" placeholder="请输入密码"/></div></li>
                 <li class="textrig colb fs12">
 
-                    <span class='disib top_check fl check pad10 mat10 mar10 <notempty name="password">on</notempty>'></span><span class="fl">记住密码</span>
+                    <span class='disib top_check fl check pad10 mat10 mar10'></span><span class="fl">记住密码</span>
                     <a style="text-decoration: underline;" linkto="/index.php?m=Wap&c=Member&a=resetpwd">忘记密码</a>
                 </li>
                 <li><div class="bgbtn colb login_account">登陆</div></li>
@@ -79,26 +79,34 @@
     <script type="text/javascript" src="__JS__/touch.min.js"></script>
     <script type="text/javascript" >
         var pitchOn = '';
+
+        var userinfo = localStorage.getItem("userinfo");
+        if (userinfo) {
+            var userobj = JSON.parse(userinfo);
+            $('.username').children().val(userobj.account);
+            $('.password').children().val(userobj.password);
+            $('.top_check').addClass('on');
+        }
+
+
         $('.login_account').click(function(){
-            if($(".top_check").hasClass("on")){
-                 pitchOn =  1;
-            }else{
-                 pitchOn =  2;
-            }
             var account = $('.username').children().val();
             var password = $('.password').children().val();
             // 登录操作
             $.post('http://2.taomim.com/index.php/Api/RegisterLog/login',{account:account,password:password},function(data){
                 if(data.flag == 'error'){
                     alert(data.message); return false;
-                }
-                $.post('/index.php?m=Wap&c=Member&a=logining',{result:data,pitchon:pitchOn,account:account,password:password},function(data){
-                    if(data == 1){
-                        window.location.href = '/index.php?m=Wap&c=Member&a=self';
+                }else{
+                    if($(".top_check").hasClass("on")){
+                        var userinfo = {
+                            account : account,
+                            password : password
+                        }
+                        localStorage.setItem("userinfo",JSON.stringify(userinfo));
                     }else{
-                        alert('登录失败');
+                        localStorage.setItem("userinfo",""); 
                     }
-                })
+                }
             },'json')
         });
 

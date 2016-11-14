@@ -193,10 +193,9 @@
 
         console.log(product_list);
 
-
+        var attrobj = {};
         //重组参数
         function radioAfter(self){
-            var attrobj = {};
             $("[attrid]").each(function(){
                 var attrid = $(this).attr("attrid");
                 var conid = $(this).find(".top_radio.on").attr("conid");
