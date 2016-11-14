@@ -216,7 +216,6 @@ function getUserInfo(URL){
 	}
 }
 
-$(function(){
 	//将用户信息挂在到
 	var jsonstr = sessionStorage.getItem("top_user");
 	if (jsonstr) {
@@ -240,4 +239,3 @@ $(function(){
 	top_sifting();
 	//显示进度条
 	top_range();
-});
