@@ -16,7 +16,7 @@
         <div class="shoptop">
             <div class="shop pad10 colb fs12">
                 <div class="fr textcen">
-                    <div class="fr pad5-10 borad4 on top_check is_collect">
+                    <div class="fr pad5-10 borad4 top_check is_collect">
                         <span class="">收藏</span>
                     </div>
                     <div class="fr lh25 mar5">
@@ -76,7 +76,7 @@
                 var obj = data.data;
                 $(".un_read_num").text(obj.un_read_num);
                 $(".merchant_name").text(obj.merchant.merchant_name);
-                $(".head_pic").text(obj.merchant.head_pic);
+                $(".head_pic").attr("src",obj.merchant.head_pic);
                 if (obj.merchant.is_collect) {
                     $(".is_collect").addClass("on");
                 }else{
