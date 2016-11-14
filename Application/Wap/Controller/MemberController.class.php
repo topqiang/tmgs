@@ -67,6 +67,14 @@ class MemberController extends BaseController
         $this->display();
     }
 
+    public function saveMid()
+    {
+        $m_id = $_POST['m_id'];
+        if (isset($m_id)) {
+            session("m_id",$m_id);
+            $this -> ajaxReturn("success");
+        } 
+    }
     /**
      * 我的
      * array(1) {

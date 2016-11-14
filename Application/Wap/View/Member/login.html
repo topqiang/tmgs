@@ -106,6 +106,8 @@
                     }else{
                         localStorage.setItem("userinfo",""); 
                     }
+                    //保存到服务器端 
+                    requestUrl("{:U('Member/saveMid')}",{'m_id':data.data.m_id});
                     sessionStorage.setItem("top_user",JSON.stringify(data.data));
                     history.go(-1);
                 }

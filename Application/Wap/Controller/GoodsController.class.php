@@ -32,7 +32,11 @@ class GoodsController extends BaseController{
     public function goodsinfo()
     {
         $url = 'http://2.taomim.com/index.php/Api/Goods/newGoodsInfo';
+        $m_id = session('m_id');
         $param = array('goods_id'=>$_GET['goods_id']);
+        if (isset($m_id)) {
+            $param['m_id'] = $m_id;
+        }
         $a  = $this->PostUrl($url,$param);
         $json = json_decode($a,true);
         $this->assign('goods_info',$json['data']);
