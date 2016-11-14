@@ -181,7 +181,7 @@
         function getJson(args) {
             console.log(dataargs);
             $.ajax({
-                url: 'http://2.taomim.com/index.php/Api/Index/newGoodsList',
+                url: '{:U("Api/Index/newGoodsList")}',
                 type: 'POST',
                 dataType: 'JSON',
                 data: dataargs,

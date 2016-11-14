@@ -79,4 +79,137 @@
     </body>
 </block>
 <block name="script">
+    <script>
+        var flag= true;//防止ajax请求期间，对此触发请求数据
+        var viewType = "good";
+        var dataargs = {p:1};
+        var g_t_id ="{$g_t_id}";
+        var keywords = "{$keywords}";
+        if(g_t_id)dataargs['g_t_id'] = g_t_id;
+        if(keywords)dataargs['keywords'] = keywords;
+        var link = '/index.php?m=Wap&c=Goods&a=goodsinfo&goods_id=';
+        //添加商品到列表
+        function putGoods(data,args) {
+            if(data.flag == 'success'){
+                var goods = data.data.goods;
+                if((!goods || goods.length == 0 ) && args == "fenye"){
+                    $(".content").append('<div class="textcen">没有更多了！</div>');
+                }else{
+                    var str ="";
+                    for(g in goods){
+                       str += '<div class="'+viewType+' bgb" linkto="'+link+goods[g]['goods_id']+'"> <div class="imgbag"> <img src="'+goods[g]['goods_pic']+'" /> </div> <div class="pad0-10"> <div class="goodname lh20 ovhid"> '+goods[g]['goods_name']+'</div> <div class="lh30 price fs14 colr">￥<span class="fs16"> '+goods[g]['price']+'</span></div> <div class="cole fs12"> <span class="mar20">销量：'+goods[g]['sales']+'</span> <span>评论数：'+goods[g]['comment_num']+'</span> </div> </div> </div>';
+                    }
+                    if (args == "fenye") {
+                        $('.goodlist').append(str);
+                    }else{
+                        $('.goodlist').html(str);
+                    }
+                    flag = true;
+                    top_linkto();
+                }
+            }else{
+                alert(data.message);
+            }
+
+            if (args == "shouci") {
+                fenye();
+            }
+        }
+
+        //
+        $(".changeType").on('click',function(){
+            var price_upper = $(".price_upper").val();
+            var price_lower = $(".price_lower").val();
+            var g_t_id = $(".goodsType").val();
+            if (price_lower)dataargs.price_lower = price_lower;
+            if (price_upper)dataargs.price_upper = price_upper;
+            if (g_t_id)dataargs.g_t_id = g_t_id;
+            if (g_t_id == "all") delete dataargs.g_t_id;
+            getJson("shouci");
+            $(".dosifting").removeClass("on");
+            $(".sifting").slideUp();
+        });
+        //切换视图回调函数
+        function jeepAfter(self){
+            if (self.hasClass("on")) {
+                viewType = "good";
+            }else{
+                viewType = "goodh";
+            }
+        }
+
+
+        //头部排序选择回调
+        function checkAfter(self){
+            if (self.hasClass("complex_order")) {
+                if (self.hasClass("on")) {
+                    delete dataargs.sales_order;
+                    delete dataargs.price_order;
+                    self.siblings().removeClass("on");
+                }
+            }else if(self.hasClass("sales_order")){
+                if (self.hasClass("on")) {
+                    dataargs.sales_order = 1;
+                }else{
+                    dataargs.sales_order = 2;
+                }
+                self.siblings(".complex_order").removeClass("on");
+            }else if(self.hasClass("price_order")){
+                if (self.hasClass("on")) {
+                    dataargs.price_order = 1;
+                }else{
+                    dataargs.price_order = 2;
+                }
+                self.siblings(".complex_order").removeClass("on");
+            }else{
+                return;
+            }
+            dataargs.p = 1;
+            getJson("shouci");
+        }
+
+
+        function getJson(args) {
+            console.log(dataargs);
+            $.ajax({
+                url: '{:U("Api/Evaluate/viewFullEvaluation")}',
+                type: 'POST',
+                dataType: 'JSON',
+                data: dataargs,
+                success : function(data){
+                    putGoods(data,args);
+                }
+            });
+        }
+
+        function selectAfter(self) {
+
+        };
+
+        $(function(){
+            // getJson("shouci");
+        });
+        function fenye(){
+            var $_zd = $("."+viewType).height();//获取每个单项的高度
+            var length = 3;//定义预加载的数量，提前三个加载数据
+            var $_par = $(".goodlist");//获取包裹容器
+            var winheight = $(window).height();//获取窗口高度
+            $(function(){
+                $(window).on("scroll",function(e){
+                    if(flag){
+                        var self = $(this);
+                        var scrtop = self.scrollTop() + winheight;
+                        var docheight = $_par.height();
+                        console.log(scrtop + "=" + docheight + "=" + $_zd);
+                        if(scrtop > docheight - ( length * $_zd ) ){
+                            flag = false;
+                            dataargs.p = dataargs.p +1;
+                            getJson("fenye");
+                        }
+                    }
+                });
+            });
+        }
+    </script>
+
 </block>
