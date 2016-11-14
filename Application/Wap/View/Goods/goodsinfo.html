@@ -123,6 +123,7 @@
                 <div>
                     <div class="colr">
                         ￥{$goods_info['goods_info']['price']}
+                        <span class="fs12">消费返利:￥{$goods_info['goods_info']['return_price']}</span>
                     </div>
                     <div class="fs14">选择尺码  颜色</div>
                 </div>
@@ -193,7 +194,13 @@
         console.log(product_list);
 
         function radioAfter(self){
-
+            var attrobj = {};
+            $("[attrid]").each(function(){
+                var attrid = $(this).attr("attrid");
+                var conid = $(this).find(".top_radio.on").attr("conid");
+                attrobj.attrid = conid;
+            });
+            console.log(attrobj);
         }
     </script>
 </block>
