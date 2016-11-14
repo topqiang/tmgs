@@ -192,6 +192,7 @@
 
         $(".iconjian,.iconadd").on('click',function(){
             var num = $(this).siblings('bge').text();
+            console.log(num);
             if ($(this).hasClass('iconjian') && num > 1) {
                 num -= 1;
             }else if ($(this).hasClass('iconadd')){
