@@ -213,7 +213,7 @@
 
         console.log(product_list);
 
-        var attrobj = {};
+        var attrobj = {};//存储所选参数组合
 
         $(function() {
             //页面初始化时，重组参数
@@ -250,11 +250,28 @@
             $(".total_price").text("0.00");
             $(".return_price").text("0.00");
         }
+
+
+        var goodsid = "{$goods_info['goods_info']['goods_id']}";
         //加入购物车
         $(".putgley").on('click',function(){
             var user = getUserInfo("{:U('Member/login')}");
-            console.log(user);
-            if (user) {
+            var data = {};
+            if (user && goodsid){
+                data.m_id = user.m_id;
+                data.goods_id = goodsid;
+                data.num = num;
+                var attr_con_json = [];
+                for(var key in attrobj){
+                    attr_con_json.push({
+                        attr_con_id : attrobj[key]
+                    });
+                }
+                console.log(attr_con_json);
+                data.attr_con_json = JSON.stringify(attr_con_json);
+                requestUrl("",data,function(res) {
+                    console.log("res"+res);
+                });
             }
         });
     </script>
