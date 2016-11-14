@@ -255,6 +255,7 @@
         var goodsid = "{$goods_info['goods_info']['goods_id']}";
         //加入购物车
         $(".putgley").on('click',function(){
+            var self = $(this);
             var user = getUserInfo("{:U('Member/login')}");
             var data = {};
             if (user && goodsid){
@@ -270,7 +271,11 @@
                 console.log(attr_con_json);
                 data.attr_con_json = JSON.stringify(attr_con_json);
                 requestUrl("{:U('Api/Cart/shoppingCart')}",data,function(res) {
-                    console.log("res"+res);
+                    if (res.flag == "success") {
+                        self.addClass('on');
+                    }else{
+                        alert(res.message);
+                    }
                 });
             }
         });
