@@ -205,7 +205,8 @@ function requestUrl(URL,DATA,CALLBACK,TYPE,DATATYPE){
 function getUserInfo(URL){
 	var jsonstr = sessionStorage.getItem("top_user");
 	if (jsonstr) {
-		return JSON.parse(jsonstr);
+		window.top_user = JSON.parse(jsonstr);
+		return top_user;
 	}else{
 		if(!URL){
 			console.warn("请在获取用户信息时，填写登录页面URL");
