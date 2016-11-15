@@ -2,7 +2,7 @@
 <block name="main">
     <body>
     <header class="bgz colb">
-        <span class="left"></span>
+        <span class="left" onclick="reset()"></span>
         <span class="title">选择省</span>
     </header>
     <div class="content" style="padding-top: 50px;">
@@ -13,10 +13,19 @@
 </block>
 <block name="script">
     <script type="text/javascript">
-    requestUrl("{:U('Api/Address/address')}",{},viewPro);
     var addobj = {};
     var cur = "province_id";
     var address = "";
+
+    requestUrl("{:U('Api/Address/address')}",{},viewPro);
+    
+    function reset(){
+        addobj = {};
+        cur = "province_id";
+        address = "";
+        requestUrl("{:U('Api/Address/address')}",{},viewPro);
+    }
+
     function viewPro(res){
         if (res.flag == "success") {
             var pro = res.data;
