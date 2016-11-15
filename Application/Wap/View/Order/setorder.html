@@ -8,41 +8,21 @@
         <div class="ordaddress mat10">
             <span class="right fr" style="margin-top: 33px;"></span>
             <!-- 新建地址 -->
-            <div class="newadd fs12 cole disn">
+            <div class="newadd fs12 cole">
                 请新建收货地址以确保商品顺利到达
             </div>
             <!-- 已有地址    修改地址-->
             <div class="ediadd">
                 <div>
-                    收货人：张涛
-                    <span class="fr mar5">1888888888</span>
+                    收货人：<span class="name">张涛</span>
+                    <span class="fr mar5 tel"></span>
                 </div>
-                <div>收货地址：天津市南开区鑫茂科技园B区1号楼1809</div>
+                <div class="">收货地址：<span class="address"></span></div>
             </div>
         </div>
-        <div class="lh50 bgb mat10 pad0-20">
-            MEAKU时尚男装
-        </div>
-        <div>
-            <div class="good bge pad10">
-                <div class="imgbag">
-                    <img src="__IMG__/good.png" />
-                </div>
-                <div class="pad0-10">
-                    <div class="goodname fs14">
-                        法国AOC领衔红酒  意大利干红葡萄酒2支组合
-                    </div>
-                    <div class="cole fs12">
-                        <span class="mar20">销量：300</span>
-                        <span>评论数：500</span>
-                    </div>
-                    <div class="lh30 price fs14 colr">
-                        <span class="colz fr">X1</span>
-                        ￥<span class="fs16 mar10">550.00</span>
-                        <span class="fs12">消费返利：￥6.00</span>
-                    </div>
-                </div>
-            </div>
+        <div class="lh50 bgb mat10 pad0-20 merchant_name"></div>
+        <div class="setgood">
+            
         </div>
 
         <div class="lh50 bgb pad0-20 borb31">
@@ -84,11 +64,64 @@
                 "attr_con_id" : setobj.attr_con_json,
                 "num" : setobj.num
             };
-            requestUrl("{:U('Api/Order/readyAddOrder')}",data,function(res){
+            requestUrl("{:U('Api/Order/readyAddOrder')}",data,viewPage);
+        }
+
+        //渲染视图
+        function viewPage(res){
+            if (res.flag != "success") {
+                alert(res.message);
+                history.go(-1);
+            }else{
+                var address = res.address;
+                var goods_info = res.goods_info;
+                if (address.is_default == 0) {
+                    $(".newadd").show();
+                    $(".ediadd").hide();
+                }else{
+                    $(".ediadd").show();
+                    $(".newadd").hide();
+                    viewAdd(address);
+                }
+                $(".merchant_name").text(goods_info.merchant_name);
+                viewGood(goods_info);
                 console.log(res);
-            });
+            }
+            
+        }
+
+        //渲染收货地址
+        function viewAdd( address ){
+            $(".tel").text(address.tel);
+            $(".name").text(name);
+            $(".address").text(address.address);
+            $(".ediadd").attr("id",address.address_id);
 
         }
-        
+        //渲染商品 
+        function viewGood(good){
+            var str = "";
+            if (typeof good == 'object') {
+                str += '<div class="good bge pad10">'
+                +'<div class="imgbag">'
+                    '<img src="'+good.goods_pic+'"/>'
+                +'</div>'
+                +'<div class="pad0-10">'
+                    +'<div class="goodname fs14">'
+                        +good.goods_name
+                    +'</div>'
+                    +'<div class="cole fs12">'
+                        +'<span class="mar20">'+good.product+'</span>'
+                    +'</div>'
+                    +'<div class="lh30 price fs14 colr">'
+                        +'<span class="colz fr">X'+good.num+'</span>'
+                        +'￥<span class="fs16 mar10 goodprice">'+good.price+'</span>'
+                        +'<span class="fs12">消费返利：￥'+good.return_price+'</span>'
+                    +'</div>'
+                +'</div>'
+            +'</div>';
+            }
+            $(".setgood").html(str);
+        }
     </script>
 </block>
