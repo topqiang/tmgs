@@ -82,7 +82,8 @@
             console.log(hpic);
             if (hpic) {
                 var src = '<div class="rateimg">';
-                for(var pic in hpic){
+                for(var key in hpic){
+                    var pic = hpic[key];
                     src += '<img src="'+pic.pic+'"/>';
                 }
                 src += '</div>';
