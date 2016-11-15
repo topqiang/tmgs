@@ -20,12 +20,11 @@
     function viewPro(res){
         if (res.flag == "success") {
             var pro = res.data;
-            var str = ""
+            $(".formline").html("");
             for(var add of pro){
-                str += '<div id="'+add.region_id+'">'+add.region_name+'</div>';
+                var addele = $("<div/>",{id:add.region_id}).text(add.region_name).appendTo(".formline");
+                addele.on('click',clickEvent);
             }
-            $(".formline").html(str);
-            $(".formline div[id]").on('click',clickEvent);
         }else{
             alert(res.message);
         }
