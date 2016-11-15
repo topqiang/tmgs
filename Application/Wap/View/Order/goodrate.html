@@ -28,7 +28,7 @@
         var flag= true;//防止ajax请求期间，对此触发请求数据
         var dataargs = {p:1,goods_id:"{$_REQUEST['goods_id']}",type:4};
         console.log(typeof top_user);
-        if (top_user != 'undefined') {
+        if (top_user) {
             dataargs.m_id = top_user.m_id;
         }else{
             getUserInfo("{:U('Member/login')}");

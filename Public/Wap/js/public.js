@@ -219,6 +219,8 @@ function getUserInfo(URL){
 var jsonstr = sessionStorage.getItem("top_user");
 	if (jsonstr) {
 		window.top_user = JSON.parse(jsonstr);
+	}else{
+		window.top_user = {};
 	}
 
 
