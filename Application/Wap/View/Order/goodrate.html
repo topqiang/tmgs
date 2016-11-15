@@ -13,7 +13,7 @@
                 <span class="mar20 bgc borad4 top_radio on">中评（<a class="count2"></a>）</span>
                 <span class="mar20 bgc borad4 top_radio">差评（<a class="count3"></a>）</span>
             </div>
-
+            <div class="ratelist"></div>
             <!--<div class="textcen pad10">
                 <span class="pad5-10 lh30 bor1b colbl borad4">查看全部评价</span>
             </div>-->
@@ -62,9 +62,9 @@
                         +'</div>';
                     }
                     if (args == "fenye") {
-                        $('.goodlist').append(str);
+                        $('.ratelist').append(str);
                     }else{
-                        $('.goodlist').html(str);
+                        $('.ratelist').html(str);
                     }
                     flag = true;
                 }
@@ -113,7 +113,7 @@
         function fenye(){
             var $_zd = $(".rate").height();//获取每个单项的高度
             var length = 3;//定义预加载的数量，提前三个加载数据
-            var $_par = $(".goodlist");//获取包裹容器
+            var $_par = $(".ratelist");//获取包裹容器
             var winheight = $(window).height();//获取窗口高度
             $(function(){
                 $(window).on("scroll",function(e){
