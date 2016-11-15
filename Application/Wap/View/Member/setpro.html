@@ -20,6 +20,9 @@
     requestUrl("{:U('Api/Address/address')}",{},viewPro);
     
     function reset(){
+        if (cur == "province_id") {
+            history.go(-1);
+        }
         addobj = {};
         cur = "province_id";
         address = "";
@@ -54,6 +57,8 @@
             requestUrl("{:U('Api/Address/address')}",{"parent_id":self.attr("id")},viewPro);
         }else{
             console.log({"addobj":addobj,"address":address});
+            sessionStorage.setItem("areaadd",JSON.stringify({"addobj":addobj,"address":address}));
+            history.go(-1);
         }
     }
     </script>

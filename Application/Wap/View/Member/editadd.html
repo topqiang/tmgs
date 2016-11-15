@@ -20,7 +20,7 @@
                 <span class="right fr mat15"></span>
                 <span class="fr mar5 cole">请选择</span>
                 <span class="disib" style="width: 100px;">所在地区：</span>
-                <input type="text" placeholder="选择取货地址" readonly="true"/>
+                <input type="text" class="address" placeholder="选择取货地址" readonly="true"/>
             </div>
             <div>
                 <input type="text" placeholder="详细地址如门牌号等"/>
@@ -40,5 +40,11 @@
 </block>
 <block name="script">
     <script type="text/javascript" src="__JS__/touch.min.js"></script>
-
+    <script type="text/javascript">
+        var jsonstr = sessionStorage.getItem("areaadd");
+        if (jsonstr) {
+            var areaadd = JSON.parse(jsonstr);
+            $(".address").val(areaadd.address);
+        }
+    </script>
 </block>
