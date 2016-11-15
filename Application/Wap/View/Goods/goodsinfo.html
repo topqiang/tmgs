@@ -26,7 +26,7 @@
             <div class="fs12 cole">
                 <span class="mar30">销量：{$goods_info['goods_info']['sales']}</span>
                 <span class="">品牌：{$goods_info['goods_info']['goods_brands']}</span>
-                <div>运费：{$goods_info['goods_info']['delivery_cost']}</div>
+                <div>运费：<span class="delivery_cost">{$goods_info['goods_info']['delivery_cost']}</span></div>
             </div>
         </div>
         <eq name="goods_info['goods_info']['is_integrity_fourteen']" value="1">
@@ -157,7 +157,7 @@
 
         <!--点击  颜色 尺码  进入-->
         <div class="botarea bgz lh50 textcen colb argsarea">
-            <div class="fr bgbtn" style="width:50%;">提交订单</div>
+            <div class="fr bgbtn putarea" style="width:50%;">提交订单</div>
             <div class="fl bgyel putgley" style="width:50%;">
                 加入购物车
             </div>
@@ -211,23 +211,29 @@
 
         var product_list = <?php echo json_encode($goods_info['product_list'])?>;
 
-        console.log(product_list);
-
         var attrobj = {};//存储所选参数组合
-
+        //存储用户所选参数对应的分组
+        var attr_id_group = "";
+        //存储所选参数组合（value）
+        var group = "";
         $(function() {
             //页面初始化时，重组参数
             radioAfter();
         })
         //重组参数
         function radioAfter(self){
+            group = "";
             $("[attrid]").each(function(){
                 var attrid = $(this).attr("attrid");
                 var conid = $(this).find(".top_radio.on").attr("conid");
+                group += $(this).text()+":"+$(this).find(".top_radio.on").text()+" ";
                 attrobj[attrid] = conid;
             });
+            console.log(group);
             outPrice(attrobj);
         }
+
+        
         //判断参数所对应价格
 
         function outPrice(attrobj){
@@ -242,6 +248,7 @@
                     }
                 }
                 if (flag) {
+                    attr_id_group = obj.attr_key_group;
                     $(".total_price").text(obj.price);
                     $(".return_price").text(obj.return_price);
                     return;
@@ -309,6 +316,7 @@
             var data = {};
             if (top_user) {
                 data.m_id = top_user.m_id;
+
             }else{
                 getUserInfo("{:U('Member/login')}");
             }
