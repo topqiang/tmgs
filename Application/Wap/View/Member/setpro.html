@@ -36,11 +36,11 @@
         address += self.text();
         console.log(cur);
         if (cur == "province_id") {
-            cur == "city_id";
+            cur = "city_id";
             $(".title").text("选择市");
             requestUrl("{:U('Api/Address/address')}",{"parent_id":addobj[cur]},viewPro);
         }else if(cur == "city_id"){
-            cur == "area_id";
+            cur = "area_id";
             $(".title").text("选择区");
             requestUrl("{:U('Api/Address/address')}",{"parent_id":addobj[cur]},viewPro);
         }else{
