@@ -14,14 +14,35 @@
 <block name="script">
     <script type="text/javascript">
     requestUrl("{:U('Api/Address/address')}",{},viewPro);
+    var addobj = {};
+    var cur = "province_id";
+    var address = "";
     function viewPro(res){
         if (res.flag == "success") {
             var pro = res.data;
+            var str = ""
             for(var add of pro){
-                $("<div/>",{id:add.region_id}).text(add.region_name).appendTo(".formline");
+                str += '<div id="'+add.region_id+'">'+add.region_name+'</div>';
             }
+            $(".formline").html(str);
+            $(".formline > div").on('click',clickEvent);
         }else{
             alert(res.message);
+        }
+    }
+
+    function clickEvent(){
+        var self = $(this);
+        addobj[cur] = self.attr("id");
+        address += self.text();
+        if (cur == "province_id") {
+            cur == "city_id";
+            $(".title").text("选择市");
+        }else if(cur == "city_id"){
+            cur == "area_id";
+            $(".title").text("选择区");
+        }else{
+            console.log({addobj:addobj,address:address});
         }
     }
     </script>
