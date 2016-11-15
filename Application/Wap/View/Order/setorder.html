@@ -30,7 +30,7 @@
         </div>
 
         <div class="lh50 bgb pad0-20 borb31">
-            <div><span class="fr fs14">￥12.00</span>运费</div>
+            <div><span class="fr fs14 delivery_cost">￥12.00</span>运费</div>
         </div>
         <div class="lh50 borb31 bgb pad0-20">
             <span class="disib fs14" style="width: 80px;">买家留言：</span>
@@ -38,16 +38,16 @@
         </div>
 
         <div class="lh50 textrig fs14 cole bgb">
-            <span class="mar10">共1件商品</span>
-            <span class="">合计:<font class="colr">￥375.00</font></span>
+            <span class="mar10">共<span class="total_num"></span>件商品</span>
+            <span class="">合计:<font class="colr">￥<span class="total_price"></span></font></span>
         </div>
     </div>
 
     <div class="botarea bgb">
         <div class="lh50 bgbtn colb pad0-20 fr">提交订单</div>
         <div class="textrig lh25">
-            <div>合计:<span class="colr mar10">￥375.00</span></div>
-            <div class="fs12 cole">合计返利：<span class="mar10">$6.00</span></div>
+            <div>合计:<span class="colr mar10">￥<span class="total_price"></span></span></div>
+            <div class="fs12 cole">合计返利：<span class="mar10">￥<span class="return_total_price"></span></span></div>
         </div>
     </div>
     </body>
@@ -84,6 +84,10 @@
                     viewAdd(address);
                 }
                 $(".merchant_name").text(goods_info.merchant_name);
+                $(".delivery_cost").text(goods_info.delivery_cost);
+                $(".total_price").text(goods_info.total_price);
+                $(".return_total_price").text(goods_info.return_total_price);
+                $(".return_total_price").text(goods_info.num);
                 viewGood(goods_info);
             }        
         }
@@ -103,7 +107,7 @@
             if (typeof good == 'object') {
                 str += '<div class="good bge pad10">'
                 +'<div class="imgbag">'
-                    '<img src="'+good.goods_pic+'"/>'
+                    +'<img src="'+good.goods_pic+'"/>'
                 +'</div>'
                 +'<div class="pad0-10">'
                     +'<div class="goodname fs14">'
