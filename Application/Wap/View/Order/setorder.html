@@ -74,8 +74,8 @@
                 alert(res.message);
                 history.go(-1);
             }else{
-                var address = res.address;
-                var goods_info = res.goods_info;
+                var address = res.data.address;
+                var goods_info = res.data.goods_info;
                 console.log(address);
                 if ( address && address.is_default == "0") {
                     $(".newadd").show();
