@@ -157,13 +157,13 @@
 
         <!--点击  颜色 尺码  进入-->
         <div class="botarea bgz lh50 textcen colb argsarea">
-            <div class="fr bgbtn putarea" style="width:50%;">提交订单</div>
+            <div class="fr bgbtn putorder" style="width:50%;">提交订单</div>
             <div class="fl bgyel putgley" style="width:50%;">
                 加入购物车
             </div>
         </div>
         <!--点击提交订单进入-->
-        <div class="botarea bgz textcen colb lh50 putarea">
+        <div class="botarea bgz textcen colb lh50 putarea putorder">
             确定
         </div>
     </div>
@@ -316,7 +316,7 @@
         });
 
         //跳转到确认订单
-        $(".putarea").on('click',function(){
+        $(".putorder").on('click',function(){
             var data = creatData();
             if (data) {
                 data.attr_id_group = attr_id_group;
