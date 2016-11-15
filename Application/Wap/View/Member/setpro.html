@@ -38,11 +38,11 @@
         if (cur == "province_id") {
             cur = "city_id";
             $(".title").text("选择市");
-            requestUrl("{:U('Api/Address/address')}",{"parent_id":addobj[cur]},viewPro);
+            requestUrl("{:U('Api/Address/address')}",{"parent_id":self.attr("id")},viewPro);
         }else if(cur == "city_id"){
             cur = "area_id";
             $(".title").text("选择区");
-            requestUrl("{:U('Api/Address/address')}",{"parent_id":addobj[cur]},viewPro);
+            requestUrl("{:U('Api/Address/address')}",{"parent_id":self.attr("id")},viewPro);
         }else{
             console.log({"addobj":addobj,"address":address});
         }
