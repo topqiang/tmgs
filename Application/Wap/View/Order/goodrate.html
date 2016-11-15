@@ -74,12 +74,10 @@
                 $(".count1").text(data.data.count1);
                 $(".count2").text(data.data.count2);
                 $(".count3").text(data.data.count3);
-
                 fenye();
             }
         }
         function getImg(hpic){
-            console.log(hpic);
             if (hpic) {
                 var src = '<div class="rateimg">';
                 for(var key in hpic){
@@ -117,7 +115,6 @@
 
 
         function getJson(args) {
-            console.log(dataargs);
             $.ajax({
                 url: '{:U("Api/Evaluate/viewFullEvaluation")}',
                 type: 'POST',

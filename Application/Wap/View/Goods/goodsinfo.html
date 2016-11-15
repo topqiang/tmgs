@@ -304,15 +304,15 @@
             }
         });
 
-        //提交订单
+        //跳转到确认订单
         $(".putarea").on('click',function(){
             var data = {};
-            if (top_user.m_id) {
+            if (top_user) {
                 data.m_id = top_user.m_id;
             }else{
                 getUserInfo("{:U('Member/login')}");
             }
-            requestUrl("{:U('Api/Order/addOneOrder')}",data)
+            window.loction.href = "{:U('Order/setorder')}";
         });
     </script>
 </block>
