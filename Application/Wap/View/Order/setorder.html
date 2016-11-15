@@ -82,7 +82,7 @@
                 "m_id" : setobj.m_id,
                 "goods_id" : setobj.goods_id,
                 "attr_con_id" : setobj.attr_con_json,
-                "num" : setorder.num
+                "num" : setobj.num
             };
             requestUrl("{:U('Api/Order/readyAddOrder')}",data,function(res){
                 console.log(res);
