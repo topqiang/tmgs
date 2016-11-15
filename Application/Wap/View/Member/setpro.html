@@ -12,6 +12,7 @@
     </body>
 </block>
 <block name="script">
+    <script type="text/javascript">
     requestUrl("{:U('Api/Address/address')}",{},viewPro);
     function viewPro(res){
         if (res.flag == "success") {
@@ -23,4 +24,5 @@
             alert(res.message);
         }
     }
+    </script>
 </block>
