@@ -44,20 +44,17 @@
                     for(var cur of evaluate){
                         str += '<div class="mat10 rate borb31">'
                             +'<div class="lh40 usinfo">'
-                                +'<span class="fr colbl">'+cur.rank+'</span>'
+                                +'<span class="fr colbl">'+getRank(cur.rank)+'</span>'
                                 +'<img src="'+cur.head_pic+'" />'
                                 +'<span class="">'+cur.nickname+'</span>'
                             +'</div>'
                             +'<div class="lh20 fs14 ma5-0">'
                             +cur.review
                             +'</div>'
-                            +'<div class="rateimg">'
-                                +'<img src="'+cur.evaluate_pic+'"/>'
-                            +'</div>'
+                            +getImg(cur.evaluate_pic);
                             +'<div class="cole">'
                                 +'<span class="fs14 cole fr">'+cur.evaluate_time+'</span>'
                                 +'<span class="mar10">'+cur.goods_attr+'</span>'
-                                +'<span class="">'+cur.goods_attr+'</span>'
                             +'</div>'
                         +'</div>';
                     }
@@ -81,8 +78,27 @@
                 fenye();
             }
         }
+        function getImg(pic){
+            if (pic) {
+                return '<div class="rateimg"><img src="'+pic+'"/></div>';
+            }else{
+                return "";
+            }
+        }
 
-
+        function getRank(type){
+            switch (type){
+                case "1":
+                return "好评";
+                break;
+                case "2":
+                return "中评";
+                break;
+                case "3":
+                return "差评";
+                break;
+            }
+        }
         //筛选
         function radioAfter(self){
             if (self.hasClass("on")) {
