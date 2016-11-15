@@ -77,7 +77,7 @@
                 var address = res.address;
                 var goods_info = res.goods_info;
                 console.log(address);
-                if ( address && address.is_default == 0) {
+                if ( address && address.is_default == "0") {
                     $(".newadd").show();
                     $(".ediadd").hide();
                 }else{
