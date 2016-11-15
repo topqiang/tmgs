@@ -9,9 +9,9 @@
         <div class="pad10-20 bgb">
             <div class="lh40">商品评价（<span class="count"></span>）</div>
             <div class="fs14 lh20 ratelevel">
-                <span class="mar20 bgc borad4 top_radio">好评（<a class="count1"></a>）</span>
-                <span class="mar20 bgc borad4 top_radio on">中评（<a class="count2"></a>）</span>
-                <span class="mar20 bgc borad4 top_radio">差评（<a class="count3"></a>）</span>
+                <span class="mar20 bgc borad4 top_radio" type="1">好评（<a class="count1"></a>）</span>
+                <span class="mar20 bgc borad4 top_radio on" type="2">中评（<a class="count2"></a>）</span>
+                <span class="mar20 bgc borad4 top_radio" type="3">差评（<a class="count3"></a>）</span>
             </div>
             <div class="ratelist"></div>
             <!--<div class="textcen pad10">
@@ -109,9 +109,7 @@
         //筛选
         function radioAfter(self){
             if (self.hasClass("on")) {
-                delete dataargs.sales_order;
-                delete dataargs.price_order;
-                self.siblings().removeClass("on");
+                dataargs.type = self.attr("type");
             }
             dataargs.p = 1;
             getJson("shouci");
