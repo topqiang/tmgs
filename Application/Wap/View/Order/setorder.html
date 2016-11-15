@@ -69,14 +69,12 @@
 
         //渲染视图
         function viewPage(res){
-            console.log(res);
             if (res.flag != "success") {
                 alert(res.message);
                 history.go(-1);
             }else{
                 var address = res.data.address;
                 var goods_info = res.data.goods_info;
-                console.log(address);
                 if ( address && address.is_default == "0") {
                     $(".newadd").show();
                     $(".ediadd").hide();
@@ -87,9 +85,7 @@
                 }
                 $(".merchant_name").text(goods_info.merchant_name);
                 viewGood(goods_info);
-                console.log(res);
-            }
-            
+            }        
         }
 
         //渲染收货地址
@@ -103,6 +99,7 @@
         //渲染商品 
         function viewGood(good){
             var str = "";
+            console.log(good);
             if (typeof good == 'object') {
                 str += '<div class="good bge pad10">'
                 +'<div class="imgbag">'
