@@ -25,7 +25,7 @@
                 str += '<div id="'+add.region_id+'">'+add.region_name+'</div>';
             }
             $(".formline").html(str);
-            $(".formline > div").on('click',clickEvent);
+            $(".formline div[id]").on('click',clickEvent);
         }else{
             alert(res.message);
         }
