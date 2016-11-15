@@ -2,7 +2,7 @@
 <block name="main">
     <body>
     <header class="bgz colb">
-        <span class="left" linkto="javascript:history.go(-1)"></span>
+        <span class="left"></span>
         <span class="title">选择省</span>
     </header>
     <div class="content" style="padding-top: 50px;">
@@ -34,6 +34,7 @@
         var self = $(this);
         addobj[cur] = self.attr("id");
         address += self.text();
+        console.log(cur);
         if (cur == "province_id") {
             cur == "city_id";
             $(".title").text("选择市");
@@ -43,7 +44,7 @@
             $(".title").text("选择区");
             requestUrl("{:U('Api/Address/address')}",{"parent_id":addobj[cur]},viewPro);
         }else{
-            console.log({addobj:addobj,address:address});
+            console.log({"addobj":addobj,"address":address});
         }
     }
     </script>
