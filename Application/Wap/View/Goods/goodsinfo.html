@@ -226,7 +226,7 @@
             $("[attrid]").each(function(){
                 var attrid = $(this).attr("attrid");
                 var conid = $(this).find(".top_radio.on").attr("conid");
-                group += $(this).text()+":"+$(this).find(".top_radio.on").text()+" ";
+                group += $(this).attr("attrname")+":"+$(this).find(".top_radio.on").text()+" ";
                 attrobj[attrid] = conid;
             });
             console.log(group);
