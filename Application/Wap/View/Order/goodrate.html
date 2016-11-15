@@ -7,16 +7,16 @@
     </header>
     <div class="content" style="padding-top: 50px;">
         <div class="pad10-20 bgb">
-            <div class="lh40">商品评价（24）</div>
+            <div class="lh40">商品评价（<span class="count"></span>）</div>
             <div class="fs14 lh20 ratelevel">
-                <span class="mar20 bgc borad4 top_radio">好评（4）</span>
-                <span class="mar20 bgc borad4 top_radio on">中评（4）</span>
-                <span class="mar20 bgc borad4 top_radio">差评（4）</span>
+                <span class="mar20 bgc borad4 top_radio">好评（<span class="count1"></span>）</span>
+                <span class="mar20 bgc borad4 top_radio on">中评（<span class="count2"></span>）</span>
+                <span class="mar20 bgc borad4 top_radio">差评（<span class="count3"></span>）</span>
             </div>
 
-            <div class="textcen pad10">
+            <!--<div class="textcen pad10">
                 <span class="pad5-10 lh30 bor1b colbl borad4">查看全部评价</span>
-            </div>
+            </div>-->
 
         </div>
 
@@ -73,6 +73,11 @@
             }
 
             if (args == "shouci") {
+                $(".count").text(data.data.count);
+                $(".count1").text(data.data.count1);
+                $(".count2").text(data.data.count2);
+                $(".count3").text(data.data.count3);
+
                 fenye();
             }
         }
