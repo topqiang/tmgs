@@ -78,10 +78,15 @@
                 fenye();
             }
         }
-        function getImg(pic){
-            console.log(pic);
-            if (pic) {
-                return '<div class="rateimg"><img src="'+pic+'"/></div>';
+        function getImg(hpic){
+            console.log(hpic);
+            if (hpic) {
+                var src = '<div class="rateimg">';
+                for(var pic in hpic){
+                    src += '<img src="'+pic.pic+'"/>';
+                }
+                src += '</div>';
+                return src;
             }else{
                 return "";
             }
