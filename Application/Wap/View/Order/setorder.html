@@ -69,13 +69,15 @@
 
         //渲染视图
         function viewPage(res){
+            console.log(res);
             if (res.flag != "success") {
                 alert(res.message);
                 history.go(-1);
             }else{
                 var address = res.address;
                 var goods_info = res.goods_info;
-                if (address.is_default == 0) {
+                console.log(address);
+                if ( address && address.is_default == 0) {
                     $(".newadd").show();
                     $(".ediadd").hide();
                 }else{
