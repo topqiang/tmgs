@@ -5,8 +5,8 @@
     		<span class="pfr local pfr">
     			<span class="jiaob poab bgr colb fs12 textcen lh14">3</span>
     		</span>
-        <span class="fr changeview toggle" style="display: none;">编辑</span>
-        <span class="fr changeview toggle">完成</span>
+        <span class="fr changeview toggle">编辑</span>
+        <span class="fr changeview toggle" style="display: none;">完成</span>
         <span>购物车</span>
     </header>
     <div class="content" style="padding: 50px 0px 110px;">
@@ -110,13 +110,16 @@
                             totalnum += parseInt(good.num);
                             totalprice += good.num * good.price;
                 }
-                $(".totalnum").text(totalnum);
-                $(".totalprice").text(totalprice);
                 $(".goodlist").html(str);
+                viewTotal();
                 top_check();
             }else{
                 alert(res.message);
             }
+        }
+        function viewTotal(){
+            $(".totalnum").text(totalnum);
+            $(".totalprice").text(totalprice);
         }
     </script>
 </block>
