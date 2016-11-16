@@ -77,7 +77,7 @@
 
     <script>
         if (!top_user) getUserInfo("{:U('Member/login')}");
-        $.post("{:U(Api/Discover/discoverList)}",{m_id:top_user.m_id},function(data){
+        $.post("{:U('Api/Discover/discoverList')}",{m_id:top_user.m_id},function(data){
             var arr = data;
             var good_product = arr['data']['good_product']; // 好货
             var good_shop = arr['data']['good_shop']; // 好店铺
