@@ -53,6 +53,28 @@
         +'</div>'
         }
         $(".content").html(str);
+        clickEvent();
+    }
+
+    function clickEvent(){
+        $(".icondel").on('click',function() {
+            var flag = confirm("您确认删除该地址吗？");
+            if (flag) {
+                var self = $(this);
+                requestUrl("{:U('Api/Address/deleteAddress')}",{"address_id":self.attr("addid")},function(res) {
+                    if (res.flag == "success") {
+                        location.reload();
+                    }else{
+                        alert(res.message);
+                    }
+                })
+            }
+        });
+
+
+        $(".iconedi").on('click',function() {
+            
+        });
     }
     </script>
 </block>
