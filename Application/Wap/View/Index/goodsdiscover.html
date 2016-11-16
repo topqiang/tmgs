@@ -47,14 +47,14 @@
         //添加商品到列表
         function putGoods(data,args) {
             if(data.flag == 'success'){
-                var goods = data.data.good_product;
-                if((!goods || goods.length == 0 ) && args == "fenye"){
+                var good_product = data.data.good_product;
+                if((!good_product || good_product.length == 0 ) && args == "fenye"){
                     $(".content").append('<div class="textcen">没有更多了！</div>');
                 }else{
                     var str ="";
                     var link = '{:U("Goods/goodsinfo")}'+(top_user ? '&m_id='+top_user.m_id : '')+'&goods_id=';
-                    for(g in goods){
-                       str += '<div class="good" linkto="'+link+goods[g]['goods_id']+'">'
+                    for(gp in good_product){
+                       str += '<div class="good" linkto="'+link+good_product[gp]['goods_id']+'">'
                              +'<div class="imgbag">'
                                 +'<img src="'+good_product[gp]['goods_pic']+'" />'
                              +'</div>'
