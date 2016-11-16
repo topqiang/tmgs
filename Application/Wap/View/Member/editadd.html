@@ -84,6 +84,7 @@
         }
         //保存事件绑定
         $(".saveadd").on('click',function() {
+            if (!top_user)getUserInfo("{:U('Member/login')}");
             addobj.m_id = top_user.m_id;
             addobj.name = locaadd.name;
             addobj.tel = locaadd.tel;
