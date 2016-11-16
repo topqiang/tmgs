@@ -46,13 +46,13 @@
         var addobj = {};
         var locaadd = {};
         var areaadd = {};
-        if (jsonstr && jsonstr != "null") {
+        if (jsonstr) {
             areaadd = JSON.parse(jsonstr);
             addobj = areaadd.addobj;
             $(".address").val(areaadd.address);
         }
 
-        if (locastr && locaadd != "null") {
+        if (locastr) {
             locaadd = JSON.parse(locastr);
             for(var key in locaadd){
                 $("."+key).val(locaadd[key]);
@@ -95,8 +95,8 @@
         //保存回调
         function callback(res) {
             if (res.flag == "success") {
-                sessionStorage.setItem("areaadd",null);
-                sessionStorage.setItem("locaadd",null);
+                sessionStorage.removeItem("areaadd");
+                sessionStorage.removeItem("locaadd");
                 window.location.href = "{:U('Member/addresslist')}";
             }else{
                 alert(res.message);
