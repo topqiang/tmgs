@@ -45,8 +45,9 @@
         var locastr = sessionStorage.getItem("locaadd");
         var addobj = {};
         var locaadd = {};
+        var areaadd = {};
         if (jsonstr) {
-            var areaadd = JSON.parse(jsonstr);
+            areaadd = JSON.parse(jsonstr);
             addobj = areaadd.addobj;
             $(".address").val(areaadd.address);
         }
@@ -87,7 +88,7 @@
             addobj.name = locaadd.name;
             addobj.tel = locaadd.tel;
             addobj.is_default = locaadd.is_default;
-            addobj.address = addobj.address + locaadd.house;
+            addobj.address = areaadd.address + locaadd.house;
             requestUrl("{:U('Api/Address/addAddress')}",addobj,callback);
         })
 
