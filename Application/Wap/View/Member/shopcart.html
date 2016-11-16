@@ -278,12 +278,10 @@
 <block name="script">
     <script type="text/javascript">
         $(".changeview").on('click',function(){
-            console.log("zhuangtai");
             $(".toggle").toggle();
         });
         function checkAfter( self ){
             console.log("quanxuan");
-            self.toggleClass('on');
             if (self.hasClass('all')) {
                 if (self.hasClass('on')) {
                     $(".top_check").removeClass("on");
