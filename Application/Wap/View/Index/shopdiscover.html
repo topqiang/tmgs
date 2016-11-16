@@ -53,12 +53,12 @@
                                 +'<div class="pad10 hdgood textcen lh30">';
                                 var link = '{:U("Goods/goodsinfo")}'+(top_user ? '&m_id='+top_user.m_id : '')+'&goods_id=';
 
-                                for(var good of merchant['goods_list']){
-                                    str += '<div class="bgb" linkto="'+link+good.goods_id+'">'
-                                        +'<img src="'+good.goods_pic+'">'
-                                        +'<span class="colr">￥'+good.price+'</span>'
-                                    +'</div>';
-                                }
+                                // for(var good of merchant['goods_list']){
+                                //     str += '<div class="bgb" linkto="'+link+good.goods_id+'">'
+                                //                 +'<img src="'+good.goods_pic+'">'
+                                //                 +'<span class="colr">￥'+good.price+'</span>'
+                                //             +'</div>';
+                                // }
                                 str +='</div></div>';
                     }
                     if (args == "fenye") {
