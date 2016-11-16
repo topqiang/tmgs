@@ -94,7 +94,7 @@
         //保存回调
         function callback(res) {
             if (res.flag == "success") {
-                alert(res.message);
+                window.location.href = "{:U('Member/addresslist')}";
             }else{
                 alert(res.message);
             }
