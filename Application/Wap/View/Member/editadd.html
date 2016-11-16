@@ -3,7 +3,7 @@
     <body>
     <header class="bgz colb">
         <span class="left" linkto="javascript:history.go(-1)"></span>
-        <span class="poab pfr mar10">保存</span>
+        <span class="poab pfr mar10 saveadd">保存</span>
         <span class="title">修改地址</span>
     </header>
     <div class="content" style="padding-top: 50px;">
@@ -72,7 +72,7 @@
            sessionStorage.setItem("locaadd",JSON.stringify(locaadd));
         });
 
-
+        //单选回调
         function checkAfter(self){
             if (self.hasClass("on")) {
                 locaadd.is_default = 1;
@@ -80,6 +80,24 @@
                 locaadd.is_default = 0;
             }
            sessionStorage.setItem("locaadd",JSON.stringify(locaadd));
+        }
+        //保存事件绑定
+        $(".saveadd").on('click',function() {
+            addobj.m_id = top_user.m_id;
+            addobj.name = locaadd.name;
+            addobj.tel = locaadd.tel;
+            addobj.is_default = locaadd.is_default;
+            addobj.address = addobj.address + locaadd.house;
+            requestUrl("{:U('Api/Address/addAddress')}",addobj,callback);
+        })
+
+        //保存回调
+        function callback(res) {
+            if (res.flag == "success") {
+                alert(res.message);
+            }else{
+                alert(res.message);
+            }
         }
     </script>
 </block>
