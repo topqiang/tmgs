@@ -65,7 +65,7 @@
                     "name" : self.siblings().find(".name").text(),
                     "tel" : self.siblings().find(".tel").text(),
                     "address" : self.siblings().find(".address").text(),
-                    "address_id" : self.attr("addid");
+                    "address_id" : self.attr("addid")
                 };
                 sessionStorage.setItem("curaddress",JSON.stringify(curaddress));
                 window.location.href = "{:U('Order/setorder')}";
