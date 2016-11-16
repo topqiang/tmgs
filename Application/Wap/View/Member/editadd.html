@@ -95,6 +95,8 @@
         //保存回调
         function callback(res) {
             if (res.flag == "success") {
+                sessionStorage.setItem("areaadd",null);
+                sessionStorage.setItem("locaadd",null);
                 window.location.href = "{:U('Member/addresslist')}";
             }else{
                 alert(res.message);
