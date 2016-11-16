@@ -53,11 +53,6 @@
         var addobj = {};
         var locaadd = {};
         var areaadd = {};
-        if (jsonstr) {
-            areaadd = JSON.parse(jsonstr);
-            addobj = areaadd.addobj;
-            $(".address").val(areaadd.address);
-        }
 
         if (locastr) {
             locaadd = JSON.parse(locastr);
@@ -68,6 +63,13 @@
                 $(".top_check").addClass("on");
             }
         }
+
+        if (jsonstr) {
+            areaadd = JSON.parse(jsonstr);
+            addobj = areaadd.addobj;
+            $(".address").val(areaadd.address);
+        }
+
         $("div input").on('change',function() {
            var self = $(this);
            if (self.hasClass("name")) {
@@ -93,11 +95,14 @@
         $(".saveadd").on('click',function() {
             if (!top_user)getUserInfo("{:U('Member/login')}");
             locaadd.m_id = top_user.m_id;
-            locaadd.province_id = addobj.province_id;
-            locaadd.city_id = addobj.city_id;
-            locaadd.area_id = addobj.area_id;
-            locaadd.address = areaadd.address + locaadd.house;
-            
+            if (addid['province_id']) {
+                locaadd.province_id = addobj.province_id;
+                locaadd.city_id = addobj.city_id;
+                locaadd.area_id = addobj.area_id;
+            }
+            if (areaadd.address && locaadd.house) {
+                locaadd.address = areaadd.address + locaadd.house;
+            }
             <if condition="isset($_REQUEST['address_id'])">
             requestUrl("{:U('Api/Address/ModifyAddress')}",locaadd,callback);
             <else/>
