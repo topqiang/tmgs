@@ -44,6 +44,8 @@ function getRootPath(){
  * @version 1.0
  * **/
 function top_check(){
+	$(".top_radio").off('click');
+	$(".top_check").off('click');
 	$(".top_radio").on('click',function(){
 		var self = $(this);
 		self.addClass("on");
