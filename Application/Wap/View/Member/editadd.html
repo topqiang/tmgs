@@ -28,7 +28,7 @@
         </div>
 
         <div class="formline paytype mat20">
-            <div class="top_check on mar10"><span class="iconcheck fr"></span>设为默认地址</div>
+            <div class="top_check mar10"><span class="iconcheck fr"></span>设为默认地址</div>
         </div>
 
         <div class="botarea bgz colb textcen lh50 fs16">
@@ -55,6 +55,9 @@
             locaadd = JSON.parse(locastr);
             for(var key in locaadd){
                 $("."+key).val(locaadd[key]);
+            }
+            if (locaadd.is_default == 1) {
+                $(".top_check").addClass("on");
             }
         }
         $("div input").on('change',function() {
