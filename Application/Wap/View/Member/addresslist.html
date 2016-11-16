@@ -54,11 +54,14 @@
         }
         $(".content").html(str);
         clickEvent();
+        if (typeof goback == 'function') {
+            goback();
+        }
     }
 
 
     <if condition="isset($_REQUEST['order'])">
-        $(function(){
+        function goback(){
             $(".goback").on('click',function(){
                 var self = $(this);
                 var curaddress = {
@@ -70,7 +73,7 @@
                 sessionStorage.setItem("curaddress",JSON.stringify(curaddress));
                 window.location.href = "{:U('Order/setorder')}";
             });
-        });
+        }
     </if>
 
     function clickEvent(){
