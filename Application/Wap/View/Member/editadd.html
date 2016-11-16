@@ -95,7 +95,7 @@
         $(".saveadd").on('click',function() {
             if (!top_user)getUserInfo("{:U('Member/login')}");
             locaadd.m_id = top_user.m_id;
-            if (addid['province_id']) {
+            if (addobj['province_id']) {
                 locaadd.province_id = addobj.province_id;
                 locaadd.city_id = addobj.city_id;
                 locaadd.area_id = addobj.area_id;
