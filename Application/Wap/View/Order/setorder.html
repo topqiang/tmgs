@@ -34,7 +34,7 @@
         </div>
         <div class="lh50 borb31 bgb pad0-20">
             <span class="disib fs14" style="width: 80px;">买家留言：</span>
-            <input type="text" placeholder="选填"/>
+            <input type="text" class="leave_msg" placeholder="选填"/>
         </div>
 
         <div class="lh50 textrig fs14 cole bgb">
@@ -44,7 +44,7 @@
     </div>
 
     <div class="botarea bgb">
-        <div class="lh50 bgbtn colb pad0-20 fr">提交订单</div>
+        <div class="lh50 bgbtn colb pad0-20 fr putorder">提交订单</div>
         <div class="textrig lh25">
             <div>合计:<span class="colr mar10">￥<span class="total_price"></span></span></div>
             <div class="fs12 cole">合计返利：<span class="mar10">￥<span class="return_total_price"></span></span></div>
@@ -110,7 +110,6 @@
         //渲染商品 
         function viewGood(good){
             var str = "";
-            console.log(good);
             if (typeof good == 'object') {
                 str += '<div class="good bge pad10">'
                 +'<div class="imgbag">'
@@ -133,5 +132,23 @@
             }
             $(".setgood").html(str);
         }
+
+        $(".putorder").on('click',function(){
+            setobj.address_id = $(".ediadd").attr("id");
+            setobj.leave_msg = $(".leave_msg").val();
+            if (setobj.address_id && setobj.address_id != "") {
+                requestUrl("{:U('Api/Order/addOneOrder')}",setobj,function(res){
+                    if (res.flag == "success") {
+                        var order_list_sn = res.data.order_list_sn;
+                        sessionStorage.setItem("order_list_sn",order_list_sn);
+                        window.location.href = "{:U('Order/paytype')}";
+                    }else{
+                        alert(res.message);
+                    }
+                });
+            }else{
+                alert("收货地址不能为空！");
+            }
+        });
     </script>
 </block>
