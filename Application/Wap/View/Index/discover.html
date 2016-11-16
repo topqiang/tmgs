@@ -121,6 +121,7 @@
                 var gsStr = '<div class="shop pad20 borb31"> <img src="'+good_service[gs]['head_pic']+'" /> <div class="shopdec lh20"> <p><span class="mar5">'+good_service[gs]["merchant_name"]+'</span> </p> <p class="mat10 cole fs14"> <span class="mar20">销量:'+good_service[gs]['sales']+'</span> <span>商品:'+good_service[gs]['goods_count']+'</span> </p> </div> <div class="bobtn bor1b colbl fr pad0-10 borad4 mat10" linkto="'+shoplink+good_service[gs]['merchant_id']+'">进店逛逛</div> </div>';
                 $('.servicelist').append(gsStr);
             }
+            top_linkto();
             console.log(arr);
         },'json');
     </script>
