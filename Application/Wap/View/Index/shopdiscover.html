@@ -7,67 +7,14 @@
     			<span class="jiaob poab bgr colb fs12 textcen lh14">3</span>
     		</span>
         <div class="textcen cenimg">
-            <img src="__IMG__/topbghd.png">
-            <!-- <img src="__IMG__/topbghfw.png"> -->
+        <if condition="$_REQUEST['type'] eq 'discoverMerchant'"><img src="__IMG__/topbghd.png">
+        <else/><img src="__IMG__/topbghfw.png">
+        </if>
         </div>
     </header>
     <div class="content" style="padding-top: 50px">
-        <div class="shopinfo textcen colb lh25">
-            <div class="shoplogo pad10">
-                <img class="mat10" src="__IMG__/shoplogo.png">
-            </div>
-            <div class="fs24">达产官方旗舰店</div>
-            <div class="fs12">
-                <span class="mar10">销量300</span>
-                <span class="">商品500</span>
-            </div>
-            <div>
-                <span class="borbtnb">进店逛逛</span>
-            </div>
-        </div>
-
-        <div class="pad10 hdgood textcen lh30">
-            <div class="bgb" linkto="goodinfo.html">
-                <img src="__IMG__/good.png">
-                <span class="colr">￥488.00</span>
-            </div>
-            <div class="bgb">
-                <img src="__IMG__/good.png">
-                <span class="colr">￥488.00</span>
-            </div>
-            <div class="bgb">
-                <img src="__IMG__/good.png">
-                <span class="colr">￥488.00</span>
-            </div>
-        </div>
-
-        <div class="shopinfo textcen colb lh25">
-            <div class="shoplogo pad10">
-                <img class="mat10" src="__IMG__/shoplogo.png">
-            </div>
-            <div class="fs24">达产官方旗舰店</div>
-            <div class="fs12">
-                <span class="mar10">销量300</span>
-                <span class="">商品500</span>
-            </div>
-            <div>
-                <span class="borbtnb">进店逛逛</span>
-            </div>
-        </div>
-
-        <div class="pad10 hdgood textcen lh30">
-            <div class="bgb">
-                <img src="__IMG__/good.png">
-                <span class="colr">￥488.00</span>
-            </div>
-            <div class="bgb">
-                <img src="__IMG__/good.png">
-                <span class="colr">￥488.00</span>
-            </div>
-            <div class="bgb">
-                <img src="__IMG__/good.png">
-                <span class="colr">￥488.00</span>
-            </div>
+        
+        <div class="shoplis">
         </div>
     </div>
     </body>
@@ -75,5 +22,105 @@
 <block name="script">
     <script type="text/javascript" src="__JS__/yxMobileSlider.js" ></script>
     <script type="text/javascript" src="__JS__/touch.min.js"></script>
+    <script type="text/javascript">
+        var flag= true;//防止ajax请求期间，对此触发请求数据
+        var dataargs = {p:1};
+        if (top_user) dataargs.m_id = top_user.m_id;
 
+        //添加商品到列表
+        function putGoods(data,args) {
+            if(data.flag == 'success'){
+                var good_product = data.data.good_service;
+                if((!good_product || good_product.length == 0 ) && args == "fenye"){
+                    $(".content").append('<div class="textcen">没有更多了！</div>');
+                }else{
+                    var str ="";
+                    var shoplink = "{:U('Merchant/shopinfo')}&merchant_id=";
+                    for(var merchant in good_product){
+                       str += '<div class="shopli"><div class="shopinfo textcen colb lh25">'
+                                    +'<div class="shoplogo pad10">'
+                                        +'<img class="mat10" src="'+merchant.head_pic+'">'
+                                    +'</div>'
+                                    +'<div class="fs24">'+merchant.merchant_name+'</div>'
+                                    +'<div class="fs12">'
+                                        +'<span class="mar10">销量'+merchant.sales+'</span>'
+                                        +'<span class="">商品'+merchant.goods_count+'</span>'
+                                    +'</div>'
+                                    +'<div>'
+                                        +'<span class="borbtnb" linkto="'+shoplink+merchant.merchant_id+'">进店逛逛</span>'
+                                    +'</div>'
+                                +'</div>'
+                                +'<div class="pad10 hdgood textcen lh30">';
+                                var link = '{:U("Goods/goodsinfo")}'+(top_user ? '&m_id='+top_user.m_id : '')+'&goods_id=';
+
+                                for(var good of merchant.goods_list){
+                                    str += '<div class="bgb" linkto="'+link+good.goods_id+'">'
+                                        +'<img src="'+good.goods_pic+'">'
+                                        +'<span class="colr">￥'+good.price+'</span>'
+                                    +'</div>';
+                                }
+                                str +='</div></div>';
+                    }
+                    if (args == "fenye") {
+                        $('.shoplis').append(str);
+                    }else{
+                        $('.shoplis').html(str);
+                    }
+                    top_linkto();
+                    flag = true;
+                }
+            }else{
+                alert(data.message);
+            }
+
+            if (args == "shouci") {
+                fenye();
+            }
+        }
+
+
+        function getJson(args) {
+            console.log(dataargs);
+            var url = "";
+            if ( "{$_REQUEST['type']}" == "discoverMerchant") {
+                url = '{:U("Api/Discover/discoverMerchant")}';
+            }else{
+                url = '{:U("Api/Discover/discoverService")}';
+            }
+            $.ajax({
+                url: url,
+                type: 'POST',
+                dataType: 'JSON',
+                data: dataargs,
+                success : function(data){
+                    putGoods(data,args);
+                }
+            });
+        }
+
+        $(function(){
+            getJson("shouci");
+        });
+        function fenye(){
+            var $_zd = $(".shopli").height();//获取每个单项的高度
+            var length = 3;//定义预加载的数量，提前三个加载数据
+            var $_par = $(".shoplis");//获取包裹容器
+            var winheight = $(window).height();//获取窗口高度
+            $(function(){
+                $(window).on("scroll",function(e){
+                    if(flag){
+                        var self = $(this);
+                        var scrtop = self.scrollTop() + winheight;
+                        var docheight = $_par.height();
+                        console.log(scrtop + "=" + docheight + "=" + $_zd);
+                        if(scrtop > docheight - ( length * $_zd ) ){
+                            flag = false;
+                            dataargs.p = dataargs.p +1;
+                            getJson("fenye");
+                        }
+                    }
+                });
+            });
+        }
+    </script>
 </block>
