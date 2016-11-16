@@ -43,7 +43,7 @@
                 +'<span class="fr">'+obj.tel+'</span>'
             +'</div>'
             +'<div>'
-                +((obj.is_default == "1") ? '<span class="smbtn">默认</span>' : "")
+                +((obj.is_default == "1") ? '<span class="smbtn bgbtn colb pad5-10 borad4">默认</span>' : "")
                 +'<span>'+obj.address+'</span>'
             +'</div>'
             +'<div class="playadd">'
@@ -73,7 +73,13 @@
 
 
         $(".iconedi").on('click',function() {
-            
+            var self = $(this);
+            requestUrl("Api/Address/addressInfo",{"address_id":self.attr("addid")},function (res) {
+                if (res.flag == "success") {
+                    var addobj = sessionStorage.setItem("locaadd",JSON.stringify(res.data));
+                    window.location.href = "{:U('Member/editadd')}&address_id="+self.attr("addid");
+                }
+            });
         });
     }
     </script>
