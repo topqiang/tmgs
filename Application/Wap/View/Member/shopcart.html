@@ -125,7 +125,7 @@
             $(".iconjian,.iconadd").on("click",function(){
                 var self = $(this);
                 var parent =self.parent();
-                price = parseInt(parent.attr("goodprice"));
+                price = parent.attr("goodprice");
                 num = parseInt(self.siblings(".goodnum").text());
                 cart_id = parent.attr("cart_id");
                 if (self.is(".iconjian")) {
