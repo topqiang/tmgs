@@ -31,6 +31,7 @@
         function putGoods(data,args) {
             if(data.flag == 'success'){
                 var good_product = data.data.good_service || data.data.good_shop;
+                console.log(good_product);
                 if((!good_product || good_product.length == 0 ) && args == "fenye"){
                     $(".content").append('<div class="textcen">没有更多了！</div>');
                 }else{
