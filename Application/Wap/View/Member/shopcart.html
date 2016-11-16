@@ -66,7 +66,6 @@
             self.toggleClass('on');
         });
         
-
         var totalprice = 0;
         var totalnum = 0;
         if (!top_user)getUserInfo("{:U('Member/login')}");
@@ -93,14 +92,14 @@
                                 +'</div>'
                                 +'<div class="playgood pore toggle" style="display: none;">'
                                     +'<div class="bgc playbtn disf cole lh20 fs14">'
-                                        +'<div class="iconggley" goods_id="'+good.goods_id+'">'
+                                        +'<div class="iconggley" cart_id="'+good.cart_id+'">'
                                             +'<span>移入收藏</span>'
                                         +'</div>'
                                         +'<div class="icongdel" cart_id="'+good.cart_id+'">'
                                             +'<span>删除</span>'
                                         +'</div>'
                                     +'</div>'
-                                    +'<div class="pfr poab localmana" goodprice="'+good.price+'">'
+                                    +'<div class="pfr poab localmana" goodprice="'+good.price+'" cart_id="'+good.cart_id+'">'
                                         +'<span class="iconadd"></span>'
                                         +'<span class="bge goodnum">'+good.num+'</span>'
                                         +'<span class="iconjian"></span>'
@@ -117,6 +116,35 @@
                 alert(res.message);
             }
         }
+
+        function clickEvent(){
+            var price = 0;
+            var num = 0;
+            var cart_id = 0;
+            $(".iconjian,.iconadd").on("click",function(){
+                var self = $(this);
+                var parent =self.parent();
+                price = parent.attr("goodprice");
+                num = self.siblings(".goodnum").text();
+                cart_id = parent.attr("cart_id");
+                if (self.is(".iconjian")) {
+                    if (num > 1) {
+                        num -= 1;
+                        totalnum -= 1;
+                        totalprice =totalprice - price*1;
+                    }else{
+                        self.parents(".good").remove();
+                    }
+                }else if (self.is(".iconadd")) {
+                    totalnum += 1;
+                    num +=1;
+                    totalprice =totalprice+ price*1;
+                }
+                parent.find("goodnum").text(num);
+                viewTotal();
+            });
+        }
+
         function viewTotal(){
             $(".totalnum").text(totalnum);
             $(".totalprice").text(totalprice);
