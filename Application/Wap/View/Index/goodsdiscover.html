@@ -54,7 +54,7 @@
                     var str ="";
                     var link = '{:U("Goods/goodsinfo")}'+(top_user ? '&m_id='+top_user.m_id : '')+'&goods_id=';
                     for(g in goods){
-                       str += '<div class="good" linkto="'+link+good_product[gp]['goods_id']+'">'
+                       str += '<div class="good" linkto="'+link+goods[g]['goods_id']+'">'
                              +'<div class="imgbag">'
                                 +'<img src="'+good_product[gp]['goods_pic']+'" />'
                              +'</div>'
