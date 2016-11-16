@@ -30,7 +30,7 @@
         //添加商品到列表
         function putGoods(data,args) {
             if(data.flag == 'success'){
-                var good_product = data.data.good_service;
+                var good_product = data.data.good_service || data.data.good_shop;
                 if((!good_product || good_product.length == 0 ) && args == "fenye"){
                     $(".content").append('<div class="textcen">没有更多了！</div>');
                 }else{
@@ -53,7 +53,7 @@
                                 +'<div class="pad10 hdgood textcen lh30">';
                                 var link = '{:U("Goods/goodsinfo")}'+(top_user ? '&m_id='+top_user.m_id : '')+'&goods_id=';
 
-                                for(var good of merchant.goods_list){
+                                for(var good of merchant['goods_list']){
                                     str += '<div class="bgb" linkto="'+link+good.goods_id+'">'
                                         +'<img src="'+good.goods_pic+'">'
                                         +'<span class="colr">￥'+good.price+'</span>'
