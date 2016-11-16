@@ -256,7 +256,7 @@
             <span class="colb fr bgyel pad0-10">移到收藏夹</span>
         </div>
 
-        <span class="gleygood top_check disib">全选</span>
+        <span class="gleygood top_check disib all">全选</span>
     </div>
     <footer class="bgz">
         <div linkto="{:U('Index/index')}">
@@ -285,5 +285,15 @@
         $(".changeview").on('click',function(){
             $(".toggle").toggle();
         });
+        function checkAfter( self ){
+            self.toggleClass('on');
+            if (self.hasClass('all')) {
+                if (self.hasClass('on')) {
+                    $(".top_check").removeClass("on");
+                }else{
+                    $(".top_check").addClass("on");
+                }
+            }
+        }
     </script>
 </block>
