@@ -86,7 +86,7 @@
                                     +'</div>'
                                     +'<div class="cole fs12">'+good.product+'</div>'
                                     +'<div class="lh30 price fs14">'
-                                        +'<span class="fr goodnum">x'+good.num+'</span>'
+                                        +'<span class="fr goodnum">x<span carnum="'+good.cart_id+'">'+good.num+'</span></span>'
                                         +'<span class="fs16 colr">￥'+good.price+'</span>'
                                     +'</div>'
                                 +'</div>'
@@ -101,7 +101,7 @@
                                     +'</div>'
                                     +'<div class="pfr poab localmana" goodprice="'+good.price+'" cart_id="'+good.cart_id+'">'
                                         +'<span class="iconadd"></span>'
-                                        +'<span class="bge goodnum">'+good.num+'</span>'
+                                        +'<span class="bge goodnum" carnum="'+good.cart_id+'">'+good.num+'</span>'
                                         +'<span class="iconjian"></span>'
                                     +'</div>'
                                 +'</div>'
@@ -141,7 +141,7 @@
                     num +=1;
                     totalprice =totalprice+ price*1;
                 }
-                parent.find("goodnum").text(num);
+                $("[carnum='"+cart_id+"']").text(num);
                 viewTotal();
             });
         }
