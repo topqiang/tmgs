@@ -82,8 +82,8 @@
             var good_product = arr['data']['good_product']; // 好货
             var good_shop = arr['data']['good_shop']; // 好店铺
             var good_service = arr['data']['good_service']; // 好服务
+            var link = '{:U("Goods/goodsinfo")}'+(top_user ? '&m_id='+top_user.m_id : '')+'&goods_id=';
             for(gp in good_product){
-                var link = '{:U("Goods/goodsinfo")}'+(top_user ? '&m_id='+top_user.m_id : '')+'&goods_id=';
                 // 好商品
                 var gpStr =  '<div class="good" linkto="'+link+good_product[gp]['goods_id']+'">'
                              +'<div class="imgbag">'
