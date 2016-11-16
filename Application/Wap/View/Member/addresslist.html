@@ -38,13 +38,13 @@
         var str = "";
         for(var obj of addressList){
             str += '<div class="address">'
-            +'<div class="colbl">'
-                +'<span class="">'+obj.name+'</span>'
-                +'<span class="fr">'+obj.tel+'</span>'
+            +'<div class="colbl goback" addid="'+obj.address_id+'">'
+                +'<span class="name">'+obj.name+'</span>'
+                +'<span class="fr tel">'+obj.tel+'</span>'
             +'</div>'
-            +'<div>'
+            +'<div class="goback" addid="'+obj.address_id+'">'
                 +((obj.is_default == "1") ? '<span class="smbtn bgbtn colb pad5-10 borad4">默认</span>' : "")
-                +'<span>'+obj.address+'</span>'
+                +'<span class="address">'+obj.address+'</span>'
             +'</div>'
             +'<div class="playadd">'
                 +'<span class="fr cole icondel" addid="'+obj.address_id+'">删除</span>'
@@ -55,6 +55,23 @@
         $(".content").html(str);
         clickEvent();
     }
+
+
+    <if condition="isset($_REQUEST['order'])">
+        $(function(){
+            $(".goback").on('click',function(){
+                var self = $(this);
+                var curaddress = {
+                    "name" : self.siblings().find(".name").text(),
+                    "tel" : self.siblings().find(".tel").text(),
+                    "address" : self.siblings().find(".address").text(),
+                    "address_id" : self.attr("addid");
+                };
+                sessionStorage.setItem("curaddress",JSON.stringify(curaddress));
+                window.location.href = "{:U('Order/setorder')}";
+            });
+        });
+    </if>
 
     function clickEvent(){
         $(".icondel").on('click',function() {

@@ -5,7 +5,7 @@
         <div class="left">订单详情</div>
     </header>
     <div class="content" style="padding: 50px 0px 10px;">
-        <div class="ordaddress mat10" linkto="{:U('Member/addresslist')}">
+        <div class="ordaddress mat10" linkto="{:U('Member/addresslist')}&order=1">
             <span class="right fr" style="margin-top: 40px;"></span>
             <!-- 新建地址 -->
             <div class="newadd fs12 cole">
@@ -100,6 +100,13 @@
             $(".ediadd").attr("id",address.address_id);
 
         }
+
+        $(function(){
+            var curaddress = sessionStorage.getItem("curaddress");
+            if (curaddress) {
+                viewAdd(JSON.parse(curaddress));
+            }
+        })
         //渲染商品 
         function viewGood(good){
             var str = "";
