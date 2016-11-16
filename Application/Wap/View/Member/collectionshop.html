@@ -11,16 +11,6 @@
     </header>
     <div class="content" style="padding: 50px 0px;">
         <div class="shoplist">
-            <div class="shop pad20 borb31 bgb">
-                <img src="__IMG__/shoplogo.png" />
-                <div class="shopdec lh50" linkto="shopinfo.html">
-                    <p>
-                        <span class="mar5">达产官方旗舰店</span>
-                        <span class="bor1b bora50 colbl disib fs12 wh20">H</span>
-                    </p>
-                </div>
-                <div class="fr borbtn lh14 colz mat10">取消收藏</div>
-            </div>
         </div>
     </div>
     <footer class="bgz">
@@ -48,5 +38,86 @@
         $(".borbtn").on('click',function(){
             confirm("您确定要删除收藏吗？");
         });
+
+
+        if (!top_user) getUserInfo("{:U('Member/login')}");
+
+        var flag= true;//防止ajax请求期间，对此触发请求数据
+        var dataargs = {p:1,m_id:top_user.m_id};
+        //添加商品到列表
+        function putGoods(data,args) {
+            if(data.flag == 'success'){
+                var goods = data.data.merchant;
+                if((!goods || goods.length == 0 ) && args == "fenye"){
+                    $(".content").append('<div class="textcen">没有更多了！</div>');
+                }else{
+                    var str ="";
+                    for(var merchant of goods){
+                       str += '<div class="shop pad20 borb31 bgb">'
+                                    +'<img src="'+merchant.head_pic+'" />'
+                                    +'<div class="shopdec lh50">'
+                                        +'<p>'
+                                            +'<span class="mar5">'+merchant.merchant_name+'</span>'
+                                            +'<span class="bor1b bora50 colbl disib fs12 wh20">H</span>'
+                                        +'</p>'
+                                    +'</div>'
+                                    +'<div class="fr borbtn lh14 colz mat10" merchant_id ="'+merchant.merchant_id+'">取消收藏</div>'
+                                +'</div>';
+                    }
+                    if (args == "fenye") {
+                        $('.shoplist').append(str);
+                    }else{
+                        $('.shoplist').html(str);
+                    }
+                    flag = true;
+                }
+            }else{
+                alert(data.message);
+            }
+
+            if (args == "shouci") {
+                fenye();
+            }
+        }
+
+
+        function getJson(args) {
+            console.log(dataargs);
+            $.ajax({
+                url: '{:U("Api/Collect/collectMerchantList")}',
+                type: 'POST',
+                dataType: 'JSON',
+                data: dataargs,
+                success : function(data){
+                    putGoods(data,args);
+                }
+            });
+        }
+
+        $(function(){
+            getJson("shouci");
+        });
+        function fenye(){
+            var $_zd = $(".shop").height();//获取每个单项的高度
+            var length = 3;//定义预加载的数量，提前三个加载数据
+            var $_par = $(".shoplist");//获取包裹容器
+            var winheight = $(window).height();//获取窗口高度
+            $(function(){
+                $(window).on("scroll",function(e){
+                    if(flag){
+                        var self = $(this);
+                        var scrtop = self.scrollTop() + winheight;
+                        var docheight = $_par.height();
+                        console.log(scrtop + "=" + docheight + "=" + $_zd);
+                        if(scrtop > docheight - ( length * $_zd ) ){
+                            flag = false;
+                            dataargs.p = dataargs.p +1;
+                            getJson("fenye");
+                        }
+                    }
+                });
+            });
+        }
+
     </script>
 </block>
