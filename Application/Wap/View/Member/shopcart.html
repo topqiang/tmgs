@@ -18,9 +18,9 @@
     </div>
     <div class="botarea lh50 bgb" style="bottom: 60px;">
         <div class="fr toggle">
-            <span class="fr bgbtn pad0-10 colb">结算（2）</span>
+            <span class="fr bgbtn pad0-10 colb">结算（<span class="totalnum"></span>）</span>
 				<span class="fr mar10 cole textrig">
-					<div class="lh30">合计：<span class="colr">￥250.00</span></div>
+					<div class="lh30">合计：<span class="colr">￥<span class="totalprice"></span></span></div>
 					<div class="lh20 fs12">含运费：￥20</div>
 				</span>
         </div>
@@ -67,7 +67,8 @@
         }
         
 
-
+        var totalprice = 0;
+        var totalnum = 0;
         if (!top_user)getUserInfo("{:U('Member/login')}");
         requestUrl("{:U('Api/Cart/cartList')}",{m_id:top_user.m_id},viewAddress);
 
@@ -99,14 +100,18 @@
                                             +'<span>删除</span>'
                                         +'</div>'
                                     +'</div>'
-                                    +'<div class="pfr poab localmana">'
+                                    +'<div class="pfr poab localmana" goodprice="'+good.price+'">'
                                         +'<span class="iconadd"></span>'
-                                        +'<span class="bge goodnum">1</span>'
+                                        +'<span class="bge goodnum">'+good.num+'</span>'
                                         +'<span class="iconjian"></span>'
                                     +'</div>'
                                 +'</div>'
                             +'</div>';
+                            totalnum += parseInt(good.num);
+                            totalprice += good.num * good.price;
                 }
+                $(".totalnum").text(totalnum);
+                $(".totalprice").text(totalprice);
                 $(".goodlist").html(str);
                 top_check();
             }else{
