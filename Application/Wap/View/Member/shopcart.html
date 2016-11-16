@@ -29,7 +29,7 @@
             <span class="colb fr bgyel pad0-10">移到收藏夹</span>
         </div>
 
-        <span class="gleygood top_check disib all">全选</span>
+        <span class="gleygood disib all">全选</span>
     </div>
     <footer class="bgz">
         <div linkto="{:U('Index/index')}">
@@ -56,15 +56,14 @@
         $(".changeview").on('click',function(){
             $(".toggle").toggle();
         });
-        function checkAfter( self ){
-            if (self.hasClass('all')) {
-                if (self.hasClass('on')) {
-                    $(".top_check").removeClass("on");
-                }else{
-                    $(".top_check").addClass("on");
-                }
+        $(".all").on('click',function(){
+            var self = $(this);
+            if (self.hasClass('on')) {
+                $(".top_check").removeClass("on");
+            }else{
+                $(".top_check").addClass("on");
             }
-        }
+        });
         
 
         var totalprice = 0;
