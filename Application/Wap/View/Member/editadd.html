@@ -2,7 +2,7 @@
 <block name="main">
     <body>
     <header class="bgz colb">
-        <span class="left"></span>
+        <span class="left" linkto="javascript:history.go(-1)"></span>
         <span class="poab pfr mar10">保存</span>
         <span class="title">修改地址</span>
     </header>
@@ -16,11 +16,11 @@
                 <span class="disib" style="width: 100px;">联系电话：</span>
                 <input type="text" placeholder="请填写手机号码"/>
             </div>
-            <div linkto="{:U('Member/setpro')}">
+            <div class="pore" linkto="{:U('Member/setpro')}">
                 <span class="right fr mat15"></span>
                 <span class="fr mar5 cole">请选择</span>
                 <span class="disib" style="width: 100px;">所在地区：</span>
-                <input type="text" class="address" placeholder="选择取货地址" readonly="true"/>
+                <input type="text" class="address poab" style="left:100px;" placeholder="选择取货地址" readonly="true"/>
             </div>
             <div>
                 <input type="text" placeholder="详细地址如门牌号等"/>
