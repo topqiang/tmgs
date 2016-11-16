@@ -76,15 +76,37 @@
     <script type="text/javascript" src="__JS__/yxMobileSlider.js" ></script>
 
     <script>
-        var m_id = 1;
-        $.post("http://2.taomim.com/index.php/Api/Discover/discoverList",{m_id:m_id},function(data){
+        if (!top_user) getUserInfo("{:U('Member/login')}");
+        $.post("{:U(Api/Discover/discoverList)}",{m_id:top_user.m_id},function(data){
             var arr = data;
             var good_product = arr['data']['good_product']; // 好货
             var good_shop = arr['data']['good_shop']; // 好店铺
             var good_service = arr['data']['good_service']; // 好服务
             for(gp in good_product){
                 // 好商品
-                var gpStr =  '<div class="good" linkto="goodinfo.html"> <div class="imgbag"> <img src="'+good_product[gp]['goods_pic']+'" /> </div> <div class="pad0-10"> <div class="goodname fs14"> '+good_product[gp]["goods_name"]+' </div> <div class="lh30 price fs14 colr">￥<span class="fs16">'+good_product[gp]["price"]+'</span></div> <div class="cole fs12"> <span class="mar20">销量：'+good_product[gp]["sales"]+'</span> <span>评论数：'+good_product[gp]["evaluate"]+'</span> </div> </div> </div>'
+                var gpStr =  '<div class="good" linkto="goodinfo.html">'
+                             +'<div class="imgbag">'
+                                +'<img src="'+good_product[gp]['goods_pic']+'" />'
+                             +'</div>'
+                             +'<div class="pad0-10">'
+                                +'<div class="goodname fs14">'
+                                    +good_product[gp]["goods_name"]
+                                +' </div>'
+                                +'<div class="lh30 price fs14 colr">'
+                                    +'￥<span class="fs16">'
+                                        +good_product[gp]["price"]
+                                    +'</span>'
+                                +'</div>'
+                                +'<div class="cole fs12">'
+                                    +'<span class="mar20">销量:'
+                                        +good_product[gp]["sales"]
+                                    +'</span>'
+                                    +'<span>评论数：'
+                                        +good_product[gp]["evaluate"]
+                                    +'</span>'
+                                +'</div>'
+                            +'</div>'
+                        +'</div>';
                 $('.goodlist').append(gpStr);
             }
             for(gs in good_shop){
