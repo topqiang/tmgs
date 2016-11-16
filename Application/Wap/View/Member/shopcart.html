@@ -107,7 +107,7 @@
                                 +'</div>'
                             +'</div>';
                             totalnum += parseInt(good.num);
-                            totalprice += good.num * good.price;
+                            totalprice += good.num * good.price*100;
                 }
                 $(".goodlist").html(str);
                 viewTotal();
@@ -132,14 +132,14 @@
                     if (num > 1) {
                         num -= 1;
                         totalnum -= 1;
-                        totalprice =totalprice - price*1;
+                        totalprice =totalprice - price*100;
                     }else{
                         self.parents(".good").remove();
                     }
                 }else if (self.is(".iconadd")) {
                     totalnum += 1;
                     num += 1;
-                    totalprice =totalprice+ price*1;
+                    totalprice =totalprice+ price*100;
                 }
                 $("[carnum='"+cart_id+"']").text(num);
                 viewTotal();
@@ -148,7 +148,7 @@
 
         function viewTotal(){
             $(".totalnum").text(totalnum);
-            $(".totalprice").text(totalprice);
+            $(".totalprice").text(totalprice/100);
         }
     </script>
 </block>
