@@ -60,6 +60,14 @@ class MemberController extends BaseController
     }
 
     /**
+     * 收藏商家列表
+     */
+    public function collectionshop()
+    {
+        $this->display();
+    }
+
+    /**
      * 购物车
      */
     public function shopcart()
