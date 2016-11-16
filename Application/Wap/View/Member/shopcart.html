@@ -55,6 +55,7 @@
     <script type="text/javascript">
         $(".changeview").on('click',function(){
             $(".toggle").toggle();
+            viewTotal();
         });
         $(".all").on('click',function(){
             var self = $(this);
@@ -101,7 +102,7 @@
                                     +'</div>'
                                     +'<div class="pfr poab localmana" goodprice="'+good.price+'" cart_id="'+good.cart_id+'">'
                                         +'<span class="iconadd"></span>'
-                                        +'<span class="bge goodnum" carnum="'+good.cart_id+'">'+good.num+'</span>'
+                                        +'<span class="bge goodnum">'+good.num+'</span>'
                                         +'<span class="iconjian"></span>'
                                     +'</div>'
                                 +'</div>'
@@ -133,7 +134,6 @@
                         num -= 1;
                         totalnum -= 1;
                         totalprice =totalprice - price*100;
-                        console.log(totalprice);
                     }else{
                         self.parents(".good").remove();
                     }
@@ -142,8 +142,7 @@
                     num += 1;
                     totalprice =totalprice+ price*100;
                 }
-                $("[carnum='"+cart_id+"']").text(num);
-                viewTotal();
+                parent.find(".goodnum").text(num);
             });
         }
 
