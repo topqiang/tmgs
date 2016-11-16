@@ -10,11 +10,11 @@
         <div class="formline pad0-10">
             <div>
                 <span class="disib" style="width: 100px;">收货人：</span>
-                <input type="text" placeholder="请填写姓名"/>
+                <input type="text" class="name" placeholder="请填写姓名"/>
             </div>
             <div>
                 <span class="disib" style="width: 100px;">联系电话：</span>
-                <input type="text" placeholder="请填写手机号码"/>
+                <input type="text" class="tel" placeholder="请填写手机号码"/>
             </div>
             <div class="pore" linkto="{:U('Member/setpro')}">
                 <span class="right fr mat15"></span>
@@ -23,7 +23,7 @@
                 <input type="text" class="address poab" style="left:115px;top:17px;" placeholder="选择取货地址" readonly="true"/>
             </div>
             <div>
-                <input type="text" placeholder="详细地址如门牌号等"/>
+                <input type="text" class="house" placeholder="详细地址如门牌号等"/>
             </div>
         </div>
 
@@ -42,9 +42,41 @@
     <script type="text/javascript" src="__JS__/touch.min.js"></script>
     <script type="text/javascript">
         var jsonstr = sessionStorage.getItem("areaadd");
+        var locastr = sessionStorage.getItem("locaadd");
+        var addobj = {};
+        var locaadd = {};
         if (jsonstr) {
             var areaadd = JSON.parse(jsonstr);
+            addobj = areaadd.addobj;
             $(".address").val(areaadd.address);
+        }
+
+        if (locastr) {
+            locaadd = JSON.parse(locastr);
+            for(var key in locaadd){
+                $("."+key).val(locaadd[key]);
+            }
+        }
+        $("div input").on('change',function() {
+           var self = $(this);
+           if (self.hasClass("name")) {
+                locaadd.name = self.val();
+           }else if (self.hasClass("tel")) {
+                locaadd.tel = self.val();
+           }else if (self.hasClass("house")) {
+                locaadd.house = self.val();
+           }
+           sessionStorage.setItem("locaadd",JSON.stringify(locaadd));
+        });
+
+
+        function checkAfter(self){
+            if (self.hasClass("on")) {
+                self.is_default = 1;
+            }else {
+                self.is_default = 0;
+            }
+           sessionStorage.setItem("locaadd",JSON.stringify(locaadd));
         }
     </script>
 </block>
