@@ -131,10 +131,26 @@
         }
 
         $(".putorder").on('click',function(){
-            setobj.address_id = $(".ediadd").attr("id");
-            setobj.leave_msg = $(".leave_msg").val();
+            var address_id = $(".ediadd").attr("id");
+            var message_json = [];
+            $(".merchant_id").each(function(){
+                var merchant_id = $(this).attr("merchant_id");
+                var message = $(this)find('.leave_msg').val();
+                message_json.push({
+                    "merchant_id" : merchant_id,
+                    "message" :message
+                });
+            });
+
+            var setobj = {
+                "m_id" : top_user.m_id,
+                "address_id" : address_id,
+                "cart_json" :cart_json,
+                "message_json" : JSON.stringify(message_json)
+            };
+
             if (setobj.address_id && setobj.address_id != "") {
-                requestUrl("{:U('Api/Order/addOneOrder')}",setobj,function(res){
+                requestUrl("{:U('Api/Order/cartOrder')}",setobj,function(res){
                     if (res.flag == "success") {
                         var order_list_sn = res.data.order_list_sn;
                         sessionStorage.setItem("order_list_sn",order_list_sn);
