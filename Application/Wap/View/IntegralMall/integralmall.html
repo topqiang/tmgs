@@ -10,87 +10,83 @@
     </header>
     <div class="content" style="padding: 50px 0px;">
         <div class="goodlist ovhid">
-            <div class="good bgb">
-                <div class="imgbag" linkto="goodinfo.html">
-                    <img src="__IMG__/good.png" />
-                </div>
-                <div class="pad0-10">
-                    <div class="goodname lh20" linkto="goodinfo.html">
-                        法国AOC领衔红酒  意大利干红葡萄酒2支组合
-                    </div>
-                    <div class="lh30 price fs14">
-                        <div class="fr bgbtn lh14 colb mar5 pad5-10 borad4">兑换</div>
-                        积分：<span class="fs16 colr">550.00</span>
-                    </div>
-                </div>
-            </div>
-
-            <div class="good bgb">
-                <div class="imgbag" linkto="goodinfo.html">
-                    <img src="__IMG__/good.png" />
-                </div>
-                <div class="pad0-10">
-                    <div class="goodname lh20" linkto="goodinfo.html">
-                        法国AOC领衔红酒  意大利干红葡萄酒2支组合
-                    </div>
-                    <div class="lh30 price fs14">
-                        <span class="fr cole fs12">2016.10.08</span>
-                        积分：<span class="fs16 colr">550.00</span>
-                    </div>
-                </div>
-            </div>
-
-            <div class="good bgb">
-                <div class="imgbag" linkto="goodinfo.html">
-                    <img src="__IMG__/good.png" />
-                </div>
-                <div class="pad0-10">
-                    <div class="goodname lh20" linkto="goodinfo.html">
-                        法国AOC领衔红酒  意大利干红葡萄酒2支组合
-                    </div>
-                    <div class="lh30 price fs14">
-                        <div class="fr bgbtn lh14 colb mar5 pad5-10 borad4">兑换</div>
-                        积分：<span class="fs16 colr">550.00</span>
-                    </div>
-                </div>
-            </div>
-
-            <div class="good bgb">
-                <div class="imgbag" linkto="goodinfo.html">
-                    <img src="__IMG__/good.png" />
-                </div>
-                <div class="pad0-10">
-                    <div class="goodname lh20" linkto="goodinfo.html">
-                        法国AOC领衔红酒  意大利干红葡萄酒2支组合
-                    </div>
-                    <div class="lh30 price fs14">
-                        <div class="fr bgbtn lh14 colb mar5 pad5-10 borad4">兑换</div>
-                        积分：<span class="fs16 colr">550.00</span>
-                    </div>
-                </div>
-            </div>
-
-            <div class="good bgb">
-                <div class="imgbag" linkto="goodinfo.html">
-                    <img src="__IMG__/good.png" />
-                </div>
-                <div class="pad0-10">
-                    <div class="goodname lh20" linkto="goodinfo.html">
-                        法国AOC领衔红酒  意大利干红葡萄酒2支组合
-                    </div>
-                    <div class="lh30 price fs14">
-                        <div class="fr bgbtn lh14 colb mar5 pad5-10 borad4">兑换</div>
-                        积分：<span class="fs16 colr">550.00</span>
-                    </div>
-                </div>
-            </div>
+            
         </div>
     </div>
     <div class="botarea bgb textcen lh50">
-        <span class="colr iconzuan">我的积分：6666</span>
+        <span class="colr iconzuan">我的积分：<span class="myfen"></span></span>
     </div>
     </body>
 </block>
 <block name="script">
     <script type="text/javascript" src="__JS__/touch.min.js"></script>
+    <script type="text/javascript">
+    if (top_user) {
+        requestUrl("{:U('Api/MerActive/integralList')}",{m_id:top_user.m_id},viewAddList);
+    }else{
+        getUserInfo("{:U('Member/login')}");
+    }
+    function viewAddList(res) {
+        console.log(res);
+        if (res.flag == "success") {
+            var addList = res.data.integral_list;
+            if ( addList.length > 0) {
+                viewAdd(addList);
+            }
+            $(".myfen").text(res.data.integral_balance);
+        }else{
+            alert(res.message);
+        }
+    }
+
+    function viewAdd(addressList){
+        var str = "";
+        for(var obj of addressList){
+            str += '<div class="good bgb">'
+                +'<div class="imgbag" linkto="goodinfo.html">'
+                    +'<img src="'+obj.pic+'" />'
+                +'</div>'
+                +'<div class="pad0-10">'
+                    +'<div class="goodname lh20" linkto="goodinfo.html">'
+                        +obj.goods_name
+                    +'</div>'
+                    +'<div class="lh30 price fs14">'
+                        +'<div class="fr bgbtn lh14 colb mar5 pad5-10 borad4" id="'+obj.integral_id+'">兑换</div>'
+                        +'积分：<span class="fs16 colr">'+obj.integral+'</span>'
+                    +'</div>'
+                +'</div>'
+            +'</div>';
+        }
+        $(".goodlist").html(str);
+        clickEvent();
+    }
+
+    function clickEvent(){
+        $(".icondel").on('click',function() {
+            var flag = confirm("您确认删除该地址吗？");
+            if (flag) {
+                var self = $(this);
+                requestUrl("{:U('Api/Address/deleteAddress')}",{"address_id":self.attr("addid")},function(res) {
+                    if (res.flag == "success") {
+                        location.reload();
+                    }else{
+                        alert(res.message);
+                    }
+                })
+            }
+        });
+
+
+        $(".iconedi").on('click',function() {
+            var self = $(this);
+            requestUrl("Api/Address/addressInfo",{"address_id":self.attr("addid")},function (res) {
+                if (res.flag == "success") {
+                    var addobj = sessionStorage.setItem("locaadd",JSON.stringify(res.data));
+                    window.location.href = "{:U('Member/editadd')}&address_id="+self.attr("addid");
+                }
+            });
+        });
+    }
+    </script>
+
 </block>
