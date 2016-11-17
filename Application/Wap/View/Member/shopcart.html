@@ -77,6 +77,20 @@
                 $(".top_check").addClass("on");
             }
             self.toggleClass('on');
+
+            totalnum = 0;
+            totalprice = 0;
+
+            if (self.hasClass('on')) {
+                $(".good").each(function(){
+                    var self = $(this);
+                    var num = parseInt(self.find(".playgood .goodnum").text());
+                    var goodprice = self.find("[goodprice]").attr("goodprice")*100;
+                    totalnum += num;
+                    totalprice += goodprice;
+                })
+            }
+            viewTotal();
         });
         
         var totalprice = 0;
