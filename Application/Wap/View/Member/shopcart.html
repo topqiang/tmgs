@@ -121,7 +121,7 @@
                     var num = parseInt(self.find(".playgood .goodnum").text());
                     var goodprice = self.find("[goodprice]").attr("goodprice")*100;
                     totalnum += num;
-                    totalprice += goodprice;
+                    totalprice += goodprice*num;
                 })
             }
             viewTotal();
