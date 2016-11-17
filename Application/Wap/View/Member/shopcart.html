@@ -70,10 +70,10 @@
             if (!self.hasClass("on")) {
                 $(".all").removeClass("on");
                 totalnum -= num;
-                totalprice -= goodprice*num;
+                totalprice -= goodprice*100*num;
             }else{
                 totalnum += num;
-                totalprice += goodprice*num;
+                totalprice += goodprice*100*num;
             }
             viewTotal();
         }
