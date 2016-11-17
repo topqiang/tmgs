@@ -139,10 +139,12 @@
             if (self.hasClass('on')) {
                 $(".good").each(function(){
                     var self = $(this);
-                    var num = parseInt(self.find(".playgood .goodnum").text());
-                    var goodprice = self.find("[goodprice]").attr("goodprice")*100;
-                    totalnum += num;
-                    totalprice += goodprice*num;
+                    if (self.find(".top_check").hasClass("on")) {
+                        var num = parseInt(self.find(".playgood .goodnum").text());
+                        var goodprice = self.find("[goodprice]").attr("goodprice")*100;
+                        totalnum += num;
+                        totalprice += goodprice*num;
+                    }
                 })
             }
             viewTotal();
@@ -213,15 +215,11 @@
                 if (self.is(".iconjian")) {
                     if (num > 1) {
                         num -= 1;
-                        totalnum -= 1;
-                        totalprice =totalprice - price*100;
                     }else{
                         self.parents(".good").remove();
                     }
                 }else if (self.is(".iconadd")) {
-                    totalnum += 1;
                     num += 1;
-                    totalprice =totalprice+ price*100;
                 }
                 parent.find(".goodnum").text(num);
             });
