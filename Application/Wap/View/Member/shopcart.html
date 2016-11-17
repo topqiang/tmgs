@@ -6,7 +6,7 @@
     			<span class="jiaob poab bgr colb fs12 textcen lh14">3</span>
     		</span>
         <span class="fr changeview toggle">编辑</span>
-        <span class="fr changeview toggle" style="display: none;">完成</span>
+        <span class="fr changeview toggle fini" style="display: none;">完成</span>
         <span>购物车</span>
     </header>
     <div class="content" style="padding: 50px 0px 110px;">
@@ -53,10 +53,22 @@
 
 <block name="script">
     <script type="text/javascript">
+        var cart_json = [];
+
         $(".changeview").on('click',function(){
             $(".toggle").toggle();
             viewTotal();
+            if ($(this).hasClass("fini")) {
+                requestUrl("{:U('Api/Cart/modifyCart')}",{"m_id":top_user.m_id,"cart_json":JSON.stringify(cart_json)},callback);
+            }
         });
+
+        function callback(res){
+            if (res.flag != "success") {
+                alert(res.message);
+            }
+        }
+
         $(".all").on('click',function(){
             var self = $(this);
             if (self.hasClass('on')) {
@@ -76,7 +88,7 @@
             if (res.flag == "success") {
                 var str = "";
                 for(var good of res.data.goods){
-                    str += '<div class="good bgb borb31">'
+                    str += '<div class="good bgb borb31" cart_id="'+good.cart_id+'">'
                                 +'<div class="top_check gleygood fl100"></div>'
                                 +'<div class="imgbag">'
                                     +'<img src="'+good.goods_pic+'" />'
@@ -147,9 +159,13 @@
         }
 
         function viewTotal(){
+            cart_json = [];
             $(".good").each(function(){
                 var self = $(this);
-                self.find("[carnum]").text(self.find(".playgood .goodnum").text());
+                var num = self.find(".playgood .goodnum").text();
+                var cart_id = self.attr("cart_id");
+                cart_json.push({"cart_id":cart_id,"num":num});
+                self.find("[carnum]").text(self.find( num );
             })
             $(".totalnum").text(totalnum);
             $(".totalprice").text(totalprice/100);
