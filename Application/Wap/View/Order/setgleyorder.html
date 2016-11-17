@@ -150,6 +150,7 @@
             };
 
             if (setobj.address_id && setobj.address_id != "") {
+                console.log(setobj);
                 requestUrl("{:U('Api/Order/cartOrder')}",setobj,function(res){
                     if (res.flag == "success") {
                         var order_list_sn = res.data.order_list_sn;
