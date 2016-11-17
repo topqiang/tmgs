@@ -11,65 +11,7 @@
     </header>
     <div class="content" style="padding: 50px 0px;">
         <div class="goodlist ovhid">
-            <div class="good bgb borb31">
-                <div class="imgbag">
-                    <img src="__IMG__/good.png" />
-                </div>
-                <div class="pad0-10">
-                    <div class="goodname fs16 lh20">
-                        法国AOC领衔红酒  意大利干红葡萄酒2支组合dfdsf
-                    </div>
-                    <div class="lh30 price fs14 colr">
-                        <div class="fr bor1b lh20 colbl mar5 pad0-20 borad4">删除</div>
-                        ￥<span class="fs16">550.00</span>
-                    </div>
-                </div>
-            </div>
 
-            <div class="good bgb borb31">
-                <div class="imgbag">
-                    <img src="__IMG__/good.png" />
-                </div>
-                <div class="pad0-10">
-                    <div class="goodname fs16 lh20">
-                        法国AOC领衔红酒  意大利干红葡萄酒2支组合dfdsf
-                    </div>
-                    <div class="lh30 price fs14 colr">
-                        <div class="fr bor1b lh20 colbl mar5 pad0-20 borad4">删除</div>
-                        ￥<span class="fs16">550.00</span>
-                    </div>
-                </div>
-            </div>
-
-            <div class="good bgb borb31">
-                <div class="imgbag">
-                    <img src="__IMG__/good.png" />
-                </div>
-                <div class="pad0-10">
-                    <div class="goodname fs16 lh20">
-                        法国AOC领衔红酒  意大利干红葡萄酒2支组合dfdsf
-                    </div>
-                    <div class="lh30 price fs14 colr">
-                        <div class="fr bor1b lh20 colbl mar5 pad0-20 borad4">删除</div>
-                        ￥<span class="fs16">550.00</span>
-                    </div>
-                </div>
-            </div>
-
-            <div class="good bgb borb31">
-                <div class="imgbag">
-                    <img src="__IMG__/good.png" />
-                </div>
-                <div class="pad0-10">
-                    <div class="goodname fs16 lh20">
-                        法国AOC领衔红酒  意大利干红葡萄酒2支组合dfdsf
-                    </div>
-                    <div class="lh30 price fs14 colr">
-                        <div class="fr bor1b lh20 colbl mar5 pad0-20 borad4">删除</div>
-                        ￥<span class="fs16">550.00</span>
-                    </div>
-                </div>
-            </div>
         </div>
     </div>
     </body>
@@ -77,8 +19,90 @@
 <block name="script">
     <script type="text/javascript" src="__JS__/touch.min.js"></script>
     <script type="text/javascript">
-        $(".borbtn").on('click',function(){
-            confirm("您确定要删除足迹吗？");
+        if (!top_user) getUserInfo("{:U('Member/login')}");
+        var flag= true;//防止ajax请求期间，对此触发请求数据
+        var viewType = "good";
+        var dataargs = {p:1,"m_id":top_user.m_id};
+        var link = '{:U("Goods/goodsinfo")}'+(top_user ? '&m_id='+top_user.m_id : '')+'&goods_id=';
+        //添加商品到列表
+        function putGoods(data,args) {
+            if(data.flag == 'success'){
+                var goods = data.data.goods;
+                if((!goods || goods.length == 0 ) && args == "fenye"){
+                    $(".content").append('<div class="textcen">没有更多了！</div>');
+                }else{
+                    var str ="";
+                    for(g in goods){
+                        str += '<div class="good bgb borb31">'
+                                +'<div class="imgbag">'
+                                    +'<img src="__IMG__/good.png" />'
+                                +'</div>'
+                                +'<div class="pad0-10">'
+                                    +'<div class="goodname fs16 lh20">'
+                                        +'法国AOC领衔红酒  意大利干红葡萄酒2支组合dfdsf'
+                                    +'</div>'
+                                    +'<div class="lh30 price fs14 colr">'
+                                        +'<div class="fr bor1b lh20 colbl mar5 pad0-20 borad4">删除</div>'
+                                        +'￥<span class="fs16">550.00</span>'
+                                    +'</div>'
+                                +'</div>'
+                            +'</div>';
+                    }
+                    if (args == "fenye") {
+                        $('.goodlist').append(str);
+                    }else{
+                        $('.goodlist').html(str);
+                    }
+                    flag = true;
+                    top_linkto();
+                }
+            }else{
+                alert(data.message);
+            }
+
+            if (args == "shouci") {
+                fenye();
+            }
+        }
+
+        
+
+        function getJson(args) {
+            console.log(dataargs);
+            $.ajax({
+                url: '{:U("Api/Index/newGoodsList")}',
+                type: 'POST',
+                dataType: 'JSON',
+                data: dataargs,
+                success : function(data){
+                    putGoods(data,args);
+                }
+            });
+        }
+
+        $(function(){
+            getJson("shouci");
         });
+        function fenye(){
+            var $_zd = $(".good").height();//获取每个单项的高度
+            var length = 3;//定义预加载的数量，提前三个加载数据
+            var $_par = $(".goodlist");//获取包裹容器
+            var winheight = $(window).height();//获取窗口高度
+            $(function(){
+                $(window).on("scroll",function(e){
+                    if(flag){
+                        var self = $(this);
+                        var scrtop = self.scrollTop() + winheight;
+                        var docheight = $_par.height();
+                        console.log(scrtop + "=" + docheight + "=" + $_zd);
+                        if(scrtop > docheight - ( length * $_zd ) ){
+                            flag = false;
+                            dataargs.p = dataargs.p +1;
+                            getJson("fenye");
+                        }
+                    }
+                });
+            });
+        }
     </script>
 </block>
