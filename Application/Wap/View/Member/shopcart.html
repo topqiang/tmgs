@@ -58,7 +58,7 @@
         $(".changeview").on('click',function(){
             $(".toggle").toggle();
             viewTotal();
-            if ($(this).hasClass("fini")) {
+            if ($(this).hasClass("fini") && cart_json.length > 0) {
                 requestUrl("{:U('Api/Cart/modifyCart')}",{"m_id":top_user.m_id,"cart_json":JSON.stringify(cart_json)},callback);
             }
         });
