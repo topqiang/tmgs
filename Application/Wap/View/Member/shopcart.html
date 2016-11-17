@@ -29,7 +29,7 @@
             <span class="colb fr bgyel pad0-10">移到收藏夹</span>
         </div>
 
-        <span class="gleygood disib all">全选</span>
+        <span class="gleygood disib all on">全选</span>
     </div>
     <footer class="bgz">
         <div linkto="{:U('Index/index')}">
@@ -89,7 +89,7 @@
                 var str = "";
                 for(var good of res.data.goods){
                     str += '<div class="good bgb borb31" cart_id="'+good.cart_id+'">'
-                                +'<div class="top_check gleygood fl100"></div>'
+                                +'<div class="top_check on gleygood fl100"></div>'
                                 +'<div class="imgbag">'
                                     +'<img src="'+good.goods_pic+'" />'
                                 +'</div>'
@@ -119,8 +119,11 @@
                                     +'</div>'
                                 +'</div>'
                             +'</div>';
+                            totalnum += parseInt(good.num);
+                            totalprice += good.num * good.price*100;
                 }
                 $(".goodlist").html(str);
+                viewTotal();
                 top_check();
                 clickEvent();
             }else{
