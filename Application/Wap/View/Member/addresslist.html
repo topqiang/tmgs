@@ -71,7 +71,14 @@
                     "address_id" : self.attr("addid")
                 };
                 sessionStorage.setItem("curaddress",JSON.stringify(curaddress));
-                window.location.href = "{:U('Order/setorder')}";
+                
+                var order = "{$_REQUEST['order']}";
+                if (order && order == "1") {
+                    window.location.href = "{:U('Order/setorder')}";
+                }else if (order == "2") {
+                    window.location.href = "{:U('Order/setgleyorder')}"; 
+                }
+
             });
         }
     </if>
