@@ -3,41 +3,52 @@
     <body>
     <header class="bgz colb">
         <span class="left"></span>
-        <span class="pfr mar10">添加</span>
+        <span class="pfr mar10" linkto="{:U('Member/addbank')}">添加</span>
         我的银行卡
     </header>
     <div class="content" style="padding-top: 50px;">
-        <div class="">
+        <div class="banklist">
 
-            <div class="pad0-20 borad4 bgb pore borb31">
-                <div class="lh14">
-    					<span class="fl mar10">
-    						<img src="__IMG__/ccb.png" class="mat10" style="height: 40px;"/>
-    					</span>
-                    <div class="lh20 pad10">
-                        <div class="">建设银行</div>
-                        <div class="cole fs14">尾号9070储蓄卡</div>
-                    </div>
-                </div>
-                <div class="poab colb cancel iconcancel borad4 fs12">取消关联</div>
-            </div>
-
-            <div class="pad0-20 borad4 bgb pore borb31">
-                <div class="lh14">
-    					<span class="fl mar10">
-    						<img src="__IMG__/ccb.png" class="mat10" style="height: 40px;"/>
-    					</span>
-                    <div class="lh20 pad10">
-                        <div class="">建设银行</div>
-                        <div class="cole fs14">尾号9070储蓄卡</div>
-                    </div>
-                </div>
-                <div class="poab colb cancel iconcancel borad4 fs12">取消关联</div>
-            </div>
         </div>
     </div>
     </body>
 </block>
 <block name="script">
+    <script type="text/javascript">
+    if (top_user) {
+        requestUrl("{:U('Api/MyWallet/myCardList')}",{m_id:top_user.m_id},viewAddList);
+    }else{
+        getUserInfo("{:U('Member/login')}");
+    }
+    function viewAddList(res) {
+        console.log(res);
+        if (res.flag == "success") {
+            var addList = res.data;
+            if ( addList.length > 0) {
+                viewAdd(addList);
+            }
+        }else{
+            alert(res.message);
+        }
+    }
 
+    function viewAdd(addressList){
+        var str = "";
+        for(var obj of addressList){
+            str += '<div class="pad0-20 borad4 bgb pore borb31" card_id="'+obj.card_id+'">'
+                '<div class="lh14">'
+                        +'<span class="fl mar10">'
+                            +'<img src="'+obj.bank_icon+'" class="mat10" style="height: 40px;"/>'
+                        +'</span>'
+                    +'<div class="lh20 pad10">'
+                        +'<div class="">'+obj.bank_name+'</div>'
+                        +'<div class="cole fs14">****'+obj.card_number+'</div>'
+                    +'</div>'
+                +'</div>'
+                +'<div class="poab colb cancel iconcancel borad4 fs12" id="'+obj.bank_id+'">取消关联</div>'
+            +'</div>';
+        }
+        $(".banklist").html(str);
+    }
+    </script>
 </block>
