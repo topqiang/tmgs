@@ -128,28 +128,6 @@
             self.toggleClass('on');
             viewTotal();
         });
-        
-        $(".playbtn [cart_id]").on('click',function(){
-            var self = $(this);
-            cart_json = [];
-            var cart_id = self.attr("cart_id");
-            cart_json.push({"cart_id":cart_id});
-            var data ={"m_id":top_user.m_id,"cart_json":JSON.stringify(cart_json)};
-            var url = "";
-            if (self.hasClass("icongdel")) {
-                url = "{:U('Api/Cart/cartdelete')}";
-            }else{
-                url = "{:U('Api/Cart/cartCollect')}";
-            }
-            requestUrl(url,data,function(res) {
-                if (res.flag != "success") {
-                    alert(res.message);
-                }else{
-                    self.parents(".good").remove();
-                    viewTotal();
-                }
-            });
-        });
 
         var totalprice = 0;
         var totalnum = 0;
@@ -221,6 +199,28 @@
                     num += 1;
                 }
                 parent.find(".goodnum").text(num);
+            });
+
+            $(".playbtn [cart_id]").on('click',function(){
+                var self = $(this);
+                cart_json = [];
+                var cart_id = self.attr("cart_id");
+                cart_json.push({"cart_id":cart_id});
+                var data ={"m_id":top_user.m_id,"cart_json":JSON.stringify(cart_json)};
+                var url = "";
+                if (self.hasClass("icongdel")) {
+                    url = "{:U('Api/Cart/cartdelete')}";
+                }else{
+                    url = "{:U('Api/Cart/cartCollect')}";
+                }
+                requestUrl(url,data,function(res) {
+                    if (res.flag != "success") {
+                        alert(res.message);
+                    }else{
+                        self.parents(".good").remove();
+                        viewTotal();
+                    }
+                });
             });
         }
 
