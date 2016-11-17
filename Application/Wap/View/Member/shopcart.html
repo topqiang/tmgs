@@ -147,6 +147,10 @@
         }
 
         function viewTotal(){
+            $(".good").each(function(){
+                var self = $(this);
+                self.find("[carnum]").text(self.find(".playgood .goodnum").text());
+            })
             $(".totalnum").text(totalnum);
             $(".totalprice").text(totalprice/100);
         }
