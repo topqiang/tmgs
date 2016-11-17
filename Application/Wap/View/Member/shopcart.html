@@ -64,7 +64,7 @@
         });
 
         function checkAfter(self){
-            var playgood = $(this).siblings(".playgood");
+            var playgood = self.siblings(".playgood");
             var num = parseInt(playgood.find(".goodnum").text());
             var goodprice = playgood.find("[goodprice]").attr("[goodprice]");
             if (!self.hasClass("on")) {
