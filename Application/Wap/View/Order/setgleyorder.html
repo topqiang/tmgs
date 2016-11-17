@@ -135,7 +135,7 @@
             var message_json = [];
             $(".merchant_id").each(function(){
                 var merchant_id = $(this).attr("merchant_id");
-                var message = $(this)find('.leave_msg').val();
+                var message = $(this).find('.leave_msg').val();
                 message_json.push({
                     "merchant_id" : merchant_id,
                     "message" :message
