@@ -32,18 +32,18 @@
                     $(".content").append('<div class="textcen">没有更多了！</div>');
                 }else{
                     var str ="";
-                    for(g in goods){
+                    for(var g of goods){
                         str += '<div class="good bgb borb31">'
                                 +'<div class="imgbag">'
-                                    +'<img src="__IMG__/good.png" />'
+                                    +'<img src="'+g.goods_pic+'" />'
                                 +'</div>'
                                 +'<div class="pad0-10">'
                                     +'<div class="goodname fs16 lh20">'
-                                        +'法国AOC领衔红酒  意大利干红葡萄酒2支组合dfdsf'
+                                        +g.goods_name
                                     +'</div>'
                                     +'<div class="lh30 price fs14 colr">'
                                         +'<div class="fr bor1b lh20 colbl mar5 pad0-20 borad4">删除</div>'
-                                        +'￥<span class="fs16">550.00</span>'
+                                        +'￥<span class="fs16">'+g.price+'</span>'
                                     +'</div>'
                                 +'</div>'
                             +'</div>';
@@ -70,7 +70,7 @@
         function getJson(args) {
             console.log(dataargs);
             $.ajax({
-                url: '{:U("Api/Index/newGoodsList")}',
+                url: '{:U("Api/Pug/pugList")}',
                 type: 'POST',
                 dataType: 'JSON',
                 data: dataargs,
