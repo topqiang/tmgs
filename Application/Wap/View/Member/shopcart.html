@@ -82,6 +82,21 @@
             }
         });
 
+        $(".collall").on('click',function(){
+            var top_check = $(".good .top_check.on");
+            if (top_check.size() > 0) {
+                cart_json = [];
+                top_check.each(function(){
+                    cart_json.push({"cart_id":$(this).parent().attr("cart_id")});
+                });
+                requestUrl("{:U('Api/Cart/cartCollect')}",{"m_id":top_user.m_id,"cart_json":JSON.stringify(cart_json)},function(res) {
+                    alert(res.message);
+                });
+            }else{
+                alert("请选中商品！");
+            }
+        });
+
         function callback(res){
             if (res.flag != "success") {
                 alert(res.message);
