@@ -18,6 +18,8 @@ function top_linkto(){
 			var hostname = getRootPath();
 			url = hostname + url;
 			window.location.href = url;
+		}else if( url.indexOf("tel:") == 0){
+			window.location.href = url;
 		}else if( url.indexOf("javascript:") == 0){
 			var start = url.indexOf(":");
 			var str = url.substring(start+1);
