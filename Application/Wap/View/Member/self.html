@@ -11,7 +11,7 @@
         </div>
     </header>
     <div class="content" style="padding: 50px 0px 60px;">
-        <div class="selftop bgb pad20 borb31 ovhid lh50">
+        <div class="selftop bgb pad20 borb31 ovhid lh50" linkto="{:U('Member/selfinfo')}">
             <div class="fr fs14">
                 <span class="right fr mat15"></span>
                 <span class="">个人资料</span>
@@ -23,19 +23,19 @@
             </div>
         </div>
         <div class="lines">
-            <div class="icondd">
+            <div class="icondd" linkto="{:U('Order/orderlist')}">
                 <span class="right fr mat15"></span>我的订单
             </div>
         </div>
 
         <div class="line">
-            <div class="iconqb"><span class="right fr mat15"></span>我的钱包</div>
-            <div class="icondz"><span class="right fr mat15"></span>收货地址</div>
-            <div class="iconpj"><span class="right fr mat15"></span>我的评价</div>
-            <div class="iconzj"><span class="right fr mat15"></span>我的足迹</div>
+            <div class="iconqb" linkto="{:U('Member/mywallet')}"><span class="right fr mat15"></span>我的钱包</div>
+            <div class="icondz" linkto="{:U('Member/addresslist')}"><span class="right fr mat15"></span>收货地址</div>
+            <div class="iconpj" linkto="{:U('Order/ratelist')}"><span class="right fr mat15"></span>我的评价</div>
+            <div class="iconzj" linkto="{:U('')}"><span class="right fr mat15"></span>我的足迹</div>
         </div>
         <div class="line">
-            <div class="iconyq"><span class="right fr mat15"></span>邀请人数</div>
+            <div class="iconyq" linkto="{:U('Member/mylevel')}><span class="right fr mat15"></span>邀请人数</div>
             <div class="iconfx"><span class="right fr mat15"></span>分享赚钱</div>
         </div>
         <div class="line">
@@ -47,7 +47,7 @@
             <div class="iconbz"><span class="right fr mat15"></span>帮助中心</div>
         </div>
     </div>
-    <div class="disib gohead">
+    <div class="disib gohead" linkto="{:U('IntegralMall/getgift')}">
         <img src="__IMG__/iconhongbao.png" />
     </div>
 
@@ -76,6 +76,6 @@
         if (!top_user)getUserInfo("{:U('Member/login')}");
         $(".nickname").text(top_user.nickname);
         $(".hearder").attr("src",top_user.head_pic);
-        
+
     </script>
 </block>
