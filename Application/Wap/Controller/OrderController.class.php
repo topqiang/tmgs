@@ -17,6 +17,15 @@ class OrderController extends BaseController
     }
 
     /**
+     * 我的评价列表
+     */
+    public function myrate()
+    {
+        $this->display();
+    }
+
+
+    /**
      * 提交订单
      */
     public function setOrder()

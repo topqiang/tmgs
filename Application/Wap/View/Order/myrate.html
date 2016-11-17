@@ -1,0 +1,155 @@
+<extend name="Public/base" />
+<block name="main">
+    <body>
+    <header class="bgz colb">
+        <span class="left" linkto="javascript:history.go(-1)"></span>
+        我的评价
+    </header>
+    <div class="content" style="padding-top: 50px;">
+        <div class="pad10-20 bgb">
+            <div class="lh40">商品评价（<span class="count"></span>）</div>
+            <div class="fs14 lh20 ratelevel">
+                <span class="mar20 bgc borad4 top_radio" type="1">好评（<a class="count1"></a>）</span>
+                <span class="mar20 bgc borad4 top_radio on" type="2">中评（<a class="count2"></a>）</span>
+                <span class="mar20 bgc borad4 top_radio" type="3">差评（<a class="count3"></a>）</span>
+            </div>
+            <div class="ratelist"></div>
+            <!--<div class="textcen pad10">
+                <span class="pad5-10 lh30 bor1b colbl borad4">查看全部评价</span>
+            </div>-->
+
+        </div>
+
+    </div>
+    </body>
+</block>
+<block name="script">
+    <script>
+        if (!top_user) getUserInfo("{:U('Member/login')}");
+        var flag= true;//防止ajax请求期间，对此触发请求数据
+        var dataargs = {p:1,m_id:top_user.m_id,type:4};
+        console.log(typeof top_user);
+        if (top_user) {
+            dataargs.m_id = top_user.m_id;
+        }else{
+            getUserInfo("{:U('Member/login')}");
+        }
+        //添加评价到列表
+        function putGoods(data,args) {
+            if(data.flag == 'success'){
+                var evaluate = data.data.evaluate;
+                if((!evaluate || evaluate.length == 0 ) && args == "fenye"){
+                    $(".content").append('<div class="textcen">没有更多了！</div>');
+                }else{
+                    var str ="";
+                    for(var cur of evaluate){
+                        str += '<div class="mat10 rate borb31">'
+                            +'<div class="lh40 usinfo">'
+                                +'<span class="fr colbl">'+getRank(cur.rank)+'</span>'
+                                +'<img src="'+cur.head_pic+'" />'
+                                +'<span class="">'+cur.nickname+'</span>'
+                            +'</div>'
+                            +'<div class="lh20 fs14 ma5-0">'
+                            +cur.review
+                            +'</div>'
+                            +getImg(cur.evaluate_pic)
+                            +'<div class="cole">'
+                                +'<span class="fs14 cole fr">'+cur.evaluate_time+'</span>'
+                                +'<span class="mar10">'+cur.goods_attr+'</span>'
+                            +'</div>'
+                        +'</div>';
+                    }
+                    if (args == "fenye") {
+                        $('.ratelist').append(str);
+                    }else{
+                        $('.ratelist').html(str);
+                    }
+                    flag = true;
+                }
+            }else{
+                alert(data.message);
+            }
+
+            if (args == "shouci") {
+                $(".count").text(data.data.count);
+                $(".count1").text(data.data.count1);
+                $(".count2").text(data.data.count2);
+                $(".count3").text(data.data.count3);
+                fenye();
+            }
+        }
+        function getImg(hpic){
+            if (hpic) {
+                var src = '<div class="rateimg">';
+                for(var key in hpic){
+                    var pic = hpic[key];
+                    src += '<img src="'+pic.pic+'"/>';
+                }
+                src += '</div>';
+                return src;
+            }else{
+                return "";
+            }
+        }
+
+        function getRank(type){
+            switch (type){
+                case "1":
+                return "好评";
+                break;
+                case "2":
+                return "中评";
+                break;
+                case "3":
+                return "差评";
+                break;
+            }
+        }
+        //筛选
+        function radioAfter(self){
+            if (self.hasClass("on")) {
+                dataargs.type = self.attr("type");
+            }
+            dataargs.p = 1;
+            getJson("shouci");
+        }
+
+
+        function getJson(args) {
+            $.ajax({
+                url: '{:U("Api/Evaluate/myEvaluationList")}',
+                type: 'POST',
+                dataType: 'JSON',
+                data: dataargs,
+                success : function(data){
+                    putGoods(data,args);
+                }
+            });
+        }
+        $(function(){
+            getJson("shouci");
+        });
+        function fenye(){
+            var $_zd = $(".rate").height();//获取每个单项的高度
+            var length = 3;//定义预加载的数量，提前三个加载数据
+            var $_par = $(".ratelist");//获取包裹容器
+            var winheight = $(window).height();//获取窗口高度
+            $(function(){
+                $(window).on("scroll",function(e){
+                    if(flag){
+                        var self = $(this);
+                        var scrtop = self.scrollTop() + winheight;
+                        var docheight = $_par.height();
+                        console.log(scrtop + "=" + docheight + "=" + $_zd);
+                        if(scrtop > docheight - ( length * $_zd ) ){
+                            flag = false;
+                            dataargs.p = dataargs.p +1;
+                            getJson("fenye");
+                        }
+                    }
+                });
+            });
+        }
+    </script>
+
+</block>
