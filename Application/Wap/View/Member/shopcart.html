@@ -63,6 +63,23 @@
             }
         });
 
+        function checkAfter(self){
+            if (!self.hasClass("on")) {
+                $(".all").removeClass("on");
+            }
+            totalnum = 0;
+            totalprice = 0;
+
+            $(".good top_check.on").parent().each(function(){
+                var self = $(this);
+                var num = parseInt(self.find(".playgood .goodnum").text());
+                var goodprice = self.find("[goodprice]").attr("goodprice")*100;
+                totalnum += num;
+                totalprice += goodprice*num;
+            })
+            viewTotal();
+        }
+
         $(".delall").on('click',function(){
             var top_check = $(".good .top_check.on");
             if (top_check.size() > 0) {
@@ -74,7 +91,7 @@
                     if (res.flag != "success") {
                         alert(res.message);
                     }else{
-                        top_check.parent().remove();
+                        location.reload();
                     }
                 });
             }else{
@@ -90,7 +107,12 @@
                     cart_json.push({"cart_id":$(this).parent().attr("cart_id")});
                 });
                 requestUrl("{:U('Api/Cart/cartCollect')}",{"m_id":top_user.m_id,"cart_json":JSON.stringify(cart_json)},function(res) {
-                    alert(res.message);
+                    if (res.flag != "success") {
+                        alert(res.message);
+                    }else{
+                        alert(res.message);
+                        location.reload();
+                    }
                 });
             }else{
                 alert("请选中商品！");
@@ -101,6 +123,7 @@
             if (res.flag != "success") {
                 alert(res.message);
             }
+
         }
 
         $(".all").on('click',function(){
