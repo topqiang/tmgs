@@ -64,8 +64,16 @@
         });
 
         function checkAfter(self){
+            var playgood = $(this).siblings(".playgood");
+            var num = parseInt(playgood.find(".goodnum").text());
+            var goodprice = playgood.find("[goodprice]").attr("[goodprice]");
             if (!self.hasClass("on")) {
                 $(".all").removeClass("on");
+                totalnum -= num;
+                totalprice -= goodprice*num;
+            }else{
+                totalnum += num;
+                totalprice += goodprice*num;
             }
             viewTotal();
         }
