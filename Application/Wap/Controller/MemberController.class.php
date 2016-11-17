@@ -221,6 +221,12 @@ class MemberController extends BaseController
         $this->display();
     }
 
+
+    public function myinvite()
+    {
+        $this->display();
+    }
+
     /**
      * 推广获得收益
      */
