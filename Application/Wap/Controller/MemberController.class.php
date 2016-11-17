@@ -190,6 +190,14 @@ class MemberController extends BaseController
     }
 
     /**
+     * 提现
+     */
+    public function tixian()
+    {
+        $this->display();
+    }
+
+    /**
      * 账单明细
      */
     public function transaction()

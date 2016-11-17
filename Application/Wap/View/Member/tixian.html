@@ -1,0 +1,35 @@
+<extend name="Public/base" />
+<block name="main">
+    <body>
+    <header class="bgz colb">
+        <span class="left"></span>
+        提现
+    </header>
+
+    <div class="content" style="padding-top: 50px;">
+        <div class="formline" style="padding: 20px 10px;">
+            <div class="pore">
+                <span class="fr right mat15"></span>
+                <span class="fr mar5" ele="paytype">微信充值</span>
+                <span class="">选择提现银行卡</span>
+                <select class="poab selpstime" forele="paytype">
+                    <option>微信充值</option>
+                    <option>支付宝充值</option>
+                    <option>建设银行（尾号9070）</option>
+                </select>
+            </div>
+        </div>
+        <div class="formline mat10">
+            <div class="pad0-20">
+                <span class="disib" style="width: 100px;">金额：</span>
+                <input type="text" placeholder="可提现金额：￥50.00"/>
+            </div>
+        </div>
+        <div class="big-btn bgz mat30">确定</div>
+    </div>
+    </body>
+</block>
+<block name="script">
+    <script type="text/javascript" src="__JS__/touch.min.js"></script>
+
+</block>
