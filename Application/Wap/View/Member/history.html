@@ -70,10 +70,15 @@
         function delhis(){
             $(".delhis").on('click',function(){
                 if (confirm("确定要删除吗？")) {
+                    var self = $(this);
                     var pug_id = $(this).attr("id");
                     requestUrl("{:U('Api/Pug/deletePug')}",{"m_id":top_user.m_id,"pug_id":pug_id},function(res) {
                         if (res.flag == "success") {
-                            location.reload();
+                            if (pug_id) {
+                                self.parents(".good").remove();
+                            }else{
+                                $(".good").remove();
+                            }
                         }else{
                             alert(res.message);
                         }
