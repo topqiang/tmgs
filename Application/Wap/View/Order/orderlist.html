@@ -7,112 +7,214 @@
     <div class="content" style="padding-top: 50px;">
 
         <div class="shopbar fs14">
-            <div class="on">全部</div>
-            <div>待支付</div>
-            <div>待发货</div>
-            <div>待收货</div>
-            <div>待评价</div>
+            <div class="on" type="8">全部</div>
+            <div type="0">待支付</div>
+            <div type="2">待发货</div>
+            <div type="3">待收货</div>
+            <div type="4">待评价</div>
+        </div>
+        <div class="olist">
         </div>
 
-        <div class="order mat5 bgb ovhid">
-            <div class="lh40 bgb pad0-20 fs14 cole">
-                <span class="fr colbl">待发货</span>
-                <span class="">MEAKU时尚男装</span>
-                <span class="right mat10"></span>
-            </div>
-            <div>
-                <div class="good bgf pad10">
-                    <div class="imgbag">
-                        <img src="__IMG__/good.png" />
-                    </div>
-                    <div class="pad0-10">
-                        <div class="goodname fs14">
-                            法国AOC领衔红酒  意大利干红葡萄酒2支组合
-                        </div>
-                        <div class="cole fs12">
-                            <span class="mar20">颜色分类：灰色</span>
-                            <span>尺码：175</span>
-                        </div>
-                        <div class="lh30 price fs14 colr">
-                            <span class="colz fr">X1</span>
-                            ￥<span class="fs16 mar10">550.00</span>
-                            <span class="fs12">消费返利：￥6.00</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="lh40 textrig fs14 cole bgb borb31">
-                <span class="mar10">共1件商品</span>
-                <span class="">合计:<font class="fs16">￥375.00</font></span>
-            </div>
-
-            <div class="lh25 pad10 textrig">
-                <span class="disib bor1b colbl borad4 pad0-10">取消订单</span>
-            </div>
-        </div>
-
-
-        <div class="order mat5 bgb ovhid">
-            <div class="lh40 bgb pad0-20 fs14 cole">
-                <span class="fr colbl">待收货</span>
-                <span class="">MEAKU时尚男装</span>
-                <span class="right mat10"></span>
-            </div>
-            <div class="ogoodlist">
-                <div class="good bgf pad10">
-                    <div class="imgbag">
-                        <img src="__IMG__/good.png" />
-                    </div>
-                    <div class="pad0-10">
-                        <div class="goodname fs14">
-                            法国AOC领衔红酒  意大利干红葡萄酒2支组合
-                        </div>
-                        <div class="cole fs12">
-                            <span class="mar20">颜色分类：灰色</span>
-                            <span>尺码：175</span>
-                        </div>
-                        <div class="lh30 price fs14 colr">
-                            <span class="colz fr">X1</span>
-                            ￥<span class="fs16 mar10">550.00</span>
-                            <span class="fs12">消费返利：￥6.00</span>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="good bgf pad10">
-                    <div class="imgbag">
-                        <img src="__IMG__/good.png" />
-                    </div>
-                    <div class="pad0-10">
-                        <div class="goodname fs14">
-                            法国AOC领衔红酒  意大利干红葡萄酒2支组合
-                        </div>
-                        <div class="cole fs12">
-                            <span class="mar20">颜色分类：灰色</span>
-                            <span>尺码：175</span>
-                        </div>
-                        <div class="lh30 price fs14 colr">
-                            <span class="colz fr">X1</span>
-                            ￥<span class="fs16 mar10">550.00</span>
-                            <span class="fs12">消费返利：￥6.00</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="lh40 textrig fs14 cole bgb borb31">
-                <span class="mar10">共1件商品</span>
-                <span class="">合计:<font class="fs16">￥375.00</font></span>
-            </div>
-
-            <div class="lh25 pad10 textrig">
-                <span class="disib bor1b colbl borad4 pad0-10">物流详情</span>
-                <span class="disib bor1b colbl borad4 pad0-10">确认收货</span>
-            </div>
-        </div>
-
+        
     </div>
     </body>
 </block>
 <block name="script">
+    <script type="text/javascript">
+        if (!top_user) getUserInfo("{:U('Member/login')}");
+        var dataargs = {type:8,p:1,m_id: top_user.m_id};
+        //添加商品到列表
+        function putGoods(data,args) {
+            if(data.flag == 'success'){
+                var orders = data.data.order;
+                if((!orders || orders.length == 0 )&& args == "fenye"){
+                    $(".content").append('<div class="textcen">没有更多了！</div>');
+                }else{
+                    var str ="";
+                    for(var order of orders){
+                        str += '<div class="order mat5 bgb ovhid">'
+                            +'<div class="lh40 bgb pad0-20 fs14 cole">'
+                                +'<span class="fr colbl">'+getType(order.status)+'</span>'
+                                +'<span class="">'+order.merchant_name+'</span>'
+                                +'<span class="right mat10"></span>'
+                            +'</div>'
+                            +'<div class="ogoodlist">';
+                            for(var good of order.goods_list){
+                                str += '<div class="good bgf pad10">'
+                                            +'<div class="imgbag">'
+                                                +'<img src="'+good.goods_pic+'" />'
+                                            +'</div>'
+                                            +'<div class="pad0-10">'
+                                                +'<div class="goodname fs14">'
+                                                    +good.goods_name
+                                                +'</div>'
+                                                +'<div class="cole fs12">'
+                                                    +'<span class="mar20">'+good.attr_con_name+'</span>'
+                                                +'</div>'
+                                                +'<div class="lh30 price fs14 colr">'
+                                                    +'<span class="colz fr">X'+good.num+'</span>'
+                                                    +'￥<span class="fs16 mar10">'+good.price+'</span>'
+                                                    +'<span class="fs12">消费返利：￥'+good.return_price+'</span>'
+                                                +'</div>'
+                                            +'</div>'
+                                        +'</div>';
+                            }
 
+                           str += '</div>'
+                            +'<div class="lh40 textrig fs14 cole bgb borb31">'
+                                +'<span class="mar10">共'+order.goods_num+'件商品</span>'
+                                +'<span class="">合计:<font class="fs16">￥'+order.totalprice+'</font></span>'
+                            +'</div>'
+
+                            +'<div class="lh25 pad10 textrig">'
+                                +getBtn(order.status)
+                            +'</div>'
+                        +'</div>';
+                    }
+                    if (args == "fenye") {
+                        $('.olist').append(str);
+                    }else{
+                        $('.olist').html(str);
+                    }
+                    top_linkto();
+                }
+            }else{
+                 alert(data.message);
+            }
+
+            if (args == "shouci") {
+                fenye();
+            }
+        }
+
+        function getJson(args) {
+            console.log(dataargs);
+            $.ajax({
+                url: '{:U("Api/Order/orderList")}',
+                type: 'POST',
+                dataType: 'JSON',
+                data: dataargs,
+                success : function(data){
+                    putGoods(data,args);
+                }
+            });
+        }
+
+        function getBtn(status,city_order_id) {
+            var str = "";
+            switch (status){
+                case "0":
+                str = '<span class="borbtnh fr mat10 fs12 mar10" onclick="updOrderType('+status+','+city_order_id+')">立即付款</span><span class="borbtnh fr mat10 fs12 mar10" onclick="updOrderType('+2+','+city_order_id+')">取消订单</span>';
+                break;
+                case "1":
+                str = '<span class="borbtnh fr mat10 fs12 mar10" onclick="updOrderType('+status+','+city_order_id+')">申请退款</span>';
+                break;
+                case "2":
+                str = '<span class="borbtnh fr mat10 fs12 mar10" onclick="updOrderType('+status+','+city_order_id+')">取消申请</span>';
+                break;
+                case "3":
+                str = '<span class="borbtnh fr mat10 fs12 mar10" onclick="updOrderType('+status+','+city_order_id+')">删除订单</span>';
+                break;
+                case "5":
+                str = '<span class="borbtnh fr mat10 fs12 mar10" onclick="updOrderType('+status+','+city_order_id+')">立即评价</span>';
+                break;
+                case "6":
+                str = '<span class="borbtnh fr mat10 fs12 mar10" onclick="updOrderType('+3+','+city_order_id+')">删除订单</span>';
+                break;
+            }
+            return str;
+        }
+
+
+        function updOrderType(status,city_order_id){
+            console.log(status+"==="+city_order_id);
+            var data = {
+                "m_id" : dataargs.m_id,
+                "city_order_id" : city_order_id
+            };
+            if (status == "0") {
+                window.location.href = "{:U('Merchant/paytype')}&m_id="+dataargs.m_id+"&city_order_id="+city_order_id;
+            }else if (status == "1") {
+                var flag = confirm("你确认取消订单吗？");
+                if (flag) {
+                    requestUrl("{:U('Api/CityOrder/applyCancel')}",data);
+                }
+            }else if (status == "2") {
+                var flag = confirm("你确认撤销取消订单吗？");
+                if (flag) {
+                    requestUrl("{:U('Api/CityOrder/cancelApply')}",data);
+                }
+            }else if (status == "3") {
+                var flag = confirm("删除后，将再也看不到该订单了哦！");
+                if (flag) {
+                    requestUrl("{:U('Api/CityOrder/deleteOrder')}",data);
+                }
+            }
+            else if (status == "5") {
+                window.location.href = "{:U('Order/addCityComment')}&m_id="+dataargs.m_id+"&city_order_id="+city_order_id;
+            }
+        }
+
+        function getType(status){
+            var str = "";
+            switch (status){
+                case "0":
+                str = '待付款';
+                break;
+                case "1":
+                str = '已支付';
+                break;
+                case "2":
+                str = '退款中';
+                break;
+                case "3":
+                str = '已退款';
+                break;
+                case "5":
+                str = '已使用';
+                break;
+                case "6":
+                str = '已完成';
+                break;
+            }
+            return str;
+        }
+
+        function radioAfter(self) {
+            var type = self.attr("type");
+            if (type != "") {
+                dataargs.type=type;
+                dataargs.p = 1;
+                getJson();
+            }
+        }
+        
+        $(function(){
+            getJson("shouci");
+        });
+        function fenye(){
+            var flag= true;//防止ajax请求期间，对此触发请求数据
+            var $_zd = $(".order").height();//获取每个单项的高度
+            var length = 3;//定义预加载的数量，提前三个加载数据
+            var $_par = $(".olist");//获取包裹容器
+            var winheight = $(window).height();//获取窗口高度
+            var curpage = 1;//存储当前的页数v
+            $(function(){
+                $(window).on("scroll",function(e){
+                    if(flag){
+                        var self = $(this);
+                        var scrtop = self.scrollTop() + winheight;
+                        var docheight = $_par.height();
+                        console.log(scrtop + "=" + docheight + "=" + $_zd);
+                        if(scrtop > docheight - ( length * $_zd ) ){
+                            flag = false;
+                            dataargs.p = dataargs.p +1;
+                            getJson("fenye");
+                        }
+                    }
+                });
+            });
+        }
+    </script>
 </block>
