@@ -25,8 +25,8 @@
 				</span>
         </div>
         <div class="toggle fr" style="display:none;">
-            <span class="bgbtn colb fr pad0-20">删除</span>
-            <span class="colb fr bgyel pad0-10">移到收藏夹</span>
+            <span class="bgbtn colb fr pad0-20 delall">删除</span>
+            <span class="colb fr bgyel pad0-10 collall">移到收藏夹</span>
         </div>
 
         <span class="gleygood disib all on">全选</span>
@@ -60,6 +60,25 @@
             viewTotal();
             if ($(this).hasClass("fini")) {
                 requestUrl("{:U('Api/Cart/modifyCart')}",{"m_id":top_user.m_id,"cart_json":JSON.stringify(cart_json)},callback);
+            }
+        });
+
+        $(".delall").on('click',function(){
+            var top_check = $(".good .top_check.on");
+            if (top_check.size() > 0) {
+                cart_json = [];
+                top_check.each(function(){
+                    cart_json.push({"cart_id":$(this).parent().attr("cart_id")});
+                });
+                requestUrl("{:U('Api/Cart/cartdelete')}",{"m_id":top_user.m_id,"cart_json":JSON.stringify(cart_json)},function(res) {
+                    if (res.flag != "success") {
+                        alert(res.message);
+                    }else{
+                        top_check.parent().remove();
+                    }
+                });
+            }else{
+                alert("请选中商品！");
             }
         });
 
