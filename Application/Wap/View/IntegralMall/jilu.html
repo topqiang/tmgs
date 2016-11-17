@@ -1,0 +1,60 @@
+<extend name="Public/base" />
+<block name="main">
+    <body>
+    <header class="bgz colb">
+        <span class="left"></span>
+        <span class="">兑换记录</span>
+    </header>
+    <div class="content" style="padding: 50px 0px;">
+        <div class="goodlist ovhid">
+            
+        </div>
+    </div>
+    </body>
+</block>
+<block name="script">
+    <script type="text/javascript" src="__JS__/touch.min.js"></script>
+    <script type="text/javascript">
+    if (top_user) {
+        requestUrl("{:U('Api/MerActive/integralLog')}",{m_id:top_user.m_id},viewAddList);
+    }else{
+        getUserInfo("{:U('Member/login')}");
+    }
+    function viewAddList(res) {
+        console.log(res);
+        if (res.flag == "success") {
+            var addList = res.data;
+            if ( addList.length > 0) {
+                viewAdd(addList);
+            }
+            $(".myfen").text(res.data.intrgral_balance);
+        }else{
+            alert(res.message);
+        }
+    }
+
+    function viewAdd(addressList){
+        var str = "";
+        for(var obj of addressList){
+            str += '<div class="good bgb">'
+                +'<div class="imgbag" linkto="goodinfo.html">'
+                    +'<img src="'+obj.pic+'" />'
+                +'</div>'
+                +'<div class="pad0-10">'
+                    +'<div class="goodname lh20" linkto="goodinfo.html">'
+                        +obj.goods_name
+                    +'</div>'
+                    +'<div class="lh30 price fs14">'
+                        +'<div class="fr mar5 cole">'+obj.create_time+'</div>'
+                        +'积分：<span class="fs16 colr">'+obj.integral+'</span>'
+                    +'</div>'
+                +'</div>'
+            +'</div>';
+        }
+        $(".goodlist").html(str);
+        clickEvent();
+    }
+
+    </script>
+
+</block>

@@ -25,6 +25,15 @@ class IntegralMallController extends BaseController
     }
 
     /**
+     * 兑换记录
+     */
+    public function jilu()
+    {
+        $this->display();
+    }
+
+
+    /**
      * 签到
      */
     public function arriveat()
