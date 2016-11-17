@@ -10,7 +10,7 @@
             <div class="lh40">商品评价（<span class="count"></span>）</div>
             <div class="fs14 lh20 ratelevel">
                 <span class="mar20 bgc borad4 top_radio" type="1">好评（<a class="count1"></a>）</span>
-                <span class="mar20 bgc borad4 top_radio on" type="2">中评（<a class="count2"></a>）</span>
+                <span class="mar20 bgc borad4 top_radio" type="2">中评（<a class="count2"></a>）</span>
                 <span class="mar20 bgc borad4 top_radio" type="3">差评（<a class="count3"></a>）</span>
             </div>
             <div class="ratelist"></div>
@@ -46,8 +46,8 @@
                         str += '<div class="mat10 rate borb31">'
                             +'<div class="lh40 usinfo">'
                                 +'<span class="fr colbl">'+getRank(cur.rank)+'</span>'
-                                +'<img src="'+cur.head_pic+'" />'
-                                +'<span class="">'+cur.nickname+'</span>'
+                                +'<img src="'+cur.merchant_head_pic+'" />'
+                                +'<span class="">'+cur.merchant_name+'</span>'
                             +'</div>'
                             +'<div class="lh20 fs14 ma5-0">'
                             +cur.review
@@ -55,7 +55,7 @@
                             +getImg(cur.evaluate_pic)
                             +'<div class="cole">'
                                 +'<span class="fs14 cole fr">'+cur.evaluate_time+'</span>'
-                                +'<span class="mar10">'+cur.goods_attr+'</span>'
+                                +'<span class="mar10">'+cur.goods_name+'</span>'
                             +'</div>'
                         +'</div>';
                     }
