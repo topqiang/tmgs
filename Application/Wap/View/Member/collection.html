@@ -67,7 +67,7 @@
                                         +'</span>'
                                     +'</div>'
                                     +'<div>'
-                                        +'<div class="fr borbtn lh14 colz mar5 iconcancel" goodid="'+goods[g]['goods_id']+'">取消收藏</div>'
+                                        +'<div class="fr borbtn lh14 colz mar5 iconcan" goodid="'+goods[g]['goods_id']+'">取消收藏</div>'
                                     +'</div>'
                                 +'</div>'
                             +'</div>';
@@ -130,7 +130,7 @@
 
 
         function clickEvent(){
-            $(".iconcancel").on('click',function() {
+            $(".iconcan").on('click',function() {
                var flag = confirm("您确定要取消收藏吗？");
                var self = $(this);
                if ( flag ) {
