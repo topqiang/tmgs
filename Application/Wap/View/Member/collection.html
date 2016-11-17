@@ -67,7 +67,7 @@
                                         +'</span>'
                                     +'</div>'
                                     +'<div>'
-                                        +'<div class="fr borbtn lh14 colz mar5" goodid="'+goods[g]['goods_id']+'">取消收藏</div>'
+                                        +'<div class="fr borbtn lh14 colz mar5 iconcancel" goodid="'+goods[g]['goods_id']+'">取消收藏</div>'
                                     +'</div>'
                                 +'</div>'
                             +'</div>';
@@ -77,6 +77,7 @@
                     }else{
                         $('.goodlist').html(str);
                     }
+                    clickEvent();
                     flag = true;
                 }
             }else{
@@ -127,5 +128,26 @@
             });
         }
 
+
+        function clickEvent(){
+            $(".iconcancel").on('click',function() {
+               var flag = confirm("您确定要取消收藏吗？");
+               var self = $(this);
+               if ( flag ) {
+                var goods_id = self.attr("goodid");
+                var data = {
+                    "m_id" : top_user.m_id,
+                    "goods_id" : goods_id
+                };
+                requestUrl("{:U('Api/Collect/exitCollectGoods')}",data,function(res) {
+                    if (res.flag == "success") {
+                        self.parents(".good").remove();
+                    }else{
+                        alert(res.message);
+                    }
+                })
+               } 
+            });
+        }
     </script>
 </block>
