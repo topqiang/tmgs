@@ -3,9 +3,9 @@
     <body>
     <header class="bgz colb">
         <span class="iconset poab"></span>
-	    		<span class="pfr local pfr">
-	    			<span class="jiaob poab bgr colb fs12 textcen lh14">3</span>
-	    		</span>
+    		<span class="pfr local pfr">
+    			<span class="jiaob poab bgr colb fs12 textcen lh14">3</span>
+    		</span>
         <div class="">
             我的
         </div>
@@ -17,8 +17,8 @@
                 <span class="">个人资料</span>
             </div>
             <div class="fl">
-                <img src="__IMG__/header.png" class="hearder"/>
-                <span>品牌餐厅</span>
+                <img src="" class="hearder"/>
+                <span class="nickname"></span>
                 <img src="__IMG__/levela.png" class="ulevel mat15"/>
             </div>
         </div>
@@ -72,4 +72,10 @@
 </block>
 <block name="script">
     <script type="text/javascript" src="__JS__/touch.min.js"></script>
+    <script>
+        if (!top_user)getUserInfo("{:U('Member/login')}");
+        $(".nickname").text(top_user.nickname);
+        $(".hearder").attr("src",top_user.head_pic);
+        
+    </script>
 </block>
