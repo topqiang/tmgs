@@ -10,20 +10,32 @@
     <div class="content" style="padding-top: 50px;">
         <div class="bgb pad20 lh40">
             <div class="iconyueh">余额</div>
-            <div class="colr fs24">￥100.00</div>
+            <div class="colr fs24">￥<span class="yue"></span></div>
         </div>
         <div class="bgb pad20 lh40 mat10">
             <div class="iconjs">结算中余额</div>
-            <div class="cole fs24">￥6.00</div>
+            <div class="cole fs24">￥<span class="djs"></span></div>
         </div>
         <div class="line mat10">
-            <div class="iconchz">充值</div>
-            <div class="icontx">提现</div>
-            <div class="iconmx">账单明细</div>
+            <div class="iconchz" linkto="{:U('Member/')}">充值</div>
+            <div class="icontx" linkto="{:U('Member/recharge')}">提现</div>
+            <div class="iconmx" linkto="{:U('Member/transaction')}">账单明细</div>
         </div>
     </div>
     </body>
 </block>
 <block name="script">
     <script type="text/javascript" src="__JS__/touch.min.js"></script>
+    <script type="text/javascript">
+        if (!top_user)getUserInfo("{:U('Member/login')}");
+        requestUrl("{:U('Api/MyWallet/myWallet')}",{m_id:top_user.m_id},callback);
+        function callback(res){
+            if (res.flag == "success") {
+                $(".yue").text(res.data.balance);
+                $(".djs").text(res.data.amount);
+            }else{
+                alert(res.message);
+            }
+        }
+    </script>
 </block>
