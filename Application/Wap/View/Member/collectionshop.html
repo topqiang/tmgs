@@ -52,10 +52,11 @@
                     $(".content").append('<div class="textcen">没有更多了！</div>');
                 }else{
                     var str ="";
+                    var shoplink = "{:U('Merchant/shopinfo')}&merchant_id=";
                     for(var merchant of goods){
                        str += '<div class="shop pad20 borb31 bgb">'
                                     +'<img src="'+merchant.head_pic+'" />'
-                                    +'<div class="shopdec lh50">'
+                                    +'<div class="shopdec lh50" linkto="'+shoplink+merchant.merchant_id+'">'
                                         +'<p>'
                                             +'<span class="mar5">'+merchant.merchant_name+'</span>'
                                             +'<span class="bor1b bora50 colbl disib fs12 wh20">H</span>'
@@ -71,6 +72,7 @@
                     }
                     clickEvent();
                     flag = true;
+                    top_linkto();
                 }
             }else{
                 alert(data.message);

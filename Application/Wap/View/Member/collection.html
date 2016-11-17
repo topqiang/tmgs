@@ -52,9 +52,10 @@
                     $(".content").append('<div class="textcen">没有更多了！</div>');
                 }else{
                     var str ="";
+                    var link = '{:U("Goods/goodsinfo")}'+(top_user ? '&m_id='+top_user.m_id : '')+'&goods_id=';
                     for(g in goods){
                        str += '<div class="good bgb">'
-                                +'<div class="imgbag">'
+                                +'<div class="imgbag" linkto="'+link+goods[g]['goods_id']+'">'
                                     +'<img src="'+goods[g]['goods_pic']+'"/>'
                                 +'</div>'
                                 +'<div class="pad0-10" style="padding-top:0px;">'
@@ -78,6 +79,7 @@
                         $('.goodlist').html(str);
                     }
                     clickEvent();
+                    top_linkto();
                     flag = true;
                 }
             }else{
