@@ -133,7 +133,7 @@
         $(".putorder").on('click',function(){
             var address_id = $(".ediadd").attr("id");
             var message_json = [];
-            $(".merchant_id").each(function(){
+            $("[merchant_id]").each(function(){
                 var merchant_id = $(this).attr("merchant_id");
                 var message = $(this).find('.leave_msg').val();
                 message_json.push({
