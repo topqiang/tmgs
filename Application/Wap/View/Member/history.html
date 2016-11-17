@@ -3,7 +3,7 @@
     <body>
     <header class="bgz colb">
         <span class="left"></span>
-        <span class="poab fs14" style="right: 40px;">清楚全部</span>
+        <span class="poab fs14 delhis" style="right: 40px;">清楚全部</span>
     		<span class="pfr rigshe pore" linkto="msg.html">
     			<span class="jiaob poab bgr colb fs12 textcen lh14">3</span>
     		</span>
@@ -39,11 +39,11 @@
                                     +'<img src="'+g.goods_pic+'" />'
                                 +'</div>'
                                 +'<div class="pad0-10">'
-                                    +'<div class="goodname fs16 lh20">'
+                                    +'<div class="goodname fs16 lh20" linkto="'+link+g.goods_id+'">'
                                         +g.goods_name
                                     +'</div>'
                                     +'<div class="lh30 price fs14 colr">'
-                                        +'<div class="fr bor1b lh20 colbl mar5 pad0-20 borad4">删除</div>'
+                                        +'<div class="fr bor1b lh20 colbl mar5 pad0-20 borad4 delhis" id="'+g.pug_id+'">删除</div>'
                                         +'￥<span class="fs16">'+g.price+'</span>'
                                     +'</div>'
                                 +'</div>'
@@ -56,6 +56,7 @@
                     }
                     flag = true;
                     top_linkto();
+                    delhis();
                 }
             }else{
                 alert(data.message);
@@ -66,7 +67,20 @@
             }
         }
 
-        
+        function delhis(){
+            $(".delhis").on('click',function(){
+                if (confirm("确定要删除吗？")) {
+                    var pug_id = $(this).attr("id");
+                    requestUrl("{:U('Api/Pug/deletePug')}",{"m_id":top_user.m_id,"pug_id":pug_id},function(res) {
+                        if (res.flag == "success") {
+                            location.reload();
+                        }else{
+                            alert(res.message);
+                        }
+                    });
+                }
+            });
+        }
 
         function getJson(args) {
             console.log(dataargs);
