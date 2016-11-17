@@ -67,16 +67,6 @@
             if (!self.hasClass("on")) {
                 $(".all").removeClass("on");
             }
-            totalnum = 0;
-            totalprice = 0;
-
-            $(".good top_check.on").parent().each(function(){
-                var self = $(this);
-                var num = parseInt(self.find(".playgood .goodnum").text());
-                var goodprice = self.find("[goodprice]").attr("goodprice")*100;
-                totalnum += num;
-                totalprice += goodprice*num;
-            })
             viewTotal();
         }
 
