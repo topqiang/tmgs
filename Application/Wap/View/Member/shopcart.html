@@ -18,7 +18,7 @@
     </div>
     <div class="botarea lh50 bgb" style="bottom: 60px;">
         <div class="fr toggle">
-            <span class="fr bgbtn pad0-10 colb">结算（<span class="totalnum"></span>）</span>
+            <span class="fr bgbtn pad0-10 colb putorder">结算（<span class="totalnum"></span>）</span>
 				<span class="fr mar10 cole textrig">
 					<div class="lh50">合计：<span class="colr">￥<span class="totalprice"></span></span></div>
 					<!--<div class="lh20 fs12">含运费：￥20</div>-->
@@ -72,6 +72,20 @@
             }
             viewTotal();
         }
+
+        $(".putorder").on('click',function(){
+            var top_check = $(".good .top_check.on");
+            if (top_check.size() > 0) {
+                cart_json = [];
+                top_check.each(function(){
+                    cart_json.push({"cart_id":$(this).parent().attr("cart_id")});
+                });
+                sessionStorage.setItem("cart_json",JSON.stringify(cart_json));
+                window.location.href = "{:U('Order/setgleyorder')}";
+            }else{
+                alert("请选中商品！");
+            }
+        });
 
         $(".delall").on('click',function(){
             var top_check = $(".good .top_check.on");

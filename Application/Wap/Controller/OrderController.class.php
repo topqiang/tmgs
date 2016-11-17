@@ -25,6 +25,14 @@ class OrderController extends BaseController
     }
 
     /**
+     * 购物车提交订单
+     */
+    public function setGleyOrder()
+    {
+        $this->display();
+    }
+
+    /**
      * 订单信息
      */
     public function orderinfo()

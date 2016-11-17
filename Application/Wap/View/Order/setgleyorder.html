@@ -1,0 +1,151 @@
+<extend name="Public/base" />
+<block name="main">
+    <body>
+    <header class="bgz">
+        <div class="left">订单详情</div>
+    </header>
+    <div class="content" style="padding: 50px 0px 10px;">
+        <div class="ordaddress mat10" linkto="{:U('Member/addresslist')}&order=1">
+            <span class="right fr" style="margin-top: 40px;"></span>
+            <!-- 新建地址 -->
+            <div class="newadd fs12 cole">
+                请新建收货地址以确保商品顺利到达
+            </div>
+            <!-- 已有地址    修改地址-->
+            <div class="ediadd" style="display:none;">
+                <div>
+                    收货人：<span class="name">张涛</span>
+                    <span class="fr mar5 tel"></span>
+                </div>
+                <div class="">收货地址：<span class="address"></span></div>
+            </div>
+        </div>
+        <div class="gleyorder">
+
+        </div>
+    </div>
+
+    <div class="botarea bgb">
+        <div class="lh50 bgbtn colb pad0-20 fr putorder">提交订单</div>
+        <div class="textrig lh25">
+            <div>合计:<span class="colr mar10">￥<span class="total_price"></span></span></div>
+            <div class="fs12 cole">合计返利：<span class="mar10">￥<span class="return_total_price"></span></span></div>
+        </div>
+    </div>
+    </body>
+</block>
+<block name="script">
+    <script type="text/javascript">
+        if (!top_user)getUserInfo("{:U('Member/login')}");
+        var cart_json = sessionStorage.getItem("cart_json");
+        if (cart_json) {
+            console.log(cart_json);
+            var data = {
+                "m_id" : top_user.m_id,
+                "cart_json" : cart_json
+            };
+            requestUrl("{:U('Api/Order/readAddCartOrder')}",data,viewPage);
+        }
+
+        //渲染视图
+        function viewPage(res){
+            if (res.flag != "success") {
+                alert(res.message);
+                history.go(-1);
+            }else{
+                var address = res.data.address;
+                var merchant_info = res.data.merchant_info;
+                if ( address && address.is_default == "0") {
+                    $(".newadd").show();
+                    $(".ediadd").hide();
+                }else{
+                    $(".ediadd").show();
+                    $(".newadd").hide();
+                    var curaddress = sessionStorage.getItem("curaddress");
+                    if (curaddress) {
+                        viewAdd(JSON.parse(curaddress));
+                        sessionStorage.removeItem("curaddress");
+                    }else{
+                       viewAdd(address); 
+                    }
+                }
+                $(".delivery_cost").text(res.data.delivery_cost);
+                $(".total_price").text(res.data.price);
+                $(".return_total_price").text(res.data.return_price);
+                viewGood(merchant_info);
+            }        
+        }
+
+        //渲染收货地址
+        function viewAdd( address ){
+            $(".tel").text(address.tel);
+            $(".name").text(address.name);
+            $(".address").text(address.address);
+            $(".ediadd").attr("id",address.address_id);
+        }
+        
+        //渲染商品 
+        function viewGood(merchant_info){
+            var str = "";
+            for (var merchant of merchant_info) {
+                str += '<div merchant_id="'+merchant.merchant_id+'">'
+                        +'<div class="lh50 bgb mat10 pad0-20 merchant_name">'+merchant.merchant_name+'</div>';
+                        
+                        for(var good of merchant.goods_info){
+                            str += '<div class="good bge pad10" goods_id="'+good.goods_id+'">'
+                                    +'<div class="imgbag">'
+                                        +'<img src="'+good.goods_pic+'"/>'
+                                    +'</div>'
+                                    +'<div class="pad0-10">'
+                                        +'<div class="goodname fs14">'
+                                            +good.goods_name
+                                        +'</div>'
+                                        +'<div class="cole fs12">'
+                                            +'<span class="mar20">'+good.attr+'</span>'
+                                        +'</div>'
+                                        +'<div class="lh30 price fs14 colr">'
+                                            +'<span class="colz fr">X'+good.num+'</span>'
+                                            +'￥<span class="fs16 mar10 goodprice">'+good.price+'</span>'
+                                            +'<span class="fs12">消费返利：￥'+good.return_price+'</span>'
+                                        +'</div>'
+                                    +'</div>'
+                                +'</div>';
+                        }
+                        
+                        
+                        str +='<div class="lh50 bgb pad0-20 borb31">'
+                            +'<div><span class="fr">在线支付</span>付款方式</div>'
+                        +'</div>'
+                        +'<div class="lh50 borb31 bgb pad0-20">'
+                            +'<span class="disib fs14" style="width: 80px;">买家留言：</span>'
+                            +'<input type="text" class="leave_msg" placeholder="选填"/>'
+                        +'</div>'
+
+                        +'<div class="lh50 textrig fs14 cole bgb">'
+                            +'<span class="mar10">共<span class="">'+merchant.total_num+'</span>件商品</span>'
+                            +'<span class="">合计:<font class="colr">￥<span class="">'+merchant.total_price+'(含运费：￥'+merchant.delivery_cost+')</span></font></span>'
+                        +'</div>'
+                    +'</div>';
+            }
+            $(".gleyorder").html(str);
+        }
+
+        $(".putorder").on('click',function(){
+            setobj.address_id = $(".ediadd").attr("id");
+            setobj.leave_msg = $(".leave_msg").val();
+            if (setobj.address_id && setobj.address_id != "") {
+                requestUrl("{:U('Api/Order/addOneOrder')}",setobj,function(res){
+                    if (res.flag == "success") {
+                        var order_list_sn = res.data.order_list_sn;
+                        sessionStorage.setItem("order_list_sn",order_list_sn);
+                        window.location.href = "{:U('Order/paytype')}";
+                    }else{
+                        alert(res.message);
+                    }
+                });
+            }else{
+                alert("收货地址不能为空！");
+            }
+        });
+    </script>
+</block>
