@@ -69,11 +69,6 @@
             var goodprice = playgood.find("[goodprice]").attr("goodprice");
             if (!self.hasClass("on")) {
                 $(".all").removeClass("on");
-                totalnum -= num;
-                totalprice -= goodprice*100*num;
-            }else{
-                totalnum += num;
-                totalprice += goodprice*100*num;
             }
             viewTotal();
         }
@@ -132,21 +127,6 @@
                 $(".top_check").addClass("on");
             }
             self.toggleClass('on');
-
-            totalnum = 0;
-            totalprice = 0;
-
-            if (self.hasClass('on')) {
-                $(".good").each(function(){
-                    var self = $(this);
-                    if (self.find(".top_check").hasClass("on")) {
-                        var num = parseInt(self.find(".playgood .goodnum").text());
-                        var goodprice = self.find("[goodprice]").attr("goodprice")*100;
-                        totalnum += num;
-                        totalprice += goodprice*num;
-                    }
-                })
-            }
             viewTotal();
         });
         
@@ -190,8 +170,6 @@
                                     +'</div>'
                                 +'</div>'
                             +'</div>';
-                            totalnum += parseInt(good.num);
-                            totalprice += good.num * good.price*100;
                 }
                 $(".goodlist").html(str);
                 viewTotal();
@@ -227,12 +205,21 @@
 
         function viewTotal(){
             cart_json = [];
+            totalprice = 0;
+            totalnum = 0;
             $(".good").each(function(){
                 var self = $(this);
                 var num = self.find(".playgood .goodnum").text();
                 var cart_id = self.attr("cart_id");
                 cart_json.push({"cart_id":cart_id,"num":num});
                 self.find("[carnum]").text( num );
+
+                if (self.find(".top_check").hasClass("on")) {
+                    var num = parseInt(self.find(".playgood .goodnum").text());
+                    var goodprice = self.find("[goodprice]").attr("goodprice")*100;
+                    totalnum += num;
+                    totalprice += goodprice*num;
+                }
             })
             $(".totalnum").text(totalnum);
             $(".totalprice").text(totalprice/100);
