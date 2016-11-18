@@ -42,6 +42,7 @@
     </body>
 </block>
 <block name="script">
+<script type="text/javascript">
     requestUrl("{:U('Api/MyWallet/bankCard')}",{},callback);
     function callback( res ){
         if (res.flag == "success") {
@@ -54,4 +55,5 @@
             alert(res.message);
         }
     }
+    </script>
 </block>
