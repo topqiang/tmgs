@@ -243,6 +243,27 @@ class MemberController extends BaseController
         $this->display();
     }
 
+    public function savaMember(){
+        $m_id = $_POST['m_id'];
+        if (!empty($_POST['nickname'])) {
+            $data['nickname'] = $_POST['nickname'];
+        }
+        if (!empty($_POST['age'])) {
+            $data['age'] = $_POST['age'];
+        }
+        if (!empty($_POST['head_pic'])) {
+            $data['head_pic'] = $_POST['head_pic'];
+        }
+        $where['id'] = $m_id;
+        $data['update_time'] = time();
+        $res = M('Member')->where($where)->data($data)->save();
+        if (isset($res)) {
+            $this -> ajaxReturn("success");
+        }else{
+            $this -> ajaxReturn("error");
+        }
+    }
+
     /**
      * 上传图片
      */

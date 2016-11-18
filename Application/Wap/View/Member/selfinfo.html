@@ -50,11 +50,16 @@
         $(".savebtn").on('click',function(){
             var data = {
                 "m_id" : top_user.m_id,
-                "head_pic" : $(".viewhead").attr("src"),
+                "head_pic" : $(".viewhead").attr("id"),
                 "nickname" : $(".nickname").text(),
                 "age" : $(".age").text()
             };
-            requestUrl("{:U('Api/Member/modifyBaseData')}",data,viewInfo);
+            requestUrl("{:U('Member/savaMember')}",data,function( res ){
+                console.log(res);
+                if (res != "success") {
+                    alert(res);
+                }
+            });
         });
     </script>
     <script type="text/javascript">
@@ -77,6 +82,7 @@
                     success : function(data){
                         var data = JSON.parse(data);
                         if(data['flag'] == "success"){
+                            $(".viewhead").attr("id",data['data']['id']);
                             $(".viewhead").attr("src",data['data']['path']);
                         }
                     }
