@@ -18,7 +18,7 @@
             <div class="pad0-20 top_radio on">正在进行</div>
             <div class="pad0-20 top_radio">查看往期</div>
         </div>
-        <div class="goodlist ovhid mat10">
+        <div class="goodlist ovhid mat10 loveing_project">
             <div class="good bgb" linkto="goodinfo.html">
                 <div class="imgbag">
                     <img src="__IMG__/good.png" />
@@ -64,22 +64,12 @@
                 </div>
             </div>
 
-            <div class="good bgb" linkto="goodinfo.html">
-                <div class="imgbag">
-                    <img src="__IMG__/good.png" />
-                </div>
-                <div class="pad10 borb31">
-                    <div class="lh30">绿顶蓝天计划</div>
-                    <div class="lh14 fs12">美娟20元，即可绿化0.067平方米城市屋顶。美娟20元，即可绿化0.067平方米城市屋顶</div>
-                    <div class="mat5 pore range" total="15" cur="6" style="height: 6px;border: 3px;"><span></span></div>
-                    <div class="cole fs12 mat5">
-                        <span class="mar20 fr">目标<span class="colbl">6</span>千元</span>
-                        <span class="">共<span class="colbl">2333</span>份爱心</span>
-                    </div>
-                </div>
-            </div>
-
+            
         </div>
+
+        <div class="goodlist ovhid mat10 loveout_project">
+        </div>
+
     </div>
     <div class="disib gohead top_gohead">
         <img src="__IMG__/gohead.png" />
@@ -92,5 +82,40 @@
     <script type="text/javascript">
         var w = document.documentElement?document.documentElement.clientWidth:document.body.clientWidth;
         $(".slider").yxMobileSlider({width:w,height:160,during:3000});
+    </script>
+    <script type="text/javascript">
+        requestUrl("{:U('Api/DonateLove/donateLoveList')}",{},callback);
+        function callback( res ){
+            if (res.flag == "success") {
+                var love_pic = res.data.love_pic;
+                var loveing_project = res.data.loveing_project;
+                var loveout_project = res.data.loveout_project;
+
+            }else{
+                alert(res.message);
+            }
+        }
+
+        function viewLove( project ,ele){
+            var str = "";
+            for(var obj of project){
+                str += '<div class="good bgb">'
+                    +'<div class="imgbag">'
+                        +'<img src="'+obj.path+'" linkto="{:U('Love/loveinfo')}&dl_id='+obj.dl_id+'"/>'
+                    +'</div>'
+                    +'<div class="pad10 borb31">'
+                        +'<div class="lh30">'+obj.project_name+'</div>'
+                        +'<div class="lh14 fs12">'+obj.project_introduction+'</div>'
+                        +'<div class="mat5 pore range" completeness="'+obj.completeness+'" style="height: 6px;border: 3px;"><span></span></div>'
+                        +'<div class="cole fs12 mat5">'
+                            +'<span class="mar20 fr">目标<span class="colbl">6</span>千元</span>'
+                            +'<span class="">共<span class="colbl">'+obj.order_num+'</span>份爱心</span>'
+                        +'</div>'
+                    +'</div>'
+                +'</div>';
+            }
+            ele.html(str);
+            top_linkto();
+        }
     </script>
 </block>

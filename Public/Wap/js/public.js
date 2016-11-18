@@ -175,6 +175,10 @@ function top_range(){
 		var total = self.attr("total");
 		var cur = self.attr("cur");
 		var width = cur / total * 100;
+		if (!total || !cur) {
+			var completeness = self.attr("completeness");
+			width = completeness * 100;
+		}
 		self.find("span").css({"width" : width+"%" });
 	});
 }
