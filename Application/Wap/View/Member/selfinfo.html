@@ -26,7 +26,7 @@
                 <span>年龄</span>
             </div>
         </div>
-        <div class="big-btn bgz colb mat30">保存</div>
+        <div class="big-btn bgz colb mat30 savebtn">保存</div>
     </div>
     <script type="text/javascript">
     </script>
@@ -46,6 +46,16 @@
                 alert(res.message);
             }
         }
+
+        $(".savebtn").on('click',function(){
+            var data = {
+                "m_id" : top_user.m_id,
+                "head_pic" : $(".viewhead").attr("src"),
+                "nickname" : $(".nickname").text(),
+                "age" : $(".age").text()
+            };
+            requestUrl("{:U('Api/Member/modifyBaseData')}",data,viewInfo);
+        });
     </script>
     <script type="text/javascript">
         function ajax(){
