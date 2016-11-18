@@ -83,6 +83,11 @@ class MemberController extends BaseController
             $this -> ajaxReturn("success");
         } 
     }
+
+    public function loginout(){
+        session("m_id",null);
+        $this->ajaxReturn("success");
+    }
     /**
      * 我的
      * array(1) {
