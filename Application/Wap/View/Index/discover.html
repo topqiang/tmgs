@@ -76,8 +76,11 @@
     <script type="text/javascript" src="__JS__/yxMobileSlider.js" ></script>
 
     <script>
-        if (!top_user) getUserInfo("{:U('Member/login')}");
-        $.post("{:U('Api/Discover/discoverList')}",{m_id:top_user.m_id},function(data){
+        var mid = "";
+        if (top_user) {
+            mid = top_user.m_id;
+        };
+        $.post("{:U('Api/Discover/discoverList')}",{m_id:mid},function(data){
             var arr = data;
             var good_product = arr['data']['good_product']; // 好货
             var good_shop = arr['data']['good_shop']; // 好店铺
