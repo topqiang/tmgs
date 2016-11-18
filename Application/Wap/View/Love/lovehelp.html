@@ -19,55 +19,10 @@
             <div class="pad0-20 top_radio">查看往期</div>
         </div>
         <div class="goodlist ovhid mat10 loveing_project">
-            <div class="good bgb" linkto="goodinfo.html">
-                <div class="imgbag">
-                    <img src="__IMG__/good.png" />
-                </div>
-                <div class="pad10 borb31">
-                    <div class="lh30">绿顶蓝天计划</div>
-                    <div class="lh14 fs12">美娟20元，即可绿化0.067平方米城市屋顶。美娟20元，即可绿化0.067平方米城市屋顶</div>
-                    <div class="mat5 pore range" total="15" cur="8" style="height: 6px;border: 3px;"><span></span></div>
-                    <div class="cole fs12 mat5">
-                        <span class="mar20 fr">目标<span class="colbl">6</span>千元</span>
-                        <span class="">共<span class="colbl">2333</span>份爱心</span>
-                    </div>
-                </div>
-            </div>
-
-            <div class="good bgb" linkto="goodinfo.html">
-                <div class="imgbag">
-                    <img src="__IMG__/good.png" />
-                </div>
-                <div class="pad10 borb31">
-                    <div class="lh30">绿顶蓝天计划</div>
-                    <div class="lh14 fs12">美娟20元，即可绿化0.067平方米城市屋顶。美娟20元，即可绿化0.067平方米城市屋顶</div>
-                    <div class="mat5 pore range" total="15" cur="6" style="height: 6px;border: 3px;"><span></span></div>
-                    <div class="cole fs12 mat5">
-                        <span class="mar20 fr">目标<span class="colbl">6</span>千元</span>
-                        <span class="">共<span class="colbl">2333</span>份爱心</span>
-                    </div>
-                </div>
-            </div>
-
-            <div class="good bgb" linkto="goodinfo.html">
-                <div class="imgbag">
-                    <img src="__IMG__/good.png" />
-                </div>
-                <div class="pad10 borb31">
-                    <div class="lh30">绿顶蓝天计划</div>
-                    <div class="lh14 fs12">美娟20元，即可绿化0.067平方米城市屋顶。美娟20元，即可绿化0.067平方米城市屋顶</div>
-                    <div class="mat5 pore range" total="15" cur="6" style="height: 6px;border: 3px;"><span></span></div>
-                    <div class="cole fs12 mat5">
-                        <span class="mar20 fr">目标<span class="colbl">6</span>千元</span>
-                        <span class="">共<span class="colbl">2333</span>份爱心</span>
-                    </div>
-                </div>
-            </div>
-
             
         </div>
 
-        <div class="goodlist ovhid mat10 loveout_project">
+        <div class="goodlist ovhid mat10 loveout_project" style="display:none">
         </div>
 
     </div>
@@ -107,7 +62,7 @@
                     +'</div>'
                     +'<div class="pad10 borb31">'
                         +'<div class="lh30">'+obj.project_name+'</div>'
-                        +'<div class="lh14 fs12">'+obj.project_introduction+'</div>'
+                        +'<div class="lh14 fs12" style="height:40px;overflow:hidden;">'+obj.project_introduction+'</div>'
                         +'<div class="mat5 pore range" completeness="'+obj.completeness+'" style="height: 6px;border: 3px;"><span></span></div>'
                         +'<div class="cole fs12 mat5">'
                             +'<span class="mar20 fr">目标<span class="colbl">'+obj.project_aims_money+'</span>千元</span>'
@@ -118,6 +73,10 @@
             }
             ele.html(str);
             top_linkto();
+        }
+
+        function radioAfter( self ){
+            $(".loveing_project,.loveout_project").toggle();
         }
     </script>
 </block>
