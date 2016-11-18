@@ -21,10 +21,8 @@
         getUserInfo("{:U('Member/login')}");
     }
     function viewAddList(res) {
-        console.log(res);
         if (res.flag == "success") {
             var addList = res.data;
-            console.log(addList);
             if ( addList.length > 0) {
                 viewAdd(addList);
             }
@@ -50,6 +48,21 @@
             +'</div>';
         }
         $(".banklist").html(str);
+    }
+
+    function cancel(){
+        $(".iconcancel").on('click',function(){
+            var card_id = $(this).attr("id");
+            if (confirm("您确认要解绑该银行卡吗？")) {
+                requestUrl("{:U('Api/MyWallet/deleteCardList')}",{"m_id":top_user.m_id,"card_id":card_id},function(res){
+                    if (res.flag == "success") {
+                        location.reload();
+                    }else{
+                        alert(res.message);
+                    }
+                });
+            }
+        });
     }
     </script>
 </block>
