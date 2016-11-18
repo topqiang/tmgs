@@ -954,9 +954,6 @@ footer > div span {
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
-  left: 50%;
-  transform: translateX(-50%);
-  top: 65%;
 }
 .shopobj {
   margin-bottom: 10px;
