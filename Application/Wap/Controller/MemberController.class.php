@@ -266,13 +266,16 @@ class MemberController extends BaseController
             $data['create_time'] = time();
             $data['status'] = 1;
             $id = M('File')->data($data)->add();
+            $ajaxData = array("flag" => "success", "message"=>"上传成功！" );
             if($id){
                 $result_data['path'] = $data['path'];
                 $result_data['id']   = $id;
-                $this->wXResponse('success','上传头像成功',$result_data);
+                $ajaxData['data'] = $result_data;
+                $this->ajaxReturn(json_encode($ajaxData));
             }
         }else{
-            $this->wXResponse('error','上传头像失败');
+            $ajaxData = array("flag" => "error", "message"=>"上传头像失败","data" => array());
+            $this->ajaxReturn(json_encode($ajaxData));
         }
     }
 }
