@@ -7,7 +7,7 @@
     		</span>
         <span class="left" linkto="javascript:history.go(-1)"></span>
         <div class="pore mat10 searchdiv">
-            <input class="poab fs12" placeholder="男士正装时尚西服"/>
+            <input class="poab fs12 searcharea" placeholder=""/>
             <span class="search pfr"></span>
         </div>
     </header>
@@ -15,70 +15,18 @@
         <div class="tab">
             <div class="classify">
                 <div class="on">服装</div>
-                <div class="">鞋</div>
-                <div class="">包</div>
-                <div class="">鞋</div>
-                <div class="">包</div>
-                <div class="">鞋</div>
-                <div class="">包</div>
-                <div class="">鞋</div>
-                <div class="">包</div>
-                <div class="">鞋</div>
-                <div class="">包</div>
-                <div class="">鞋</div>
-                <div class="">包</div>
-                <div class="">鞋</div>
-                <div class="">包</div>
-                <div class="">鞋</div>
-                <div class="">包</div>
             </div>
             <div class="conmain">
                 <div class="contitle">服装</div>
                 <div class="warelist disf textcen">
 
-                    <div class="ware pore" linkto="goodlist.html">
-                        <img src="__IMG__/cuslogo.png" />
-                        <span class="poab">欧时力</span>
-                    </div>
-                    <div class="ware pore" linkto ="goodlist.html">
-                        <img src="__IMG__/cuslogo.png" />
-                        <span class="poab" linkto =""">欧时力</span>
-                    </div>
-                    <div class="ware pore" linkto ="goodlist.html">
-                        <img src="__IMG__/cuslogo.png" />
-                        <span class="poab">欧时力</span>
-                    </div>
-                    <div class="ware pore" linkto ="goodlist.html">
-                        <img src="__IMG__/cuslogo.png" />
-                        <span class="poab">欧时力</span>
-                    </div>
-                    <div class="ware pore" linkto ="goodlist.html">
-                        <img src="__IMG__/cuslogo.png" />
-                        <span class="poab">ONLY</span>
-                    </div>
-                    <div class="ware pore" linkto ="goodlist.html">
-                        <img src="__IMG__/cuslogo.png" />
-                        <span class="poab">欧时力</span>
-                    </div>
-                    <div class="ware pore" linkto ="goodlist.html">
-                        <img src="__IMG__/cuslogo.png" />
-                        <span class="poab">ONLY</span>
-                    </div>
                     <div class="ware pore">
                         <img src="__IMG__/cuslogo.png" />
                         <span class="poab">欧时力</span>
                     </div>
                     <div class="ware pore">
                         <img src="__IMG__/cuslogo.png" />
-                        <span class="poab">ONLY</span>
-                    </div>
-                    <div class="ware pore">
-                        <img src="__IMG__/cuslogo.png" />
                         <span class="poab">欧时力</span>
-                    </div>
-                    <div class="ware pore">
-                        <img src="__IMG__/cuslogo.png" />
-                        <span class="poab">ONLY</span>
                     </div>
                     <div class="ware pore">
                         <img src="__IMG__/cuslogo.png" />
@@ -96,35 +44,38 @@
                         <img src="__IMG__/cuslogo.png" />
                         <span class="poab">欧时力</span>
                     </div>
-                    <div class="ware pore">
-                        <img src="__IMG__/cuslogo.png" />
-                        <span class="poab">ONLY</span>
-                    </div>
-                    <div class="ware pore">
-                        <img src="__IMG__/cuslogo.png" />
-                        <span class="poab">欧时力</span>
-                    </div>
-                    <div class="ware pore">
-                        <img src="__IMG__/cuslogo.png" />
-                        <span class="poab">欧时力</span>
-                    </div>
-                    <div class="ware pore">
-                        <img src="__IMG__/cuslogo.png" />
-                        <span class="poab">ONLY</span>
-                    </div>
-                    <div class="ware pore">
-                        <img src="__IMG__/cuslogo.png" />
-                        <span class="poab">欧时力</span>
-                    </div>
-                    <div class="ware pore">
-                        <img src="__IMG__/cuslogo.png" />
-                        <span class="poab">ONLY</span>
-                    </div>
-                    <div class="ware pore">
-                        <img src="__IMG__/cuslogo.png" />
-                        <span class="poab">欧时力</span>
-                    </div>
+            
+                </div>
 
+
+                <div class="contitle">服装</div>
+                <div class="warelist disf textcen">
+
+                    <div class="ware pore">
+                        <img src="__IMG__/cuslogo.png" />
+                        <span class="poab">欧时力</span>
+                    </div>
+                    <div class="ware pore">
+                        <img src="__IMG__/cuslogo.png" />
+                        <span class="poab">欧时力</span>
+                    </div>
+                    <div class="ware pore">
+                        <img src="__IMG__/cuslogo.png" />
+                        <span class="poab">欧时力</span>
+                    </div>
+                    <div class="ware pore">
+                        <img src="__IMG__/cuslogo.png" />
+                        <span class="poab">欧时力</span>
+                    </div>
+                    <div class="ware pore">
+                        <img src="__IMG__/cuslogo.png" />
+                        <span class="poab">ONLY</span>
+                    </div>
+                    <div class="ware pore">
+                        <img src="__IMG__/cuslogo.png" />
+                        <span class="poab">欧时力</span>
+                    </div>
+            
                 </div>
             </div>
         </div>
@@ -137,5 +88,18 @@
         var h = document.documentElement?document.documentElement.clientHeight : document.body.clientHeight;
         $(".classify").height(h-50);
         $(".warelist").height(h-80);
+
+
+        var mid = "";
+        if (top_user) {
+            mid = top_user.m_id;
+        };
+        requestUrl("{:U('Api/Index/classification')}",{m_id:mid},callback);
+        function callback( res ){
+            if (res.flag == "success") {
+                $(".searcharea").attr("placeholder",res.data.app_search);
+
+            }
+        }
     </script>
 </block>

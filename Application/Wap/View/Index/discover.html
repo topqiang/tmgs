@@ -114,12 +114,12 @@
                 $('.goodlist').append(gpStr);
             }
             var shoplink = "{:U('Merchant/shopinfo')}&merchant_id=";
-            for(gs in good_shop){
+            for(var gs in good_shop){
                 // 好店铺
                 var gsStr = '<div class="shop pad20 borb31"> <img src="'+good_shop[gs]['head_pic']+'" /> <div class="shopdec lh20"> <p><span class="mar5">'+good_shop[gs]["merchant_name"]+'</span> </p> <p class="mat10 cole fs14"> <span class="mar20">销量:'+good_shop[gs]['sales']+'</span> <span>商品:'+good_shop[gs]['goods_count']+'</span> </p> </div> <div class="bobtn bor1b colbl fr pad0-10 borad4 mat10" linkto="'+shoplink+good_shop[gs]['merchant_id']+'">进店逛逛</div> </div>';
                 $('.shoplist').append(gsStr);
             }
-            for(gs in good_service){
+            for(var gs in good_service){
                 // 好服务
                 var gsStr = '<div class="shop pad20 borb31"> <img src="'+good_service[gs]['head_pic']+'" /> <div class="shopdec lh20"> <p><span class="mar5">'+good_service[gs]["merchant_name"]+'</span> </p> <p class="mat10 cole fs14"> <span class="mar20">销量:'+good_service[gs]['sales']+'</span> <span>商品:'+good_service[gs]['goods_count']+'</span> </p> </div> <div class="bobtn bor1b colbl fr pad0-10 borad4 mat10" linkto="'+shoplink+good_service[gs]['merchant_id']+'">进店逛逛</div> </div>';
                 $('.servicelist').append(gsStr);
