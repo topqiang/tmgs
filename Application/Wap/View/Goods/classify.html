@@ -14,69 +14,10 @@
     <div class="content bgf" style="padding-top: 50px;">
         <div class="tab">
             <div class="classify">
-                <div class="on">服装</div>
+
             </div>
             <div class="conmain">
-                <div class="contitle">服装</div>
-                <div class="warelist disf textcen">
-
-                    <div class="ware pore">
-                        <img src="__IMG__/cuslogo.png" />
-                        <span class="poab">欧时力</span>
-                    </div>
-                    <div class="ware pore">
-                        <img src="__IMG__/cuslogo.png" />
-                        <span class="poab">欧时力</span>
-                    </div>
-                    <div class="ware pore">
-                        <img src="__IMG__/cuslogo.png" />
-                        <span class="poab">欧时力</span>
-                    </div>
-                    <div class="ware pore">
-                        <img src="__IMG__/cuslogo.png" />
-                        <span class="poab">欧时力</span>
-                    </div>
-                    <div class="ware pore">
-                        <img src="__IMG__/cuslogo.png" />
-                        <span class="poab">ONLY</span>
-                    </div>
-                    <div class="ware pore">
-                        <img src="__IMG__/cuslogo.png" />
-                        <span class="poab">欧时力</span>
-                    </div>
-            
-                </div>
-
-
-                <div class="contitle">服装</div>
-                <div class="warelist disf textcen">
-
-                    <div class="ware pore">
-                        <img src="__IMG__/cuslogo.png" />
-                        <span class="poab">欧时力</span>
-                    </div>
-                    <div class="ware pore">
-                        <img src="__IMG__/cuslogo.png" />
-                        <span class="poab">欧时力</span>
-                    </div>
-                    <div class="ware pore">
-                        <img src="__IMG__/cuslogo.png" />
-                        <span class="poab">欧时力</span>
-                    </div>
-                    <div class="ware pore">
-                        <img src="__IMG__/cuslogo.png" />
-                        <span class="poab">欧时力</span>
-                    </div>
-                    <div class="ware pore">
-                        <img src="__IMG__/cuslogo.png" />
-                        <span class="poab">ONLY</span>
-                    </div>
-                    <div class="ware pore">
-                        <img src="__IMG__/cuslogo.png" />
-                        <span class="poab">欧时力</span>
-                    </div>
-            
-                </div>
+                
             </div>
         </div>
     </div>
@@ -94,12 +35,35 @@
         if (top_user) {
             mid = top_user.m_id;
         };
+        var goods_type = [];
         requestUrl("{:U('Api/Index/classification')}",{m_id:mid},callback);
         function callback( res ){
             if (res.flag == "success") {
                 $(".searcharea").attr("placeholder",res.data.app_search);
-
+                goods_type = res.data.goods_type;
+                viewGoodsType();
             }
+        }
+
+        function viewGoodsType() {
+            var str ="";
+            for(var goodType of goods_type){
+                str += '<div class="top_radio" id="'+goodType.type_name+'">'+goodType.g_t_id+'</div>';
+            }
+            $(".classify").html(str);
+            var twostr ="";
+            for(var goodType of goods_type[0].type_two){
+                twostr += '<div class="contitle">服装</div>'
+                            +'<div class="warelist disf textcen">';
+                for(var goodType of goodType.type_three){
+                    str += '<div class="ware pore">'
+                        +'<img src="__IMG__/cuslogo.png" />'
+                        +'<span class="poab">欧时力</span>'
+                    +'</div';
+                }
+                str += '</div>';
+            }
+            $(".conmain").html(twostr);
         }
     </script>
 </block>
