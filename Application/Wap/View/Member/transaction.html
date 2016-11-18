@@ -74,7 +74,7 @@
                     for(var g of goods){
                         str += '<div class="tran pad10 borb31">'
                                     +'<div class="fs16">'
-                                        +'<span class="fr">'+g.symbol+g.money+'</span>'
+                                        +'<span class="fr">'+(g.symbol ? "+" : "-")+g.money+'</span>'
                                         +'<span>'+g.title+'</span>'
                                     +'</div>'
                                     +'<div class="fs14 cole">'
