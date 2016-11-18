@@ -48,7 +48,7 @@
         if (res.flag == "success") {
             var str = "";
             for(var bank of res.data){
-                str += '<option value="'+bank.bank_id+'">'+bank_name+'</option>';
+                str += '<option value="'+bank.bank_id+'">'+bank.bank_name+'</option>';
             }
             $(".bank_id").html(str);
         }else{
