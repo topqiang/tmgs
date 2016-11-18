@@ -12,7 +12,7 @@
         <div class="pad20">
             <div class="pore setphoto bora50">
                 <img class="viewhead bora50" src="__IMG__/setphoto.png"/>
-                <input type="file upheadimg" class="poab selpstime"/>
+                <input type="file" class="poab selpstime"/>
             </div>
         </div>
 
@@ -66,8 +66,7 @@
                     dataType : "json",
                     success : function(data){
                         if(data['flag'] == "success"){
-                            $(".upheadimg").val(data['data']['id']);
-                            $("#img").attr("src",data['data']['path']);
+                            $(".viewhead").attr("src",data['data']['path']);
                         }
                     }
                 });
