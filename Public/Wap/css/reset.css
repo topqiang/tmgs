@@ -76,7 +76,7 @@ body {
 }
 .disf {
   display: flex;
-  justify-content: space-around;
+  justify-content: flex-start;
   flex-flow: wrap;
 }
 .colg {
