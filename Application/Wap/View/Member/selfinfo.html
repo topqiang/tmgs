@@ -61,6 +61,7 @@
                 }else{
                     alert("保存成功！");
                     $.extend(top_user,data);
+                    sessionStorage.setItem("top_user",JSON.stringify(top_user));
                 }
             });
         });
