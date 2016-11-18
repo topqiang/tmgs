@@ -24,6 +24,7 @@
         console.log(res);
         if (res.flag == "success") {
             var addList = res.data;
+            console.log(addList);
             if ( addList.length > 0) {
                 viewAdd(addList);
             }
