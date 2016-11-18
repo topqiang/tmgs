@@ -11,18 +11,18 @@
     <div class="content" style="margin-top: 50px;">
         <div class="pad20">
             <div class="pore setphoto bora50">
-                <img class="" src="__IMG__/setphoto.png"/>
-                <input type="file" class="poab selpstime"/>
+                <img class="viewhead" src="__IMG__/setphoto.png"/>
+                <input type="file upheadimg" class="poab selpstime"/>
             </div>
         </div>
 
         <div class="line">
             <div class="iconname">
-                <span class="fr mar10" contenteditable="true">Jhoin</span>
+                <span class="fr mar10 nickname" contenteditable="true">Jhoin</span>
                 <span>姓名</span>
             </div>
             <div class="iconage">
-                <span class="fr mar10" contenteditable="true">26</span>
+                <span class="fr mar10 age" contenteditable="true">26</span>
                 <span>年龄</span>
             </div>
         </div>
@@ -34,4 +34,46 @@
 </block>
 <block name="script">
     <script type="text/javascript" src="__JS__/touch.min.js"></script>
+    <script>
+        if (!top_user) getUserInfo("{:U('Member/login')}");
+        requestUrl("{:U('Api/Member/userBaseData')}",{"m_id":top_user.m_id},viewInfo);
+        function viewInfo(res) {
+            if ( res.flag == "success") {
+                $(".viewhead").attr("src",res.data.head_pic);
+                $(".nickname").text(res.data.nickname);
+                $(".age").text(res.data.age);
+            }else{
+                alert(res.message);
+            }
+        }
+    </script>
+    <script type="text/javascript">
+        function ajax(){
+            var filesize = this.files[0].size;
+            if (filesize > 10000*1024) {
+                alert("请上传大小在500k以下的图片");
+                return false;
+            }
+            var files = this.files;
+            var picname = files[0].name;
+            var reader = new FileReader();
+            reader.onload = function(e){
+                var src = e.target.result;
+                $.ajax({
+                    type:"post",
+                    url:"{:U('Member/uploadPic')}",
+                    data: {"pic":src,"pic_name":picname},
+                    dataType : "json",
+                    success : function(data){
+                        if(data['flag'] == "success"){
+                            $(".upheadimg").val(data['data']['id']);
+                            $("#img").attr("src",data['data']['path']);
+                        }
+                    }
+                });
+            }
+            reader.readAsDataURL(files[0]);
+        }
+        $("input[type='file']").on('change',ajax);
+    </script>
 </block>

@@ -243,5 +243,36 @@ class MemberController extends BaseController
         $this->display();
     }
 
-
+    /**
+     * 上传图片
+     */
+    public function uploadPic(){
+        $pic       = $_POST['pic'];
+        $pic_name      = $_POST['pic_name'];
+        $temp = explode('.',$pic_name);
+        $ext = uniqid().'.'.end($temp);
+        $base64    = substr(strstr($pic, ","), 1);
+        $image_res = base64_decode($base64);
+        $pic_link  = "Uploads/Member/".date('Y-m-d').'/'.$ext;
+        $saveRoot = "Uploads/Member/".date('Y-m-d').'/';
+        //检查目录是否存在  循环创建目录
+        if(!is_dir($saveRoot)){
+            mkdir($saveRoot, 0777, true);
+        }
+        $res = file_put_contents($pic_link ,$image_res);
+        if($res){
+            $data['name'] = date('m-d:H:i').'.'.$ext;
+            $data['path'] = '/'.$pic_link;
+            $data['create_time'] = time();
+            $data['status'] = 1;
+            $id = M('File')->data($data)->add();
+            if($id){
+                $result_data['path'] = $data['path'];
+                $result_data['id']   = $id;
+                $this->wXResponse('success','上传头像成功',$result_data);
+            }
+        }else{
+            $this->wXResponse('error','上传头像失败');
+        }
+    }
 }
