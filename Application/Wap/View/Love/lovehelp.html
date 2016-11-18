@@ -22,7 +22,7 @@
             
         </div>
 
-        <div class="goodlist ovhid mat10 loveout_project">
+        <div class="goodlist ovhid mat10 loveout_project" style="display:none">
         </div>
 
     </div>
@@ -60,7 +60,7 @@
                     +'<div class="imgbag">'
                         +'<img src="'+obj.path+'" linkto="{:U('Love/loveinfo')}&dl_id='+obj.dl_id+'"/>'
                     +'</div>'
-                    +'<div class="pad0-10 borb31">'
+                    +'<div class="borb31" style="padding-top:0px;">'
                         +'<div class="lh30">'+obj.project_name+'</div>'
                         +'<div class="lh14 fs12" style="height:40px;overflow:hidden;">'+obj.project_introduction+'</div>'
                         +'<div class="mat5 pore range" completeness="'+obj.completeness+'" style="height: 6px;border: 3px;"><span></span></div>'
@@ -76,7 +76,7 @@
         }
 
         function radioAfter( self ){
-            $(".loveing_project,.loveout_project").toggle();
+            $(".loveing_project,.loveout_project").toggle()
         }
     </script>
 </block>
