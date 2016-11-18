@@ -79,8 +79,9 @@
     <script type="text/javascript" src="__JS__/touch.min.js"></script>
     <script type="text/javascript" >
         var pitchOn = '';
-
         var userinfo = localStorage.getItem("userinfo");
+        sessionStorage.removeItem("top_user");
+        requestUrl("{:U('Member/loginout')}",{});
         if (userinfo) {
             var userobj = JSON.parse(userinfo);
             $('.username').children().val(userobj.account);
@@ -104,7 +105,7 @@
                         }
                         localStorage.setItem("userinfo",JSON.stringify(userinfo));
                     }else{
-                        localStorage.setItem("userinfo",""); 
+                        localStorage.removeItem("userinfo"); 
                     }
                     //保存到服务器端 
                     requestUrl("{:U('Member/saveMid')}",{'m_id':data.data.m_id});
