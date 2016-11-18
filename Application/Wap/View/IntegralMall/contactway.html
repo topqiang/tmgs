@@ -9,7 +9,7 @@
         <div class="textcen lh50 cole fs14">请填写您的联系方式，等待客服人员与您联系</div>
         <div class="formline pad0-20">
             <div class=""><input type="text" class="name" placeholder="姓名"/></div>
-            <div class=""><input type="text" class="phone" placeholder="联系电话"/></div>
+            <div class=""><input type="text" class="myphone" placeholder="联系电话"/></div>
             <div class=""><input type="text" class="address" placeholder="送货地址"/></div>
         </div>
         <div class="mat30 big-btn bgz">确认</div>
@@ -22,7 +22,7 @@
         var integral_id = "{$_REQUEST['integral_id']}";
         $(".big-btn").on("click",function(){
             var name = $(".name").val();
-            var phone = $(".phone").val();
+            var phone = $(".myphone").val();
             var address = $(".address").val();
             if (integral_id && name && phone && address) {
                 var data = {
