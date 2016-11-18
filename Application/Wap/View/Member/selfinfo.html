@@ -60,6 +60,7 @@
                     alert(res);
                 }else{
                     alert("保存成功！");
+                    data.head_pic = $(".viewhead").attr("src");
                     $.extend(top_user,data);
                     sessionStorage.setItem("top_user",JSON.stringify(top_user));
                 }
