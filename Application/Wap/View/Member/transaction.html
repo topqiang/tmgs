@@ -6,17 +6,7 @@
         账单明细
     </header>
     <div class="content" style="padding-top: 50px;">
-        <div class="pad0-10 bgb lh30">
-            <div class="pad10 borb31">
-                <div class="fs16">
-                    <span class="fr colp ">+10.20</span>
-                    <span>支付宝</span>
-                </div>
-                <div class="fs14 cole">
-                    <span class="fr">2016-10-20 10:20</span>
-                    <span>提现成功</span>
-                </div>
-            </div>
+        <div class="pad0-10 bgb lh30 tranlist">
 
             <div class="pad10 borb31">
                 <div class="fs16">
@@ -62,16 +52,7 @@
                 </div>
             </div>
 
-            <div class="pad10 borb31">
-                <div class="fs16">
-                    <span class="fr">-10.20</span>
-                    <span>支付宝</span>
-                </div>
-                <div class="fs14 cole">
-                    <span class="fr">2016-10-20 10:20</span>
-                    <span>提现成功</span>
-                </div>
-            </div>
+            
         </div>
 
     </div>
@@ -79,4 +60,81 @@
 </block>
 <block name="script">
     <script type="text/javascript" src="__JS__/touch.min.js"></script>
+    <script type="text/javascript">
+        if (!top_user) getUserInfo("{:U('Member/login')}");
+        var flag= true;//防止ajax请求期间，对此触发请求数据
+        var dataargs = {p:1,"m_id":top_user.m_id};
+        function putGoods(data,args) {
+            if(data.flag == 'success'){
+                var goods = data.data;
+                if((!goods || goods.length == 0 ) && args == "fenye"){
+                    $(".content").append('<div class="textcen">没有更多了！</div>');
+                }else{
+                    var str ="";
+                    for(var g of goods){
+                        str += '<div class="tran pad10 borb31">'
+                                    +'<div class="fs16">'
+                                        +'<span class="fr">'+g.symbol+g.money+'</span>'
+                                        +'<span>'+g.title+'</span>'
+                                    +'</div>'
+                                    +'<div class="fs14 cole">'
+                                        +'<span class="fr">'+g.create_time+'</span>'
+                                        +'<span>'+g.content+'</span>'
+                                    +'</div>'
+                                +'</div>';
+                    }
+                    if (args == "fenye") {
+                        $('.tranlist').append(str);
+                    }else{
+                        $('.tranlist').html(str);
+                    }
+                    flag = true;
+                }
+            }else{
+                alert(data.message);
+            }
+
+            if (args == "shouci") {
+                fenye();
+            }
+        }
+
+        function getJson(args) {
+            console.log(dataargs);
+            $.ajax({
+                url: '{:U("Api/MyWallet/detailList")}',
+                type: 'POST',
+                dataType: 'JSON',
+                data: dataargs,
+                success : function(data){
+                    putGoods(data,args);
+                }
+            });
+        }
+
+        $(function(){
+            getJson("shouci");
+        });
+        function fenye(){
+            var $_zd = $(".tran").height();//获取每个单项的高度
+            var length = 3;//定义预加载的数量，提前三个加载数据
+            var $_par = $(".tranlist");//获取包裹容器
+            var winheight = $(window).height();//获取窗口高度
+            $(function(){
+                $(window).on("scroll",function(e){
+                    if(flag){
+                        var self = $(this);
+                        var scrtop = self.scrollTop() + winheight;
+                        var docheight = $_par.height();
+                        console.log(scrtop + "=" + docheight + "=" + $_zd);
+                        if(scrtop > docheight - ( length * $_zd ) ){
+                            flag = false;
+                            dataargs.p = dataargs.p +1;
+                            getJson("fenye");
+                        }
+                    }
+                });
+            });
+        }
+    </script>
 </block>
