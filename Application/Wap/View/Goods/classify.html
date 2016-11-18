@@ -48,7 +48,7 @@
         function viewGoodsType() {
             var str ="";
             for(var goodType of goods_type){
-                str += '<div class="top_radio" id="'+goodType.type_name+'">'+goodType.g_t_id+'</div>';
+                str += '<div class="top_radio" id="'+goodType.g_t_id+'">'+goodType.type_name+'</div>';
             }
             $(".classify").html(str);
             var twostr ="";
@@ -56,12 +56,12 @@
                 twostr += '<div class="contitle">服装</div>'
                             +'<div class="warelist disf textcen">';
                 for(var goodType of goodType.type_three){
-                    str += '<div class="ware pore">'
+                    twostr += '<div class="ware pore">'
                         +'<img src="__IMG__/cuslogo.png" />'
                         +'<span class="poab">欧时力</span>'
                     +'</div';
                 }
-                str += '</div>';
+                twostr += '</div>';
             }
             $(".conmain").html(twostr);
         }
