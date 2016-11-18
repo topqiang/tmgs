@@ -899,6 +899,8 @@ footer > div span {
 .conmain {
   float: right;
   width: 75%;
+  -webkit-overflow-scrolling: touch;
+  overflow-y: auto;
 }
 .conmain > div {
   padding: 0px 10px;
@@ -909,8 +911,6 @@ footer > div span {
 }
 .conmain .warelist {
   background: #fff !important;
-  -webkit-overflow-scrolling: touch;
-  overflow-y: auto;
 }
 .wh20 {
   line-height: 20px;
