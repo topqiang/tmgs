@@ -59,7 +59,7 @@
                             +'<div class="warelist disf textcen">';
                 for(var goodType2 of goodType1.type_three){
                     twostr += '<div class="ware pore" id='+goodType2.g_t_id+'>'
-                        +'<img src="__IMG__/cuslogo.png" />'
+                        +'<img src="'+goodType2.type_picture+'" />'
                         +'<span class="poab">'+goodType2.type_name+'</span>'
                     +'</div>';
                 }
@@ -73,7 +73,7 @@
             for(var goodType of goods_type){
                 if (goodType.g_t_id == typeid) {
                     var twostr ="";
-                    for(var goodType1 of goods_type[0].type_two){
+                    for(var goodType1 of goodType.type_two){
                         twostr += '<div class="contitle" id="'+goodType1.g_t_id+'">'+goodType1.type_name+'</div>'
                                     +'<div class="warelist disf textcen">';
                         for(var goodType2 of goodType1.type_three){
