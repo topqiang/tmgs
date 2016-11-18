@@ -58,6 +58,9 @@
                 console.log(res);
                 if (res != "success") {
                     alert(res);
+                }else{
+                    alert("保存成功！");
+                    $.extend(top_user,data);
                 }
             });
         });
