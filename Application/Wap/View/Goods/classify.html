@@ -71,7 +71,7 @@
                 twostr += '<div class="contitle" id="'+goodType1.g_t_id+'">'+goodType1.type_name+'</div>'
                             +'<div class="warelist disf textcen">';
                 for(var goodType2 of goodType1.type_three){
-                    twostr += '<div class="ware pore" id='+goodType2.g_t_id+'>'
+                    twostr += '<div class="ware pore" linkto="{:U('Goods/goodslist')}&g_t_id='+goodType2.g_t_id+'">'
                         +'<img src="'+goodType2.type_picture+'" />'
                         +'<span class="lh20 disb texovh">'+goodType2.type_name+'</span>'
                     +'</div>';
@@ -79,6 +79,7 @@
                 twostr += '</div>';
             }
             $(".conmain").html(twostr);
+            top_linkto();
         }
     </script>
 </block>
