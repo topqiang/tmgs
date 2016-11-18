@@ -90,7 +90,9 @@
                 var love_pic = res.data.love_pic;
                 var loveing_project = res.data.loveing_project;
                 var loveout_project = res.data.loveout_project;
-
+                viewLove(loveing_project,$(".loveing_project"));
+                viewLove(loveout_project,$(".loveout_project"));
+                top_range();
             }else{
                 alert(res.message);
             }
@@ -108,7 +110,7 @@
                         +'<div class="lh14 fs12">'+obj.project_introduction+'</div>'
                         +'<div class="mat5 pore range" completeness="'+obj.completeness+'" style="height: 6px;border: 3px;"><span></span></div>'
                         +'<div class="cole fs12 mat5">'
-                            +'<span class="mar20 fr">目标<span class="colbl">6</span>千元</span>'
+                            +'<span class="mar20 fr">目标<span class="colbl">'+obj.project_aims_money+'</span>千元</span>'
                             +'<span class="">共<span class="colbl">'+obj.order_num+'</span>份爱心</span>'
                         +'</div>'
                     +'</div>'
