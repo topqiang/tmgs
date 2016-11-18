@@ -10,11 +10,11 @@
         <div class="formline">
             <div>
                 <span class="disib" style="width: 100px;">持卡人：</span>
-                <input type="text" placeholder="持卡人姓名"/>
+                <input type="text" class="name" placeholder="持卡人姓名"/>
             </div>
             <div>
                 <span class="disib" style="width: 100px;">卡号：</span>
-                <input type="number" placeholder="银行卡卡号"/>
+                <input type="number" class="card_number" placeholder="银行卡卡号"/>
             </div>
             <div class="pore">
                 <span class="right fr mat15"></span>
@@ -26,18 +26,18 @@
             </div>
             <div>
                 <span class="disib" style="width: 100px;">身份证号：</span>
-                <input type="text" placeholder="持卡人身份证号"/>
+                <input type="text" class="id_card" placeholder="持卡人身份证号"/>
             </div>
             <div>
                 <span class="disib" style="width: 100px;">手机号：</span>
-                <input type="number" placeholder="银行预留手机号"/>
+                <input type="number" class="phone" placeholder="银行预留手机号"/>
             </div>
         </div>
         <div class="lh50 pad0-20 colbl ovhid">
             <span class="fl disib top_check iconcheck pad20 mar10 on"></span>
             <span class="">阅读 <span linkto="agreement.html">《用户协议》</span></span>
         </div>
-        <div class="big-btn bgz">下一步</div>
+        <div class="big-btn bgz savebank">下一步</div>
     </div>
     </body>
 </block>
@@ -55,5 +55,32 @@
             alert(res.message);
         }
     }
+
+    $(".savebank").on('click',function(){
+        var name = $(".name").val();
+        var bank_id = $(".bank_id").val();
+        var card_number = $(".card_number").val();
+        var id_card = $(".id_card").val();
+        var phone = $(".phone").val();
+        if (name && bank_id && card_number && id_card && phone) {
+            var data = {
+                "m_id" : top_user.m_id,
+                "bank_id" : bank_id,
+                "card_number" : card_number,
+                "name" : name,
+                "id_card" : id_card,
+                "phone" : phone
+            };
+            requestUrl("{:U('Api/MyWallet/addBankCard')}",data,function(res){
+                if (res.flag != "success") {
+                    alert(res.message);
+                }else{
+                    window.location.href="{:U('Member/banklist')}";
+                }
+            });
+        }else{
+            alert("请完善信息填写!");
+        }
+    });
     </script>
 </block>
