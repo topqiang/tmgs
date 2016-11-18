@@ -51,41 +51,14 @@
                         +obj.goods_name
                     +'</div>'
                     +'<div class="lh30 price fs14">'
-                        +'<div class="fr bgbtn lh14 colb mar5 pad5-10 borad4" id="'+obj.integral_id+'">兑换</div>'
+                        +'<div class="fr bgbtn lh14 colb mar5 pad5-10 borad4" linkto="{:U('IntegralMall/contactway')}&integral_id='+obj.integral_id+'">兑换</div>'
                         +'积分：<span class="fs16 colr">'+obj.integral+'</span>'
                     +'</div>'
                 +'</div>'
             +'</div>';
         }
         $(".goodlist").html(str);
-        clickEvent();
-    }
-
-    function clickEvent(){
-        $(".icondel").on('click',function() {
-            var flag = confirm("您确认删除该地址吗？");
-            if (flag) {
-                var self = $(this);
-                requestUrl("{:U('Api/Address/deleteAddress')}",{"address_id":self.attr("addid")},function(res) {
-                    if (res.flag == "success") {
-                        location.reload();
-                    }else{
-                        alert(res.message);
-                    }
-                })
-            }
-        });
-
-
-        $(".iconedi").on('click',function() {
-            var self = $(this);
-            requestUrl("Api/Address/addressInfo",{"address_id":self.attr("addid")},function (res) {
-                if (res.flag == "success") {
-                    var addobj = sessionStorage.setItem("locaadd",JSON.stringify(res.data));
-                    window.location.href = "{:U('Member/editadd')}&address_id="+self.attr("addid");
-                }
-            });
-        });
+        top_linkto();
     }
     </script>
 
