@@ -20,11 +20,8 @@
                 <span class="right fr mat15"></span>
                 <span class="disib" style="width: 100px;">卡类型：</span>
                 <span class="cole fs14" ele="bank">开户行</span>
-                <select class="poab selpstime" forele="bank">
-                    <option>建行</option>
-                    <option>招行</option>
-                    <option>农行</option>
-                    <option>民行</option>
+                <select class="poab selpstime bank_id" forele="bank">
+                    
                 </select>
             </div>
             <div>
@@ -45,5 +42,16 @@
     </body>
 </block>
 <block name="script">
-
+    requestUrl("{:U('Api/MyWallet/bankCard')}",{},callback);
+    function callback( res ){
+        if (res.flag == "success") {
+            var str = "";
+            for(var bank of res.data){
+                str += '<option value="'+bank.bank_id+'">'+bank_name+'</option>';
+            }
+            $(".bank_id").html(str);
+        }else{
+            alert(res.message);
+        }
+    }
 </block>
