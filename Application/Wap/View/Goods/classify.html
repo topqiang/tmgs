@@ -49,7 +49,7 @@
         function viewGoodsType() {
             var str ="";
             for(var goodType of goods_type){
-                str += '<div class="top_radio" id="'+goodType.g_t_id+'">'+goodType.type_name+'</div>';
+                str += '<div class="top_radio texovh" id="'+goodType.g_t_id+'">'+goodType.type_name+'</div>';
             }
             $(".classify").html(str);
             $(".top_radio").eq(0).addClass('on');
@@ -73,7 +73,7 @@
                 for(var goodType2 of goodType1.type_three){
                     twostr += '<div class="ware pore" id='+goodType2.g_t_id+'>'
                         +'<img src="'+goodType2.type_picture+'" />'
-                        +'<span class="lh20 disb">'+goodType2.type_name+'</span>'
+                        +'<span class="lh20 disb texovh">'+goodType2.type_name+'</span>'
                     +'</div>';
                 }
                 twostr += '</div>';
