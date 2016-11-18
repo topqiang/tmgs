@@ -42,6 +42,7 @@
                 $(".searcharea").attr("placeholder",res.data.app_search);
                 goods_type = res.data.goods_type;
                 viewGoodsType();
+                top_check();
             }
         }
 
@@ -52,18 +53,40 @@
             }
             $(".classify").html(str);
             var twostr ="";
-            for(var goodType of goods_type[0].type_two){
-                twostr += '<div class="contitle">服装</div>'
+            $(".top_radio").eq(0).addClass('on');
+            for(var goodType1 of goods_type[0].type_two){
+                twostr += '<div class="contitle" id="'+goodType1.g_t_id+'">'+goodType1.type_name+'</div>'
                             +'<div class="warelist disf textcen">';
-                for(var goodType of goodType.type_three){
-                    twostr += '<div class="ware pore">'
+                for(var goodType2 of goodType1.type_three){
+                    twostr += '<div class="ware pore" id='+goodType2.g_t_id+'>'
                         +'<img src="__IMG__/cuslogo.png" />'
-                        +'<span class="poab">欧时力</span>'
+                        +'<span class="poab">'+goodType2.type_name+'</span>'
                     +'</div>';
                 }
                 twostr += '</div>';
             }
             $(".conmain").html(twostr);
+        }
+
+        function radioAfter(self){
+            var typeid = self.attr("id");
+            for(var goodType of goods_type){
+                if (goodType.g_t_id == typeid) {
+                    var twostr ="";
+                    for(var goodType1 of goods_type[0].type_two){
+                        twostr += '<div class="contitle" id="'+goodType1.g_t_id+'">'+goodType1.type_name+'</div>'
+                                    +'<div class="warelist disf textcen">';
+                        for(var goodType2 of goodType1.type_three){
+                            twostr += '<div class="ware pore" id='+goodType2.g_t_id+'>'
+                                +'<img src="'+goodType2.type_picture+'" />'
+                                +'<span class="poab">'+goodType2.type_name+'</span>'
+                            +'</div>';
+                        }
+                        twostr += '</div>';
+                    }
+                    $(".conmain").html(twostr);
+                }
+            }
         }
     </script>
 </block>
