@@ -68,7 +68,7 @@
                             +'</div>'
 
                             +'<div class="lh25 pad10 textrig">'
-                                +getBtn(order.status)
+                                +getBtn(order.status,order.order_id,order.delivery_code,order.delivery_sn)
                             +'</div>'
                         +'</div>';
                     }
@@ -101,20 +101,20 @@
             });
         }
 
-        function getBtn(status,city_order_id) {
+        function getBtn(status,city_order_id,com,nu) {
             var str = "";
             switch (status){
                 case "0":
-                str = '<span class="disib bor1b colbl borad4 pad0-10 mar10" onclick="updOrderType('+status+','+city_order_id+')">立即付款</span><span class="disib bor1b colbl borad4 pad0-10" onclick="updOrderType('+2+','+city_order_id+')">取消订单</span>';
+                str = '<span class="disib bor1b colbl borad4 pad0-10 mar10" onclick="updOrderType('+0+','+city_order_id+')">立即付款</span><span class="disib bor1b colbl borad4 pad0-10" onclick="updOrderType('+1+','+city_order_id+')">取消订单</span>';
                 break;
                 case "2":
-                str = '<span class="disib bor1b colbl borad4 pad0-10" onclick="updOrderType('+status+','+city_order_id+')">取消订单</span>';
+                str = '<span class="disib bor1b colbl borad4 pad0-10" onclick="updOrderType('+1+','+city_order_id+')">取消订单</span>';
                 break;
                 case "3":
-                str = '<span class="disib bor1b colbl borad4 pad0-10 mar10" onclick="updOrderType('+status+','+city_order_id+')">物流详情</span><span class="disib bor1b colbl borad4 pad0-10" onclick="updOrderType('+status+','+city_order_id+')">确认收货</span>';
+                str = '<span class="disib bor1b colbl borad4 pad0-10 mar10" onclick="updOrderType('+5+','+city_order_id+','+com+','+nu+')">物流详情</span><span class="disib bor1b colbl borad4 pad0-10" onclick="updOrderType('+2+','+city_order_id+')">确认收货</span>';
                 break;
                 case "4":
-                str = '<span class="disib bor1b colbl borad4 pad0-10" onclick="updOrderType('+status+','+city_order_id+')">立即评价</span>';
+                str = '<span class="disib bor1b colbl borad4 pad0-10" onclick="updOrderType('+4+','+city_order_id+')">立即评价</span>';
                 break;
                 case "5":
                 str = '<span class="disib bor1b colbl borad4 pad0-10" onclick="updOrderType('+3+','+city_order_id+')">删除订单</span>';
@@ -127,32 +127,33 @@
         }
 
 
-        function updOrderType(status,city_order_id){
+        function updOrderType(status,order_id,com,nu){
             console.log(status+"==="+city_order_id);
             var data = {
                 "m_id" : dataargs.m_id,
-                "city_order_id" : city_order_id
+                "order_id" : order_id
             };
             if (status == "0") {
-                window.location.href = "{:U('Merchant/paytype')}&m_id="+dataargs.m_id+"&city_order_id="+city_order_id;
+                window.location.href = "{:U('Order/paytype')}&m_id="+dataargs.m_id+"&city_order_id="+city_order_id;
             }else if (status == "1") {
                 var flag = confirm("你确认取消订单吗？");
                 if (flag) {
-                    requestUrl("{:U('Api/CityOrder/applyCancel')}",data);
+                    requestUrl("{:U('Api/Order/cancellationOrder')}",data);
                 }
             }else if (status == "2") {
-                var flag = confirm("你确认撤销取消订单吗？");
+                var flag = confirm("你确认收货吗？");
                 if (flag) {
-                    requestUrl("{:U('Api/CityOrder/cancelApply')}",data);
+                    requestUrl("{:U('Api/Order/confirmOrder')}",data);
                 }
             }else if (status == "3") {
                 var flag = confirm("删除后，将再也看不到该订单了哦！");
                 if (flag) {
-                    requestUrl("{:U('Api/CityOrder/deleteOrder')}",data);
+                    requestUrl("{:U('Api/Order/deleteOrder')}",data);
                 }
-            }
-            else if (status == "5") {
-                window.location.href = "{:U('Order/addCityComment')}&m_id="+dataargs.m_id+"&city_order_id="+city_order_id;
+            }else if (status == "4") {
+                window.location.href = "{:U('Order/rate')}";
+            }else if (status == "5") {
+                window.location.href = "http://m.kuaidi100.com/index_all.html?type= " + com + "&postid=" + nu;
             }
         }
 
