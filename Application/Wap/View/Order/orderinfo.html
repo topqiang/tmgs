@@ -9,7 +9,7 @@
         订单详情
     </header>
     <div class="content" style="padding: 50px 0px 70px;">
-        <!--已结束 iconyjs  待支付 icondzf  待收货 icondsh    待发货 icondfh   待评价  icondpj   成功 iconocg-->
+        <!--已结束 iconyjs  待支付 icondzf  待收货 icondsh    待发货 icondfh   待评价  icondpj   成功 iconocg  售后中  iconolx-->
         <div class="lh40 iconyjs">等待评价</div>
         <div class="bgb">
             <div class="busto cole borb31">
@@ -33,7 +33,7 @@
                 <span class="">MEAKU时尚男装</span>
                 <span class="right mat10"></span>
             </div>
-            <div>
+            <div class="goodli">
                 <div class="good bgf pad10">
                     <div class="imgbag">
                         <img src="__IMG__/good.png" />
@@ -83,8 +83,6 @@
         </div>
     </div>
     <div class="botarea bgb pad0-20">
-        <span class="borbtnh fr mat10 fs12">立即评价</span>
-        <span class="borbtnh fr mat10 fs12 mar10">申请售后</span>
     </div>
     </body>
 </block>
@@ -92,12 +90,95 @@
     if (!top_user)getUserInfo("{:U('Member/login')}");
     var order_id = "{$_REQUEST['order_id']}";
     requestUrl("{:U('Api/Order/userOrderDetails')}",{"m_id":top_user.m_id,"order_id":order_id},callback);
+    var totalargs = {};
+    var address = {};
+    var goods_list = [];
+    var merchant = {};
     function callback(res){
-        
+        if (res.flag == "success") {
+            totalargs = res.data;
+            address = totalargs.order.address;
+            goods_list = totalargs.order.goods_list;
+            merchant = totalargs.order.merchant;
+            viewPage();
+        }else{
+            alert(res.message);
+        }
     }
 
+    function viewPage(){
+        $(".contents").html('<div class="lh40 '+getClass(totalargs.order.status)+'">'+getType(totalargs.order.status)+'</div>'
+                                +'<div class="bgb">'
+                                    +'<div class="busto cole borb31">'
+                                        +'<div>'
+                                            +'承运公司：'+totalargs.delivery_company.company_name
+                                            +'<span class="fr mar5">'+totalargs.delivery_company.delivery_code+'</span>'
+                                        +'</div>'
+                                        +'<div>运单号：'+totalargs.delivery_sn+'</div>'
+                                    +'</div>'
+                                    +'<div class="ediadd cole borb31">'
+                                        +'<div>'
+                                            +'收货人：<span class="colz">'+address.name+'</span>'
+                                            +'<span class="fr mar5">'+address.tel+'</span>'
+                                        +'</div>'
+                                        +'<div>收货地址：'+address.address+'</div>'
+                                    +'</div>'
+                                +'</div>'
 
+                                +'<div class="order bgb ovhid">'
+                                    +'<div class="lh40 bgb pad0-20 fs14 cole">'
+                                        +'<span class="">'+merchant.merchant_name+'</span>'
+                                        +'<span class="right mat10"></span>'
+                                    +'</div>'
+                                    +'<div class="goodli">'
+                                        +viewGood()
+                                    +'</div>'
+                                +'</div>'
+                                +'<div class="lh50 bgb pad0-20">'
+                                    +'<div class="borb31">'
+                                        +'<div><span class="fr cole">在线支付</span>付款方式:</div>'
+                                    +'</div>'
+                                    +'<div class="borb31 fs14">'
+                                        +'<span class="disib" style="width: 80px;">买家留言：</span>'
+                                        +'<span class="cole">'+totalargs.order.leave_msg+'</span>'
+                                    +'</div>'
+                                    +'<div class="borb31">'
+                                        +'<div><span class="fr fs14">￥'+totalargs.order.delivery_cost+'</span>运费:</div>'
+                                    +'</div>'
+                                    +'<div class="borb31">'
+                                        +'<div><span class="fr colr">￥'+totalargs.data.totalprice+'</span>应付款：</div>'
+                                    +'</div>'
+                                +'</div>'
+                                +'<div class="lh30 bgb pad10 fs14 cole mat10">'
+                                    +'<div><span class="fr">'+totalargs.order.order_sn+'</span>订单编号：</div>'
+                                    +'<div><span class="fr">'+totalargs.order.submit_order_time+'</span>下单时间：</div>'
+                                +'</div>');
+        $(".botarea").html(getBtn(totalargs.order.status,totalargs.order.order_id,totalargs.key,totalargs.delivery_sn));
+    }
 
+    function viewGood(){
+        var str = "";
+        for(var good of goods_list){
+            str += '<div class="good bgf pad10">'
+                        +'<div class="imgbag">'
+                            +'<img src="'+good.goods_pic+'" />'
+                        +'</div>'
+                        +'<div class="pad0-10">'
+                            +'<div class="goodname">'
+                               +good.goods_name
+                            +'</div>'
+                            +'<div class="cole fs12">'
+                                +'<span class="mar20">'+good.attr_con_name+'</span>'
+                            +'</div>'
+                            +'<div class="lh30 price fs14 colr">'
+                                +'<span class="colz fr">X'+good.num+'</span>'
+                                +'￥<span class="fs16 mar10">'+good.price+'</span>'
+                            +'</div>'
+                        +'</div>'
+                    +'</div>';
+        }
+        return str;
+    }
 
     function getBtn(status,city_order_id,com,nu) {
             var str = "";
@@ -106,19 +187,22 @@
                 str = '<span class="disib bor1b colbl borad4 pad0-10 mar10" onclick="updOrderType('+0+','+city_order_id+')">立即付款</span><span class="disib bor1b colbl borad4 pad0-10" onclick="updOrderType('+1+','+city_order_id+')">取消订单</span>';
                 break;
                 case "2":
-                str = '<span class="disib bor1b colbl borad4 pad0-10" onclick="updOrderType('+1+','+city_order_id+')">取消订单</span>';
+                str = '<span class="borbtnh fr mat10 fs12 mar10">申请售后</span><span class="disib bor1b colbl borad4 pad0-10" onclick="updOrderType('+1+','+city_order_id+')">取消订单</span>';
                 break;
                 case "3":
-                str = '<span class="disib bor1b colbl borad4 pad0-10 mar10" onclick="updOrderType('+5+','+city_order_id+',\''+com+'\',\''+nu+'\')">物流详情</span><span class="disib bor1b colbl borad4 pad0-10" onclick="updOrderType('+2+','+city_order_id+')">确认收货</span>';
+                str = '<span class="borbtnh fr mat10 fs12 mar10">申请售后</span><span class="disib bor1b colbl borad4 pad0-10 mar10" onclick="updOrderType('+5+','+city_order_id+',\''+com+'\',\''+nu+'\')">物流详情</span><span class="disib bor1b colbl borad4 pad0-10" onclick="updOrderType('+2+','+city_order_id+')">确认收货</span>';
                 break;
                 case "4":
-                str = '<span class="disib bor1b colbl borad4 pad0-10 mar10" onclick="updOrderType('+5+','+city_order_id+',\''+com+'\',\''+nu+'\')">物流详情</span><span class="disib bor1b colbl borad4 pad0-10" onclick="updOrderType('+4+','+city_order_id+')">立即评价</span>';
+                str = '<span class="borbtnh fr mat10 fs12 mar10">申请售后</span><span class="disib bor1b colbl borad4 pad0-10 mar10" onclick="updOrderType('+5+','+city_order_id+',\''+com+'\',\''+nu+'\')">物流详情</span><span class="disib bor1b colbl borad4 pad0-10" onclick="updOrderType('+4+','+city_order_id+')">立即评价</span>';
                 break;
                 case "5":
                 str = '<span class="disib bor1b colbl borad4 pad0-10" onclick="updOrderType('+3+','+city_order_id+')">删除订单</span>';
                 break;
                 case "6":
                 str = '<span class="disib bor1b colbl borad4 pad0-10" onclick="updOrderType('+3+','+city_order_id+')">删除订单</span>';
+                break;
+                case "7":
+                str = '<span class="disib bor1b colbl borad4 pad0-10">售后处理中</span>';
                 break;
             }
             return str;
@@ -190,6 +274,39 @@
                 break;
                 case "7":
                 str = '售后中';
+                break;
+            }
+            return str;
+        }
+
+        function getClass(status){
+            var str = "";
+
+            <!--已结束 iconyjs  待支付 icondzf  待收货 icondsh    待发货 icondfh   待评价  icondpj   成功 iconocg  售后中  iconolx-->
+            switch (status){
+                case "0":
+                str = 'icondzf';
+                break;
+                case "1":
+                str = 'icondfh';
+                break;
+                case "2":
+                str = 'icondfh';
+                break;
+                case "3":
+                str = 'icondsh';
+                break;
+                case "4":
+                str = 'icondpj';
+                break;
+                case "5":
+                str = 'iconocg';
+                break;
+                case "6":
+                str = 'iconyjs';
+                break;
+                case "7":
+                str = 'iconolx';
                 break;
             }
             return str;
