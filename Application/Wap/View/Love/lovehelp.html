@@ -15,7 +15,7 @@
             </ul>
         </div>
         <div class="pad0-20 lh40 disf bgb cole shopbar">
-            <div class="pad0-20 top_radio on">正在进行</div>
+            <div class="pad0-20 top_radio on" forele="loveing_project">正在进行</div>
             <div class="pad0-20 top_radio">查看往期</div>
         </div>
         <div class="goodlist ovhid mat10 loveing_project">
@@ -76,7 +76,13 @@
         }
 
         function radioAfter( self ){
-            $(".loveing_project,.loveout_project").toggle()
+            if (self.attr("forele") == "loveing_project") {
+                $(".loveing_project").show();
+                $(".loveout_project").hide();
+            }else{
+                $(".loveing_project").hide();
+                $(".loveout_project").show();
+            }
         }
     </script>
 </block>
