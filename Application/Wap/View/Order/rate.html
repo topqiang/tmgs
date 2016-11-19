@@ -101,7 +101,13 @@
                     success : function(data){
                         var data = JSON.parse(data);
                         if(data['flag'] == "success"){
-                            parent.before('<div class="pore" evaluate_pic="'+data['data']['id']+'"><img src="'+data['data']['path']+'" /><span class="poab icondell"></span></div>');
+                            var curpic =  $("<div/>",{"class":"pore","evaluate_pic":data['data']['id']}).html('<img src="'+data['data']['path']+'" /><span class="poab icondell"></span>');
+                            parent.before(curpic);
+                            curpic.find('.icondell').on('click', function() {
+                                if (confirm("确认删除当前图片吗？")) {
+                                    $(this).parent().remove();
+                                }
+                            });
                         }
                     }
                 });
