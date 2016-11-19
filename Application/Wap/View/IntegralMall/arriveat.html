@@ -66,11 +66,19 @@
             for(var key in integral_rule){
                 $("."+key).text(integral_rule[key]);
                 if (i < intrgral_member.day) {
-                    console.log(i + "" + intrgral_member.day);
                     $("."+key).parent().addClass("on");
                 }
                 i++;
             }
+            $(".smbtn").on("click",function(){
+                requestUrl("{:U('Api/CheckIn/checkClick')}",{"m_id":top_user.m_id,"integral":intrgral_member.integral,"day":intrgral_member.day},function(res){
+                    if (res.flag == "success") {
+                        location.reload();
+                    }else{
+                        alert(res.message);
+                    }
+                });
+            });
         }else{
             alert(res.message);
         }
