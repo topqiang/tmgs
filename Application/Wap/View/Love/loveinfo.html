@@ -112,5 +112,24 @@
         $(".iconclose").on('tap',function(){
             $(".zhao").slideUp();
         });
+
+
+    </script>
+
+
+    <script type="text/javascript">
+        var dl_id = "{$dl_id}";
+        if (!top_user) getUserInfo("{:U('Member/login')}");
+
+        requestUrl("{:U('Api/DonateLove/donateLoveDetail')}",{"m_id":top_user.m_id,"dl_id":dl_id},callback);
+
+        function callback(res){
+            if (res.flag == "success") {
+                
+            }else{
+                alert(res.message);
+            }
+        }
+
     </script>
 </block>
