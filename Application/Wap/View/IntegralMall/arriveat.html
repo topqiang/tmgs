@@ -48,7 +48,7 @@
                 <div class="smbtn pad0-20 bgz lh40 borad4 colb disib mat20">签到</div>
             </div>
         </div>
-        <img src="../img/adbot.png" style="bottom: 0px;width: 100%;max-height:120px" class="poab adPosi"/>
+        <img src="" style="bottom: 0px;width: 100%;max-height:120px" class="poab adPosi"/>
     </body>
 </block>
 <block name="script">
@@ -62,11 +62,13 @@
             var integral_rule = res.data.integral_rule;
             $(".integral").text(intrgral_member.integral);
             $(".adPosi").attr("src",adPositionPic[0].pic);
+            var i = 0;
             for(var key in integral_rule){
                 $("."+key).text(integral_rule[key]);
-                if ($("."+key).index() < intrgral_member.day) {
+                if (i < intrgral_member.day) {
                     $("."+key).addClass("on");
                 }
+                i++;
             }
         }else{
             alert(res.message);
