@@ -1369,15 +1369,15 @@ footer > div span {
   float: left;
   width: 30%;
   border: 1px solid #E1E1E1;
-  margin-right: 5%;
+  margin-left: 5%;
   margin-bottom: 10px;
 }
 .upimg div img {
   width: 100%;
   height: 120px;
 }
-.upimg div:last-child {
-  margin-right: 0px;
+.upimg div:first-child {
+  margin-left: 0px;
 }
 .paytype {
   padding-left: 20px;
