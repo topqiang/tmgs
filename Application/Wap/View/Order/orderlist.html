@@ -41,7 +41,7 @@
                             +'</div>'
                             +'<div class="ogoodlist">';
                             for(var good of order.goods_list){
-                                str += '<div class="good bgf pad10">'
+                                str += '<div class="good bgf pad10" oid="'+order.order_id+'">'
                                             +'<div class="imgbag">'
                                                 +'<img src="'+good.goods_pic+'" />'
                                             +'</div>'
@@ -114,7 +114,7 @@
                 str = '<span class="disib bor1b colbl borad4 pad0-10 mar10" onclick="updOrderType('+5+','+city_order_id+',\''+com+'\',\''+nu+'\')">物流详情</span><span class="disib bor1b colbl borad4 pad0-10" onclick="updOrderType('+2+','+city_order_id+')">确认收货</span>';
                 break;
                 case "4":
-                str = '<span class="disib bor1b colbl borad4 pad0-10" onclick="updOrderType('+4+','+city_order_id+')">立即评价</span>';
+                str = '<span class="disib bor1b colbl borad4 pad0-10 mar10" onclick="updOrderType('+5+','+city_order_id+',\''+com+'\',\''+nu+'\')">物流详情</span><span class="disib bor1b colbl borad4 pad0-10" onclick="updOrderType('+4+','+city_order_id+')">立即评价</span>';
                 break;
                 case "5":
                 str = '<span class="disib bor1b colbl borad4 pad0-10" onclick="updOrderType('+3+','+city_order_id+')">删除订单</span>';
@@ -134,24 +134,33 @@
                 "order_id" : order_id
             };
             if (status == "0") {
-                window.location.href = "{:U('Order/paytype')}&m_id="+dataargs.m_id+"&city_order_id="+city_order_id;
+                window.location.href = "{:U('Order/paytype')}&order_id="+order_id;
             }else if (status == "1") {
                 var flag = confirm("你确认取消订单吗？");
                 if (flag) {
                     requestUrl("{:U('Api/Order/cancellationOrder')}",data);
                 }
+                location.reload();
             }else if (status == "2") {
                 var flag = confirm("你确认收货吗？");
                 if (flag) {
                     requestUrl("{:U('Api/Order/confirmOrder')}",data);
                 }
+                location.reload();
             }else if (status == "3") {
                 var flag = confirm("删除后，将再也看不到该订单了哦！");
                 if (flag) {
                     requestUrl("{:U('Api/Order/deleteOrder')}",data);
                 }
+                location.reload();
             }else if (status == "4") {
-                window.location.href = "{:U('Order/rate')}";
+                var length = $("[oid="+order_id+"]").size();
+
+                if ( length > 1) {
+                    window.location.href = "{:U('Order/ratelist')}&order_id="+order_id;
+                }else{
+                    window.location.href = "{:U('Order/rate')}";
+                }
             }else if (status == "5") {
                 window.location.href = "http://m.kuaidi100.com/index_all.html?type=" + com + "&postid=" + nu;
             }
