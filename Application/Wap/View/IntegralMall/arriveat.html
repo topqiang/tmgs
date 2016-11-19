@@ -52,6 +52,7 @@
     </body>
 </block>
 <block name="script">
+<script type="text/javascript">
     if (!top_user) getUserInfo("{:U('Member/login')}");
     requestUrl("{:U('Api/CheckIn/checkShow')}",{"m_id":top_user.m_id},callback);
     function callback(res){
@@ -71,4 +72,5 @@
             alert(res.message);
         }
     }
+    </script>
 </block>
