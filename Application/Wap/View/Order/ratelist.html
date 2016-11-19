@@ -96,8 +96,51 @@
     <script type="text/javascript" src="__JS__/touch.min.js"></script>
 
     <script type="text/javascript">
-        
+        if (!top_user)getUserInfo("{:U('Member/login')}");
+        requestUrl("{:U('Api/Evaluate/evaluationLists')}",{"m_id":top_user.m_id,"order_id":"{$_REQUEST['order_id']}"},callback);
+        var goods = [];
+        function callback( res ){
+            if (res.flag == "success") {
+                goods = res.data.goods;
+                if (goods.length > 0) {
+                    var str = "";
+                    for(var index in goods){
+                        var good = goods[index];
+                        str += '<div class="order mat5 bgb ovhid mat20">'
+                                    +'<div class="mat10">'
+                                        +'<div class="good bgf pad10">'
+                                            +'<div class="imgbag">'
+                                                +'<img src="'+good.goods_pic+'" />'
+                                            +'</div>'
+                                            +'<div class="pad0-10">'
+                                                +'<div class="goodname fs14">'
+                                                    +good.goods_name
+                                                +'</div>'
+                                                +'<div class="cole fs12">'
+                                                    +'<span class="mar20">'+good.attr_con_name+'</span>'
+                                                +'</div>'
+                                                +'<div class="lh30 price fs14 colr">'
+                                                    +'<span class="colz fr">X'+good.num+'</span>'
+                                                    +'￥<span class="fs16 mar10">'+good.price+'</span>'
+                                                +'</div>'
+                                            +'</div>'
+                                        +'</div>'
+                                    +'</div>'
+                                    +'<div class="lh25 pad10 textrig bgb">'
+                                        +'<span class="borbtnh pad0-10" onclick="gorate('+index+')">立即评价</span>'
+                                    +'</div>'
+                                +'</div>';
+                    }
+                    $(".content").html( str );
+                }
+            }else{
+                alert(res.message);
+            }
+        }
 
-
+        function gorate(index){
+            var good = goods[index];
+            console.log(good);
+        }
     </script>
 </block>
