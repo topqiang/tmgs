@@ -12,15 +12,14 @@
             <div>
                 <div class="good pad10">
                     <div class="imgbag">
-                        <img src="__IMG__/good.png" />
+                        <img src="__IMG__/good.png" class="goods_pic"/>
                     </div>
                     <div class="pad0-10">
                         <div class="goodname">
-                            法国AOC领衔红酒  意大利干红葡萄酒2支组合
+                            
                         </div>
                         <div class="cole fs12">
-                            <span class="mar20">颜色分类：灰色</span>
-                            <span>尺码：175</span>
+                            <span class="mar20 attr_con_name"></span>
                         </div>
                     </div>
                 </div>
@@ -63,4 +62,58 @@
     </body>
 </block>
 <block name="script">
+<script type="text/javascript">
+    if (!top_user) getUserInfo("{:U('Member/login')}");
+    var good = {};
+    var ratejson = sessionStorage.getItem("rategood");
+    if (ratejson) {
+        good = JSON.parse(ratejson);
+    }else{
+        var oid = "{$_REQUEST['order_id']}";
+        requestUrl("{:U('Api/Evaluate/evaluationLists')}",{"m_id":top_user.m_id,"order_id": oid },callback);
+    }
+    function callback( res ){
+        if (res.flag == "success") {
+            good = res.data.goods[0];
+        }else{
+            alert(res.message);
+        }
+    }
+
+    function viewGood(){
+        $(".goods_pic").attr("src",good.goods_pic);
+        $(".goodname").text(good.goods_name);
+        $(".attr_con_name").text(good.attr_con_name);
+    }
+</script>
+<script type="text/javascript">
+        function ajax(){
+            var filesize = this.files[0].size;
+            if (filesize > 10000*1024) {
+                alert("请上传大小在500k以下的图片");
+                return false;
+            }
+            var parent = $(this).parent();
+            var files = this.files;
+            var picname = files[0].name;
+            var reader = new FileReader();
+            reader.onload = function(e){
+                var src = e.target.result;
+                $.ajax({
+                    type:"post",
+                    url:"{:U('Member/uploadPic')}",
+                    data: {"pic":src,"pic_name":picname},
+                    dataType : "json",
+                    success : function(data){
+                        var data = JSON.parse(data);
+                        if(data['flag'] == "success"){
+                            parent.before('<div class="pore" evaluate_pic="'+data['data']['id']+'"><img src="'+data['data']['path']+'" /><span class="poab icondell"></span></div>');
+                        }
+                    }
+                });
+            }
+            reader.readAsDataURL(files[0]);
+        }
+        $("input[type='file']").on('change',ajax);
+    </script>
 </block>
