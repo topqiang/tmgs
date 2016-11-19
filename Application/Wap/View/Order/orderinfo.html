@@ -87,6 +87,7 @@
     </body>
 </block>
 <block name="script">
+<script type="text/javascript">
     if (!top_user)getUserInfo("{:U('Member/login')}");
     var order_id = "{$_REQUEST['order_id']}";
     requestUrl("{:U('Api/Order/userOrderDetails')}",{"m_id":top_user.m_id,"order_id":order_id},callback);
@@ -311,4 +312,5 @@
             }
             return str;
         }
+    </script>
 </block>
