@@ -65,6 +65,7 @@
             for(var key in integral_rule){
                 $("."+key).text(integral_rule[key]);
                 if ($("."+key).index() < intrgral_member.day) {
+                    console.log($("."+key).index() + "" + intrgral_member.day);
                     $("."+key).parent().addClass("on");
                 }
             }
