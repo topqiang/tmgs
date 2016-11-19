@@ -97,7 +97,8 @@
 
     <script type="text/javascript">
         if (!top_user)getUserInfo("{:U('Member/login')}");
-        requestUrl("{:U('Api/Evaluate/evaluationLists')}",{"m_id":top_user.m_id,"order_id":{$_REQUEST['order_id']}},callback);
+        var oid = "{$_REQUEST['order_id']}";
+        requestUrl("{:U('Api/Evaluate/evaluationLists')}",{"m_id":top_user.m_id,"order_id": oid },callback);
         var goods = [];
         function callback( res ){
             if (res.flag == "success") {
