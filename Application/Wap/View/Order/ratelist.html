@@ -128,7 +128,7 @@
                                         +'</div>'
                                     +'</div>'
                                     +'<div class="lh25 pad10 textrig bgb">'
-                                        +'<span class="borbtnh pad0-10" onclick="gorate('+index+')">立即评价</span>'
+                                        +'<span class="borbtnh pad0-10" '+((good.type==2) ? 'onclick="gorate('+index+')"' : '')+'>'+((good.type==2) ? '立即评价' : '已评价')+'</span>'
                                     +'</div>'
                                 +'</div>';
                     }
