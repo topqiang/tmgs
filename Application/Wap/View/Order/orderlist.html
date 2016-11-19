@@ -159,7 +159,7 @@
                 if ( length > 1) {
                     window.location.href = "{:U('Order/ratelist')}&order_id="+order_id;
                 }else{
-                    window.location.href = "{:U('Order/rate')}";
+                    window.location.href = "{:U('Order/rate')}&order_id="+order_id;
                 }
             }else if (status == "5") {
                 window.location.href = "http://m.kuaidi100.com/index_all.html?type=" + com + "&postid=" + nu;

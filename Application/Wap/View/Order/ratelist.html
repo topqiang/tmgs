@@ -142,6 +142,8 @@
         function gorate(index){
             var good = goods[index];
             console.log(good);
+            sessionStorage.setItem("rategood",JSON.stringify(good));
+            window.location.href = "{:U('Order/rate')}";
         }
     </script>
 </block>
