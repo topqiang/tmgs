@@ -62,12 +62,14 @@
             var integral_rule = res.data.integral_rule;
             $(".integral").text(intrgral_member.integral);
             $(".adPosi").attr("src",adPositionPic[0].pic);
+            var i = 0;
             for(var key in integral_rule){
                 $("."+key).text(integral_rule[key]);
-                if ($("."+key).index() < intrgral_member.day) {
-                    console.log($("."+key).index() + "" + intrgral_member.day);
+                if (i < intrgral_member.day) {
+                    console.log(i + "" + intrgral_member.day);
                     $("."+key).parent().addClass("on");
                 }
+                i++;
             }
         }else{
             alert(res.message);
