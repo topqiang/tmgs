@@ -34,7 +34,7 @@
                     var str ="";
                     for(var order of orders){
                         str += '<div class="order mat5 bgb ovhid">'
-                            +'<div class="lh40 bgb pad0-20 fs14 cole">'
+                            +'<div class="lh40 bgb pad0-20 fs14 cole" linkto="{:U('Order/orderinfo')}&order_id='+order.order_id+'">'
                                 +'<span class="fr colbl">'+getType(order.status)+'</span>'
                                 +'<span class="">'+order.merchant_name+'</span>'
                                 +'<span class="right mat10"></span>'
