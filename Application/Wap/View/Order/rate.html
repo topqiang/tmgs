@@ -39,7 +39,7 @@
             <div class="lh50">你也可以上传照片~</div>
 
             <div class="pad10 upimg ovhid borb31">
-                <div class="pore">
+                <div class="pore upbtn">
                     <img src="__IMG__/uploadfile.png" />
                     <input type="file" class="poab selpstime"/>
                 </div>
@@ -106,8 +106,10 @@
                             curpic.find('.icondell').on('click', function() {
                                 if (confirm("确认删除当前图片吗？")) {
                                     $(this).parent().remove();
+                                    show();
                                 }
                             });
+                            show();
                         }
                     }
                 });
@@ -115,5 +117,15 @@
             reader.readAsDataURL(files[0]);
         }
         $("input[type='file']").on('change',ajax);
+
+
+        function show(){
+            var size = $(".upimg > div").size();
+            if (size > 3) {
+                $(".upbtn").hide();
+            }else{
+                $(".upbtn").show();
+            }
+        }
     </script>
 </block>
