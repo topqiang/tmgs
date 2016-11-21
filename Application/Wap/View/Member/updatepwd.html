@@ -20,4 +20,14 @@
 </block>
 <block name="script">
     <script type="text/javascript" src="__JS__/touch.min.js"></script>
+    <script>
+        if (!top_user) getUserInfo("{:U('Member/login')}");
+        $(".big-btn").on('click',function(){
+            var old_password = $(".old_password").val();
+            var new_password = $(".new_password").val();
+            var sec_password = $(".sec_password").val();
+
+            
+        });
+    </script>
 </block>
